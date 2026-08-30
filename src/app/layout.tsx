@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { Inter, Manrope, JetBrains_Mono } from "next/font/google";
+import { Inter, Manrope, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SITE } from "@/lib/site-config";
 
-// Type direction, revised per production-audit brief: Syne read as
-// visually impressive but too novelty/geometric for a financial-trust
-// product -- distinctive letterforms that lean closer to "creative
-// studio" than "premium fintech." Inter for body/UI, Manrope for display
-// headlines -- both conventional, highly legible, credible at authority
-// without novelty. JetBrains Mono kept for prices/stat numerals so
-// figures still read as precise, live data.
+// Type direction: Inter for body/UI, Manrope for bold display headlines --
+// both conventional and credible. Instrument Serif Italic added as a
+// deliberate accent for the second headline line (per a direct reference
+// the user pointed at) -- an editorial italic serif against an otherwise
+// plain sans system reads as considered rather than novelty when used
+// this narrowly (one line, one place). JetBrains Mono kept for prices/
+// stat numerals so figures still read as precise, live data.
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -22,6 +22,13 @@ const manrope = Manrope({
   variable: "--font-manrope",
   subsets: ["latin"],
   weight: ["600", "700", "800"],
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["italic"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -73,7 +80,7 @@ const websiteJsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${inter.variable} ${manrope.variable} ${jetbrainsMono.variable} h-full`}>
+    <html lang="en" className={`${inter.variable} ${manrope.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} h-full`}>
       <body className="flex min-h-full flex-col bg-bg text-fg antialiased">
         <script
           type="application/ld+json"

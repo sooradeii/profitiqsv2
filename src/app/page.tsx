@@ -63,21 +63,21 @@ export default function HomePage() {
 
   return (
     <div>
-      {/* ===== HERO — dark, confident, tight tracking ===== */}
-      <section className="hero-surface text-white">
+      {/* ===== HERO — light, confident, editorial accent line ===== */}
+      <section className="hero-surface">
         <div className="mx-auto max-w-[1280px] px-5 pb-10 pt-12 sm:px-8 lg:pb-14 lg:pt-16">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <Reveal className="min-w-0">
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5">
+              <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5">
                 <span className="pulse-dot" />
-                <span className="font-mono text-[11px] font-medium text-white/70">63 real systems &middot; live catalog</span>
+                <span className="font-mono text-[11px] font-medium text-fg-soft">63 real systems &middot; live catalog</span>
               </div>
-              <h1 className="mt-5 font-display text-[2.6rem] font-extrabold leading-[1.02] tracking-[-0.02em] sm:text-[3.5rem]">
+              <h1 className="mt-5 font-display text-[2.6rem] font-extrabold leading-[1.02] tracking-[-0.02em] text-fg sm:text-[3.5rem]">
                 Run your business
                 <br />
-                on real numbers.
+                <span className="font-serif-accent italic font-normal tracking-normal text-accent">on real numbers.</span>
               </h1>
-              <p className="mt-5 max-w-lg text-base leading-relaxed text-white/60 sm:text-lg">
+              <p className="mt-5 max-w-lg text-base leading-relaxed text-fg-soft sm:text-lg">
                 Practical financial and operational intelligence systems
                 built around the numbers that matter — revenue, expenses,
                 profitability, cash flow, performance, and planning.
@@ -85,30 +85,30 @@ export default function HomePage() {
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link
                   href="/products"
-                  className="inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-white px-6 py-3.5 text-sm font-semibold text-ink transition-colors hover:bg-white/90"
+                  className="inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-accent px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-accent-hover"
                 >
                   Explore the Systems
                   <ArrowRight className="size-4" />
                 </Link>
                 <Link
                   href="/industries"
-                  className="inline-flex items-center gap-2 rounded-[var(--radius-control)] border border-white/30 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+                  className="inline-flex items-center gap-2 rounded-[var(--radius-control)] border border-border px-6 py-3.5 text-sm font-semibold text-fg transition-colors hover:bg-surface-muted"
                 >
                   Find Your Industry
                 </Link>
               </div>
-              <div className="mt-8 flex gap-8 border-t border-white/10 pt-5">
+              <div className="mt-8 flex gap-8 border-t border-border pt-5">
                 <div>
-                  <p className="font-display text-3xl font-extrabold tabular-nums"><StatCounter value={PRODUCTS.length} /></p>
-                  <p className="mt-1 font-mono text-[11px] text-white/45">Real systems</p>
+                  <p className="font-display text-3xl font-extrabold tabular-nums text-fg"><StatCounter value={PRODUCTS.length} /></p>
+                  <p className="mt-1 font-mono text-[11px] text-fg-soft">Real systems</p>
                 </div>
                 <div>
-                  <p className="font-display text-3xl font-extrabold tabular-nums"><StatCounter value={niches.length} /></p>
-                  <p className="mt-1 font-mono text-[11px] text-white/45">Categories</p>
+                  <p className="font-display text-3xl font-extrabold tabular-nums text-fg"><StatCounter value={niches.length} /></p>
+                  <p className="mt-1 font-mono text-[11px] text-fg-soft">Categories</p>
                 </div>
                 <div>
-                  <p className="font-display text-3xl font-extrabold tabular-nums">3</p>
-                  <p className="mt-1 font-mono text-[11px] text-white/45">Tiers each</p>
+                  <p className="font-display text-3xl font-extrabold tabular-nums text-fg">3</p>
+                  <p className="mt-1 font-mono text-[11px] text-fg-soft">Tiers each</p>
                 </div>
               </div>
             </Reveal>
@@ -120,7 +120,7 @@ export default function HomePage() {
                     <div
                       key={p.id}
                       className={
-                        "glow-card cover-lift relative aspect-[3/4] overflow-hidden rounded-[var(--radius-card)] border border-white/10 bg-white shadow-[0_20px_50px_-20px_rgba(0,0,0,0.6)] " +
+                        "glow-card cover-lift relative aspect-[3/4] overflow-hidden rounded-[var(--radius-card)] border border-border bg-white shadow-[0_20px_50px_-20px_rgba(17,19,24,0.25)] " +
                         (i === 0 ? "col-span-2 row-span-2" : "")
                       }
                     >

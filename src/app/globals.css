@@ -58,6 +58,7 @@
 
   --font-sans: var(--font-inter);
   --font-display: var(--font-manrope);
+  --font-serif-accent: var(--font-instrument-serif);
   --font-mono: var(--font-jetbrains);
 
   --radius-card: var(--radius-card);
@@ -102,16 +103,15 @@
 }
 
 @layer utilities {
-  /* Hero surface -- deep electric blue grounding into controlled violet,
-     with magenta reduced to a subtle atmospheric wash and cyan to a faint
-     highlight, layered as radial light rather than a vivid diagonal
-     rainbow band. Expensive, not loud. */
+  /* Hero surface -- light, not dark. A soft violet/cyan wash over a
+     near-white base -- "hero, not villain": the dark treatment read as
+     heavy for a first impression. Same brand hues, just as a whisper
+     instead of a wall of color. */
   .hero-surface {
     background:
-      radial-gradient(40% 40% at 92% 8%, rgba(34, 211, 238, 0.14), transparent 60%),
-      radial-gradient(60% 55% at 88% 78%, rgba(192, 38, 212, 0.16), transparent 65%),
-      radial-gradient(70% 65% at 20% 15%, rgba(124, 58, 237, 0.4), transparent 60%),
-      linear-gradient(180deg, #0a1130 0%, #12112f 55%, #170f38 100%);
+      radial-gradient(70% 60% at 12% 15%, rgba(109, 40, 217, 0.1), transparent 60%),
+      radial-gradient(70% 60% at 92% 8%, rgba(34, 211, 238, 0.12), transparent 60%),
+      linear-gradient(180deg, #f7f7fc 0%, #ffffff 60%);
   }
 
   /* CTA surface -- same restrained system, glows mirrored. */
