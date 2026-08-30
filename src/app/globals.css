@@ -1,32 +1,34 @@
 @import "tailwindcss";
 
 /* ProfitIQS design tokens -- centralized, no scattered hex values in
-   components. Style variant B: fully dark, zero white backgrounds --
-   blue/violet/cyan radial-glow system carried through the entire site
-   instead of isolated to the hero. Compared against the clean-white +
-   violet/gold system on master; whichever tests better gets locked. */
+   components. Style variant C: cyan/magenta/blue are the actual
+   background colors (not glow accents on a black canvas). Content
+   cards stay clean white for readability; the page canvas and the
+   hero/CTA moments carry the vivid tricolor gradient. Third candidate
+   alongside master (clean-white + violet/gold) and the dark branch
+   (blue/violet/cyan glow on near-black) -- compare, then lock one. */
 :root {
-  --bg: #09080f;
-  --surface: #14121f;
-  --surface-muted: #1d1a2c;
-  --foreground: #f6f5fa;
-  --foreground-soft: #a9a6ba;
-  --border: #2c2840;
-  --accent: #8b5cf6;
-  --accent-hover: #a78bfa;
-  --accent-soft: rgba(139, 92, 246, 0.16);
-  --accent-glow: rgba(139, 92, 246, 0.5);
-  --success: #10b981;
-  --success-soft: rgba(16, 185, 129, 0.16);
-  --success-glow: rgba(16, 185, 129, 0.42);
-  --warning: #fbbf24;
-  --danger: #f87171;
-  --ink: #050409;
-  --ink-soft: #131024;
-  --cyan: #22d3ee;
-  --cyan-soft: rgba(34, 211, 238, 0.16);
-  --cyan-glow: rgba(34, 211, 238, 0.4);
-  --blue: #3b82f6;
+  --bg: #f2eefb;
+  --surface: #ffffff;
+  --surface-muted: #f1eef8;
+  --foreground: #14121f;
+  --foreground-soft: #5c5a6e;
+  --border: #e5e1f0;
+  --accent: #c026d3;
+  --accent-hover: #a21caf;
+  --accent-soft: #fae8fb;
+  --accent-glow: rgba(192, 38, 212, 0.35);
+  --success: #059669;
+  --success-soft: #e7f7f0;
+  --success-glow: rgba(5, 150, 105, 0.35);
+  --warning: #d97706;
+  --danger: #dc2626;
+  --ink: #3b0764;
+  --ink-soft: #4c1d95;
+  --cyan: #0891b2;
+  --cyan-soft: #e0f7fa;
+  --cyan-glow: rgba(8, 145, 178, 0.3);
+  --blue: #1d4ed8;
 
   --radius-card: 16px;
   --radius-control: 10px;
@@ -65,8 +67,11 @@
   * {
     border-color: var(--border);
   }
+  /* The page canvas itself is the tricolor wash -- soft enough that
+     --foreground text stays legible directly on it, wherever a section
+     doesn't sit on an explicit white surface. */
   body {
-    background: var(--bg);
+    background: linear-gradient(135deg, #e0e7ff 0%, #fae8ff 45%, #cffafe 100%);
     color: var(--foreground);
   }
   html {
@@ -92,25 +97,29 @@
 }
 
 @layer utilities {
-  /* Hero surface -- the same blue/violet/cyan system as the page base, just
-     turned up: cyan glow top-right, violet glow bottom-left, a faint blue
-     wash through the middle, over the near-black ground. */
+  /* Hero surface -- the vivid, fully-saturated version of the same
+     cyan/magenta/blue family that tints the page canvas: a true colored
+     background, not a glow floating on black. */
   .hero-surface {
     background:
-      radial-gradient(120% 100% at 100% 0%, rgba(34, 211, 238, 0.24), transparent 55%),
-      radial-gradient(100% 100% at 0% 100%, rgba(139, 92, 246, 0.44), transparent 55%),
-      radial-gradient(80% 60% at 50% 35%, rgba(59, 130, 246, 0.2), transparent 60%),
-      linear-gradient(180deg, #0b0a16 0%, #07060f 100%);
+      radial-gradient(120% 100% at 100% 0%, rgba(34, 211, 238, 0.4), transparent 55%),
+      radial-gradient(100% 100% at 0% 100%, rgba(217, 70, 239, 0.4), transparent 55%),
+      linear-gradient(135deg, #1d4ed8 0%, #7c3aed 30%, #c026d3 60%, #0891b2 100%);
   }
 
-  /* CTA surface -- same system, glows mirrored, for the other spotlight
-     sections (final CTAs, dark bento tile) against the plainer page base. */
+  /* CTA surface -- same vivid system, glows mirrored, for the other
+     spotlight sections (final CTAs, colorful bento tile). */
   .cta-surface {
     background:
-      radial-gradient(90% 120% at 100% 100%, rgba(34, 211, 238, 0.2), transparent 55%),
-      radial-gradient(100% 100% at 0% 0%, rgba(139, 92, 246, 0.36), transparent 55%),
-      radial-gradient(70% 70% at 60% 30%, rgba(59, 130, 246, 0.18), transparent 60%),
-      linear-gradient(180deg, #0b0a16 0%, #07060f 100%);
+      radial-gradient(90% 120% at 100% 100%, rgba(34, 211, 238, 0.35), transparent 55%),
+      radial-gradient(100% 100% at 0% 0%, rgba(217, 70, 239, 0.35), transparent 55%),
+      linear-gradient(135deg, #1d4ed8 0%, #7c3aed 30%, #c026d3 60%, #0891b2 100%);
+  }
+
+  /* Ticker band -- a thin vivid slice of the same gradient instead of a
+     near-black strip. */
+  .ticker-surface {
+    background: linear-gradient(90deg, #1d4ed8, #7c3aed, #c026d3);
   }
 
   /* Scroll-reveal primitive -- opacity + translate only, content always
@@ -131,7 +140,7 @@
   }
   .card-hover:hover {
     transform: translateY(-3px);
-    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.65);
+    box-shadow: 0 16px 32px -20px rgba(59, 7, 100, 0.22);
     border-color: var(--accent);
   }
 
@@ -141,7 +150,7 @@
   }
   .cover-lift:hover {
     transform: translateY(-2px) scale(1.01);
-    box-shadow: 0 28px 56px -24px rgba(0, 0, 0, 0.75);
+    box-shadow: 0 24px 48px -24px rgba(59, 7, 100, 0.35);
   }
 
   /* Real depth via a radial gradient wash and layered shadow -- reads as

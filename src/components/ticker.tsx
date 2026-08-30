@@ -3,7 +3,7 @@
 export function Ticker({ items }: { items: { label: string; value: string }[] }) {
   const track = [...items, ...items];
   return (
-    <div className="overflow-hidden border-y border-white/10 bg-ink-soft py-3">
+    <div className="ticker-surface overflow-hidden border-y border-white/10 py-3">
       <div className="marquee-track gap-10">
         {track.map((item, i) => (
           <span key={`${item.label}-${i}`} className="flex shrink-0 items-center gap-2.5 whitespace-nowrap px-2 font-mono text-xs text-white/60">
