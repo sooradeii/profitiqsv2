@@ -73,7 +73,7 @@ export default async function IndustryPage({
             const isComplete = p.tier === "complete";
             return (
               <Reveal key={p.id} delay={i * 90}>
-                <div className={isComplete ? "flex h-full flex-col rounded-[var(--radius-card)] border-2 border-gold bg-gold-soft p-6" : "flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-surface p-6"}>
+                <div className={isComplete ? "flex h-full flex-col rounded-[var(--radius-card)] border-2 border-cyan bg-cyan-soft p-6" : "flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-surface p-6"}>
                   <h3 className="font-display text-lg font-bold text-fg">{p.tierLabel}</h3>
                   {p.price !== null && <p className="mt-2 font-display text-2xl font-extrabold text-fg">${p.price}</p>}
                   <ul className="mt-4 flex-1 space-y-1.5 text-sm text-fg-soft">

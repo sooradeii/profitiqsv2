@@ -286,7 +286,7 @@ export default function HomePage() {
               const isComplete = t.tier === "complete";
               return (
                 <Reveal key={t.tier} delay={i * 90}>
-                  <div className={isComplete ? "glow-card flex h-full flex-col rounded-[var(--radius-card)] border-2 border-gold bg-gold-soft p-7" : "glow-card flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-bg p-7"}>
+                  <div className={isComplete ? "glow-card flex h-full flex-col rounded-[var(--radius-card)] border-2 border-cyan bg-cyan-soft p-7" : "glow-card flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-bg p-7"}>
                     <h3 className="font-display text-lg text-fg">{t.name}</h3>
                     <p className="mt-2 flex-1 text-sm text-fg-soft">{t.body}</p>
                     {sample?.price !== null && sample?.price !== undefined && (
@@ -323,7 +323,7 @@ export default function HomePage() {
               { n: "03", title: "Open and start tracking", body: "Enter your numbers and the dashboards do the rest." },
             ].map((s, i) => (
               <Reveal key={s.n} delay={i * 90}>
-                <span className="font-mono text-7xl font-extrabold text-gold/35">{s.n}</span>
+                <span className="font-mono text-7xl font-extrabold text-cyan/35">{s.n}</span>
                 <h3 className="mt-3 font-display text-lg text-fg">{s.title}</h3>
                 <p className="mt-2 text-sm text-fg-soft">{s.body}</p>
               </Reveal>

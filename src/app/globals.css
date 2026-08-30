@@ -1,36 +1,32 @@
 @import "tailwindcss";
 
 /* ProfitIQS design tokens -- centralized, no scattered hex values in
-   components. Direction: confident, tightly-tracked display type (Syne)
-   over restrained color, real layout-driven depth (bento sizing, shadow,
-   gradient glow) -- not blur. Grounded in real inspection of Linear (Inter
-   Variable, -1.4px tracking on 64px display type, near-black ground) and
-   the documented patterns behind Ramp (bento-grid, size-as-hierarchy) and
-   Mercury (one signature accent on an otherwise restrained palette) --
-   the actually-comparable fintech products for this audience, not a
-   crypto-trading aesthetic. Brand blue/emerald kept from the original
-   spec; pushed with more real depth and a genuine dark hero section. */
+   components. Style variant B: fully dark, zero white backgrounds --
+   blue/violet/cyan radial-glow system carried through the entire site
+   instead of isolated to the hero. Compared against the clean-white +
+   violet/gold system on master; whichever tests better gets locked. */
 :root {
-  --bg: #fafafa;
-  --surface: #ffffff;
-  --surface-muted: #f2f3f5;
-  --foreground: #0d0f14;
-  --foreground-soft: #565b66;
-  --border: #e6e7eb;
-  --accent: #6d28d9;
-  --accent-hover: #5b21b6;
-  --accent-soft: #f3ecfb;
-  --accent-glow: rgba(109, 40, 217, 0.38);
-  --success: #059669;
-  --success-soft: #e7f7f0;
-  --success-glow: rgba(5, 150, 105, 0.35);
-  --warning: #d97706;
-  --danger: #dc2626;
-  --ink: #0a0c10;
-  --ink-soft: #14171d;
-  --gold: #c9962e;
-  --gold-soft: #faf1dd;
-  --gold-glow: rgba(201, 150, 46, 0.35);
+  --bg: #09080f;
+  --surface: #14121f;
+  --surface-muted: #1d1a2c;
+  --foreground: #f6f5fa;
+  --foreground-soft: #a9a6ba;
+  --border: #2c2840;
+  --accent: #8b5cf6;
+  --accent-hover: #a78bfa;
+  --accent-soft: rgba(139, 92, 246, 0.16);
+  --accent-glow: rgba(139, 92, 246, 0.5);
+  --success: #10b981;
+  --success-soft: rgba(16, 185, 129, 0.16);
+  --success-glow: rgba(16, 185, 129, 0.42);
+  --warning: #fbbf24;
+  --danger: #f87171;
+  --ink: #050409;
+  --ink-soft: #131024;
+  --cyan: #22d3ee;
+  --cyan-soft: rgba(34, 211, 238, 0.16);
+  --cyan-glow: rgba(34, 211, 238, 0.4);
+  --blue: #3b82f6;
 
   --radius-card: 16px;
   --radius-control: 10px;
@@ -54,8 +50,8 @@
   --color-danger: var(--danger);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
-  --color-gold: var(--gold);
-  --color-gold-soft: var(--gold-soft);
+  --color-cyan: var(--cyan);
+  --color-cyan-soft: var(--cyan-soft);
 
   --font-sans: var(--font-poppins);
   --font-display: var(--font-syne);
@@ -96,24 +92,25 @@
 }
 
 @layer utilities {
-  /* Hero surface -- deep violet-and-gold gradient instead of flat black or
-     navy. Gold glow top-right, violet glow bottom-left, over a near-black
-     violet-tinted base (no navy anywhere in it). */
+  /* Hero surface -- the same blue/violet/cyan system as the page base, just
+     turned up: cyan glow top-right, violet glow bottom-left, a faint blue
+     wash through the middle, over the near-black ground. */
   .hero-surface {
     background:
-      radial-gradient(120% 100% at 100% 0%, rgba(201, 150, 46, 0.22), transparent 55%),
-      radial-gradient(100% 100% at 0% 100%, rgba(109, 40, 217, 0.4), transparent 55%),
-      linear-gradient(180deg, #120a20 0%, #0d0818 100%);
+      radial-gradient(120% 100% at 100% 0%, rgba(34, 211, 238, 0.24), transparent 55%),
+      radial-gradient(100% 100% at 0% 100%, rgba(139, 92, 246, 0.44), transparent 55%),
+      radial-gradient(80% 60% at 50% 35%, rgba(59, 130, 246, 0.2), transparent 60%),
+      linear-gradient(180deg, #0b0a16 0%, #07060f 100%);
   }
 
-  /* CTA surface -- same violet/gold system as the hero, glows mirrored, for
-     the other dark sections (final CTAs, dark bento tile) so the whole site
-     reads as one palette instead of a flat black block. */
+  /* CTA surface -- same system, glows mirrored, for the other spotlight
+     sections (final CTAs, dark bento tile) against the plainer page base. */
   .cta-surface {
     background:
-      radial-gradient(90% 120% at 100% 100%, rgba(201, 150, 46, 0.18), transparent 55%),
-      radial-gradient(100% 100% at 0% 0%, rgba(109, 40, 217, 0.32), transparent 55%),
-      linear-gradient(180deg, #120a20 0%, #0d0818 100%);
+      radial-gradient(90% 120% at 100% 100%, rgba(34, 211, 238, 0.2), transparent 55%),
+      radial-gradient(100% 100% at 0% 0%, rgba(139, 92, 246, 0.36), transparent 55%),
+      radial-gradient(70% 70% at 60% 30%, rgba(59, 130, 246, 0.18), transparent 60%),
+      linear-gradient(180deg, #0b0a16 0%, #07060f 100%);
   }
 
   /* Scroll-reveal primitive -- opacity + translate only, content always
@@ -134,8 +131,8 @@
   }
   .card-hover:hover {
     transform: translateY(-3px);
-    box-shadow: 0 16px 32px -20px rgba(17, 19, 24, 0.18);
-    border-color: var(--foreground-soft);
+    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.65);
+    border-color: var(--accent);
   }
 
   /* Product cover image lift on hover -- stronger depth than UI cards. */
@@ -144,7 +141,7 @@
   }
   .cover-lift:hover {
     transform: translateY(-2px) scale(1.01);
-    box-shadow: 0 24px 48px -24px rgba(17, 19, 24, 0.3);
+    box-shadow: 0 28px 56px -24px rgba(0, 0, 0, 0.75);
   }
 
   /* Real depth via a radial gradient wash and layered shadow -- reads as
