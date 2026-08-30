@@ -85,14 +85,14 @@ export default function HomePage() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
                   href="/products"
-                  className="inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-accent px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-accent-hover"
+                  className="inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-white px-6 py-3.5 text-sm font-semibold text-ink transition-colors hover:bg-white/90"
                 >
                   Explore the Systems
                   <ArrowRight className="size-4" />
                 </Link>
                 <Link
                   href="/industries"
-                  className="inline-flex items-center gap-2 rounded-[var(--radius-control)] border border-white/20 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+                  className="inline-flex items-center gap-2 rounded-[var(--radius-control)] border border-white/30 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
                 >
                   Find Your Industry
                 </Link>
@@ -389,11 +389,11 @@ export default function HomePage() {
               63 systems, 21 categories, 3 tiers — one payment, no subscription.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Link href="/products" className="inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-accent px-7 py-3.5 text-sm font-semibold text-white hover:bg-accent-hover">
+              <Link href="/products" className="inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-white px-7 py-3.5 text-sm font-semibold text-ink hover:bg-white/90">
                 Explore the Systems
                 <ArrowRight className="size-4" />
               </Link>
-              <Link href="/industries" className="rounded-[var(--radius-control)] border border-white/25 px-7 py-3.5 text-sm font-semibold text-white hover:bg-white/10">
+              <Link href="/industries" className="rounded-[var(--radius-control)] border border-white/30 px-7 py-3.5 text-sm font-semibold text-white hover:bg-white/10">
                 Find Your Industry
               </Link>
             </div>

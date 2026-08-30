@@ -1,23 +1,24 @@
 @import "tailwindcss";
 
 /* ProfitIQS design tokens -- centralized, no scattered hex values in
-   components. Style variant C: cyan/magenta/blue are the actual
-   background colors (not glow accents on a black canvas). Content
-   cards stay clean white for readability; the page canvas and the
-   hero/CTA moments carry the vivid tricolor gradient. Third candidate
-   alongside master (clean-white + violet/gold) and the dark branch
-   (blue/violet/cyan glow on near-black) -- compare, then lock one. */
+   components. Style variant D: synthesis of B and C. The vivid
+   blue/violet/magenta/cyan gradient is confined to the hero, the
+   final CTAs, and the ticker -- the "wow" moment -- while the body
+   runs on a calm, restrained neutral + single-violet-accent system,
+   because this is a financial-trust product (Mercury/Ramp/QuickBooks
+   territory) where the content the customer actually reads and buys
+   from should read as confident and trustworthy, not playful. */
 :root {
-  --bg: #f2eefb;
+  --bg: #fafafa;
   --surface: #ffffff;
-  --surface-muted: #f1eef8;
-  --foreground: #14121f;
-  --foreground-soft: #5c5a6e;
-  --border: #e5e1f0;
-  --accent: #c026d3;
-  --accent-hover: #a21caf;
-  --accent-soft: #fae8fb;
-  --accent-glow: rgba(192, 38, 212, 0.35);
+  --surface-muted: #f2f3f5;
+  --foreground: #0d0f14;
+  --foreground-soft: #565b66;
+  --border: #e6e7eb;
+  --accent: #6d28d9;
+  --accent-hover: #5b21b6;
+  --accent-soft: #f3ecfb;
+  --accent-glow: rgba(109, 40, 217, 0.35);
   --success: #059669;
   --success-soft: #e7f7f0;
   --success-glow: rgba(5, 150, 105, 0.35);
@@ -67,11 +68,8 @@
   * {
     border-color: var(--border);
   }
-  /* The page canvas itself is the tricolor wash -- soft enough that
-     --foreground text stays legible directly on it, wherever a section
-     doesn't sit on an explicit white surface. */
   body {
-    background: linear-gradient(135deg, #e0e7ff 0%, #fae8ff 45%, #cffafe 100%);
+    background: var(--bg);
     color: var(--foreground);
   }
   html {
