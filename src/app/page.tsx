@@ -161,7 +161,7 @@ export default function HomePage() {
           </Reveal>
           <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-4">
             <Reveal className="sm:col-span-2 sm:row-span-2">
-              <div className="glow-card flex h-full flex-col justify-between rounded-[var(--radius-card)] border border-border bg-ink p-7 text-white">
+              <div className="glow-card cta-surface flex h-full flex-col justify-between rounded-[var(--radius-card)] border border-border p-7 text-white">
                 <TrendingUp className="size-6 text-accent" />
                 <div>
                   <h3 className="mt-6 font-display text-xl">What&apos;s profitable</h3>
@@ -286,7 +286,7 @@ export default function HomePage() {
               const isComplete = t.tier === "complete";
               return (
                 <Reveal key={t.tier} delay={i * 90}>
-                  <div className={isComplete ? "glow-card flex h-full flex-col rounded-[var(--radius-card)] border-2 border-ink bg-bg p-7" : "glow-card flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-bg p-7"}>
+                  <div className={isComplete ? "glow-card flex h-full flex-col rounded-[var(--radius-card)] border-2 border-gold bg-gold-soft p-7" : "glow-card flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-bg p-7"}>
                     <h3 className="font-display text-lg text-fg">{t.name}</h3>
                     <p className="mt-2 flex-1 text-sm text-fg-soft">{t.body}</p>
                     {sample?.price !== null && sample?.price !== undefined && (
@@ -379,7 +379,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== FINAL CTA ===== */}
-      <section className="bg-ink text-white">
+      <section className="cta-surface text-white">
         <div className="mx-auto max-w-2xl px-5 py-20 text-center sm:px-8">
           <Reveal>
             <h2 className="font-display text-3xl tracking-tight sm:text-4xl">

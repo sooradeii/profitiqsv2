@@ -217,7 +217,7 @@ export default async function ProductPage({
                   <div
                     className={
                       isCurrent
-                        ? "flex h-full flex-col rounded-[var(--radius-card)] border-2 border-ink bg-bg p-6"
+                        ? "flex h-full flex-col rounded-[var(--radius-card)] border-2 border-gold bg-gold-soft p-6"
                         : "flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-bg p-6"
                     }
                   >
@@ -239,7 +239,7 @@ export default async function ProductPage({
       </section>
 
       {/* Final CTA */}
-      <section className="bg-ink text-white">
+      <section className="cta-surface text-white">
         <div className="mx-auto max-w-2xl px-5 py-16 text-center sm:px-8">
           <Reveal>
             <p className="flex items-center justify-center gap-2 text-xs text-white/50">
