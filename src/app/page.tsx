@@ -63,7 +63,7 @@ export default function HomePage() {
 
   return (
     <div>
-      {/* ===== HERO — light, confident, editorial accent line ===== */}
+      {/* ===== HERO — light, confident, weight/color-driven accent ===== */}
       <section className="hero-surface">
         <div className="mx-auto max-w-[1280px] px-5 pb-10 pt-12 sm:px-8 lg:pb-14 lg:pt-16">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
@@ -75,7 +75,7 @@ export default function HomePage() {
               <h1 className="mt-5 font-display text-[2.6rem] font-extrabold leading-[1.02] tracking-[-0.02em] text-fg sm:text-[3.5rem]">
                 Run your business
                 <br />
-                <span className="font-serif-accent italic font-normal tracking-normal text-accent">on real numbers.</span>
+                <span className="text-accent">on real numbers.</span>
               </h1>
               <p className="mt-5 max-w-lg text-base leading-relaxed text-fg-soft sm:text-lg">
                 Practical financial and operational intelligence systems
@@ -286,7 +286,7 @@ export default function HomePage() {
               const isComplete = t.tier === "complete";
               return (
                 <Reveal key={t.tier} delay={i * 90}>
-                  <div className={isComplete ? "glow-card flex h-full flex-col rounded-[var(--radius-card)] border-2 border-cyan bg-cyan-soft p-7" : "glow-card flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-bg p-7"}>
+                  <div className={isComplete ? "glow-card flex h-full flex-col rounded-[var(--radius-card)] border-2 border-violet bg-violet-soft p-7" : "glow-card flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-bg p-7"}>
                     <h3 className="font-display text-lg text-fg">{t.name}</h3>
                     <p className="mt-2 flex-1 text-sm text-fg-soft">{t.body}</p>
                     {sample?.price !== null && sample?.price !== undefined && (
@@ -323,7 +323,7 @@ export default function HomePage() {
               { n: "03", title: "Open and start tracking", body: "Enter your numbers and the dashboards do the rest." },
             ].map((s, i) => (
               <Reveal key={s.n} delay={i * 90}>
-                <span className="font-mono text-7xl font-extrabold text-cyan/35">{s.n}</span>
+                <span className="font-mono text-7xl font-extrabold text-violet/30">{s.n}</span>
                 <h3 className="mt-3 font-display text-lg text-fg">{s.title}</h3>
                 <p className="mt-2 text-sm text-fg-soft">{s.body}</p>
               </Reveal>

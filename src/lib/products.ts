@@ -3785,15 +3785,18 @@ export function getCategories(): string[] {
   return Array.from(new Set(PRODUCTS.map((p) => p.category))).sort();
 }
 
-/** Centralized checkout URL helper -- per explicit product decision, a
- * real checkout link is shown whenever one exists, regardless of
- * Digistore24's own review state (see file header). Never call
- * product.digistoreCheckoutUrl directly from a component -- always through
- * this helper so the rule lives in exactly one place. */
+/** Centralized checkout URL helper -- returns the real Digistore24 URL if
+ * one exists. Never call product.digistoreCheckoutUrl directly from a
+ * component -- always through this helper so the rule lives in one place.
+ * A URL existing does NOT mean the product is sellable -- see canBuyNow. */
 export function getCheckoutUrl(product: Product): string | null {
   return product.digistoreCheckoutUrl;
 }
 
+/** Buy Now requires real Digistore24 approval, not just a mapped checkout
+ * URL (see file header -- 0/63 approved as of the last CSV export, so
+ * every product currently renders "Coming Soon" until Digistore24
+ * actually approves each listing). */
 export function canBuyNow(product: Product): boolean {
   return product.approvalStatus === "approved" && !!getCheckoutUrl(product);
 }

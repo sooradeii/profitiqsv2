@@ -33,7 +33,7 @@ export function SiteHeader() {
           : "sticky top-0 z-50 border-b border-transparent bg-surface/95 backdrop-blur transition-shadow duration-200"
       }
     >
-      <div className="mx-auto flex h-16 w-full max-w-[1280px] items-center justify-between px-5 sm:px-8">
+      <div className={`mx-auto flex w-full max-w-[1280px] items-center justify-between px-5 transition-[height] duration-200 sm:px-8 ${scrolled ? "h-14" : "h-16"}`}>
         <Link href="/" className="flex items-center gap-2">
           <Image src="/assets/brand/profitiqs-logo.png" alt="" width={26} height={26} priority />
           <span className="font-display text-[15px] font-bold tracking-tight text-fg">

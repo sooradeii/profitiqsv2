@@ -1,40 +1,18 @@
 import type { Metadata } from "next";
-import { Inter, Manrope, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SITE } from "@/lib/site-config";
 
-// Type direction: Inter for body/UI, Manrope for bold display headlines --
-// both conventional and credible. Instrument Serif Italic added as a
-// deliberate accent for the second headline line (per a direct reference
-// the user pointed at) -- an editorial italic serif against an otherwise
-// plain sans system reads as considered rather than novelty when used
-// this narrowly (one line, one place). JetBrains Mono kept for prices/
-// stat numerals so figures still read as precise, live data.
-const inter = Inter({
-  variable: "--font-inter",
+// Type direction, final: Poppins as the single typeface across the entire
+// public site -- display, body, and numerals -- per explicit instruction.
+// Weight carries the hierarchy instead of switching families: 400-500
+// body, 600 labels, 700 subheadings, 800 headlines/prices/metrics.
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
-});
-
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["italic"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains",
-  subsets: ["latin"],
-  weight: ["500", "700"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -80,7 +58,7 @@ const websiteJsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${inter.variable} ${manrope.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} h-full`}>
+    <html lang="en" className={`${poppins.variable} h-full`}>
       <body className="flex min-h-full flex-col bg-bg text-fg antialiased">
         <script
           type="application/ld+json"

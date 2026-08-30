@@ -33,9 +33,9 @@ export default function ComparePage() {
       <Reveal>
         <h1 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Compare tiers</h1>
         <p className="mt-3 max-w-2xl text-base text-fg-soft">
-          Every industry uses this same three-tier structure. Prices shown
-          below are for the Auto Repair Shop system as a real example —
-          every other industry follows the same $97 / $197 / $249 pattern.
+          Every industry uses this same three-tier structure. Pricing shown
+          reflects the current standard tier structure — see the selected
+          product page for the exact price.
         </p>
       </Reveal>
 

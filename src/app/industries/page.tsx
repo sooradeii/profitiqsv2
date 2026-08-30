@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getNiches } from "@/lib/products";
+import Image from "next/image";
+import { getNiches, getProductsByNiche } from "@/lib/products";
 import { Reveal } from "@/components/reveal";
 
 export const metadata: Metadata = {
@@ -20,19 +21,29 @@ export default function IndustriesPage() {
         </p>
       </Reveal>
       <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {niches.map((n, i) => (
-          <Reveal key={n.slug} delay={(i % 6) * 60}>
-            <Link
-              href={`/industries/${n.slug}`}
-              className="card-hover flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-surface p-6"
-            >
-              <p className="text-xs font-semibold uppercase tracking-wide text-accent">{n.category}</p>
-              <h2 className="mt-2 font-display text-lg font-bold text-fg">{n.shortName}</h2>
-              <p className="mt-2 flex-1 text-sm text-fg-soft">{n.heroLine}</p>
-              <span className="mt-4 text-sm font-semibold text-accent">View system &rarr;</span>
-            </Link>
-          </Reveal>
-        ))}
+        {niches.map((n, i) => {
+          const cover = getProductsByNiche(n.slug).find((p) => p.tier === "complete")?.coverImage;
+          return (
+            <Reveal key={n.slug} delay={(i % 6) * 60}>
+              <Link
+                href={`/industries/${n.slug}`}
+                className="card-hover flex h-full items-center gap-4 rounded-[var(--radius-card)] border border-border bg-surface p-4"
+              >
+                {cover && (
+                  <div className="relative aspect-[3/4] w-16 shrink-0 overflow-hidden rounded-[10px] border border-border bg-surface-muted">
+                    <Image src={cover} alt="" fill className="object-contain p-1" sizes="64px" />
+                  </div>
+                )}
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-accent">{n.category}</p>
+                  <h2 className="mt-1 truncate font-display text-base font-bold text-fg">{n.shortName}</h2>
+                  <p className="mt-1 line-clamp-2 text-sm text-fg-soft">{n.heroLine}</p>
+                  <span className="mt-2 inline-block text-sm font-semibold text-accent">View system &rarr;</span>
+                </div>
+              </Link>
+            </Reveal>
+          );
+        })}
       </div>
     </div>
   );

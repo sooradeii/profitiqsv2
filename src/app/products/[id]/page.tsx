@@ -217,7 +217,7 @@ export default async function ProductPage({
                   <div
                     className={
                       isCurrent
-                        ? "flex h-full flex-col rounded-[var(--radius-card)] border-2 border-cyan bg-cyan-soft p-6"
+                        ? "flex h-full flex-col rounded-[var(--radius-card)] border-2 border-violet bg-violet-soft p-6"
                         : "flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-bg p-6"
                     }
                   >

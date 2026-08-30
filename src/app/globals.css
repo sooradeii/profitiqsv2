@@ -1,35 +1,33 @@
 @import "tailwindcss";
 
 /* ProfitIQS design tokens -- centralized, no scattered hex values in
-   components. Style variant D: synthesis of B and C. The vivid
-   blue/violet/magenta/cyan gradient is confined to the hero, the
-   final CTAs, and the ticker -- the "wow" moment -- while the body
-   runs on a calm, restrained neutral + single-violet-accent system,
-   because this is a financial-trust product (Mercury/Ramp/QuickBooks
-   territory) where the content the customer actually reads and buys
-   from should read as confident and trustworthy, not playful. */
+   components. Final system: Poppins as the single typeface (weight
+   carries hierarchy, not family); electric blue as the primary brand
+   color with indigo/violet as restrained secondary accents -- matches
+   the real ProfitIQS logo mark, which is blue. Quietly expensive, not
+   loud: gradients stay in the blue/indigo/violet family only. */
 :root {
-  --bg: #fafafa;
+  --bg: #f8fafc;
   --surface: #ffffff;
-  --surface-muted: #f2f3f5;
-  --foreground: #0d0f14;
-  --foreground-soft: #565b66;
-  --border: #e6e7eb;
-  --accent: #6d28d9;
-  --accent-hover: #5b21b6;
-  --accent-soft: #f3ecfb;
-  --accent-glow: rgba(109, 40, 217, 0.35);
+  --surface-muted: #f1f5f9;
+  --foreground: #0f172a;
+  --foreground-soft: #475569;
+  --border: #e2e8f0;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-soft: #dbeafe;
+  --accent-glow: rgba(37, 99, 235, 0.3);
   --success: #059669;
   --success-soft: #e7f7f0;
   --success-glow: rgba(5, 150, 105, 0.35);
   --warning: #d97706;
   --danger: #dc2626;
-  --ink: #3b0764;
-  --ink-soft: #4c1d95;
-  --cyan: #0891b2;
-  --cyan-soft: #e0f7fa;
-  --cyan-glow: rgba(8, 145, 178, 0.3);
-  --blue: #1d4ed8;
+  --ink: #0b1120;
+  --ink-soft: #161036;
+  --indigo: #4f46e5;
+  --violet: #7c3aed;
+  --violet-soft: #ede9fe;
+  --violet-glow: rgba(124, 58, 237, 0.3);
 
   --radius-card: 16px;
   --radius-control: 10px;
@@ -53,13 +51,13 @@
   --color-danger: var(--danger);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
-  --color-cyan: var(--cyan);
-  --color-cyan-soft: var(--cyan-soft);
+  --color-indigo: var(--indigo);
+  --color-violet: var(--violet);
+  --color-violet-soft: var(--violet-soft);
 
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-manrope);
-  --font-serif-accent: var(--font-instrument-serif);
-  --font-mono: var(--font-jetbrains);
+  --font-sans: var(--font-poppins);
+  --font-display: var(--font-poppins);
+  --font-mono: var(--font-poppins);
 
   --radius-card: var(--radius-card);
   --radius-control: var(--radius-control);
@@ -79,7 +77,7 @@
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     font-weight: 700;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.01em;
     text-wrap: balance;
     /* Safety net: text-wrap:balance can pick a line-break distribution
        that renders a few pixels wider than the container for certain real
@@ -89,12 +87,9 @@
        otherwise wouldn't fit, without changing normal wrapping. */
     overflow-wrap: break-word;
   }
-  /* H1 carries slightly more weight/tightness than H2-H4 -- authoritative
-     without tipping into the novelty-geometric territory Manrope avoids
-     at rest. */
   h1 {
     font-weight: 800;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.015em;
   }
   :focus-visible {
     outline: 2px solid var(--accent);
@@ -103,29 +98,27 @@
 }
 
 @layer utilities {
-  /* Hero surface -- light, not dark. A soft violet/cyan wash over a
-     near-white base -- "hero, not villain": the dark treatment read as
-     heavy for a first impression. Same brand hues, just as a whisper
-     instead of a wall of color. */
+  /* Hero surface -- light, restrained blue/violet wash over a near-white
+     base. "Hero, not villain": light first impression, not a dark wall. */
   .hero-surface {
     background:
-      radial-gradient(70% 60% at 12% 15%, rgba(109, 40, 217, 0.1), transparent 60%),
-      radial-gradient(70% 60% at 92% 8%, rgba(34, 211, 238, 0.12), transparent 60%),
-      linear-gradient(180deg, #f7f7fc 0%, #ffffff 60%);
+      radial-gradient(70% 60% at 10% 15%, rgba(37, 99, 235, 0.1), transparent 60%),
+      radial-gradient(70% 60% at 92% 10%, rgba(124, 58, 237, 0.1), transparent 60%),
+      linear-gradient(180deg, #f8fafc 0%, #ffffff 60%);
   }
 
-  /* CTA surface -- same restrained system, glows mirrored. */
+  /* CTA surface -- deep blue grounding into indigo/violet, atmospheric
+     radial light rather than a diagonal band. No magenta or cyan. */
   .cta-surface {
     background:
-      radial-gradient(40% 40% at 8% 90%, rgba(34, 211, 238, 0.14), transparent 60%),
-      radial-gradient(60% 55% at 12% 15%, rgba(192, 38, 212, 0.16), transparent 65%),
-      radial-gradient(70% 65% at 80% 85%, rgba(124, 58, 237, 0.38), transparent 60%),
-      linear-gradient(180deg, #0a1130 0%, #12112f 55%, #170f38 100%);
+      radial-gradient(70% 65% at 15% 20%, rgba(79, 70, 229, 0.35), transparent 60%),
+      radial-gradient(60% 55% at 85% 80%, rgba(124, 58, 237, 0.3), transparent 65%),
+      linear-gradient(180deg, #0b1120 0%, #111a33 55%, #161036 100%);
   }
 
-  /* Ticker band -- calm and low-contrast, no visible color band. */
+  /* Ticker band -- calm, low-contrast, same deep blue/indigo family. */
   .ticker-surface {
-    background: linear-gradient(90deg, #12112f, #170f38);
+    background: linear-gradient(90deg, #0b1120, #161036);
   }
 
   /* Scroll-reveal primitive -- opacity + translate only, content always
@@ -146,7 +139,7 @@
   }
   .card-hover:hover {
     transform: translateY(-3px);
-    box-shadow: 0 16px 32px -20px rgba(59, 7, 100, 0.22);
+    box-shadow: 0 16px 32px -20px rgba(15, 23, 42, 0.18);
     border-color: var(--accent);
   }
 
@@ -156,7 +149,7 @@
   }
   .cover-lift:hover {
     transform: translateY(-2px) scale(1.01);
-    box-shadow: 0 24px 48px -24px rgba(59, 7, 100, 0.35);
+    box-shadow: 0 24px 48px -24px rgba(15, 23, 42, 0.3);
   }
 
   /* Real depth via a radial gradient wash and layered shadow -- reads as
