@@ -1,69 +1,373 @@
+import type { Metadata } from "next";
+import Link from "next/link";
 import Image from "next/image";
+import { ArrowRight, Search, TrendingUp, Layers, Target, Repeat } from "lucide-react";
+import { getNiches, getProduct } from "@/lib/products";
+import { FAQ_ITEMS } from "@/lib/faq";
+import { Reveal } from "@/components/reveal";
+import { ProductCard } from "@/components/product-card";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "ProfitIQS — Financial Intelligence Systems for Business Owners",
+  description:
+    "Practical financial and operational intelligence systems built around the numbers that matter — revenue, expenses, profitability, cash flow, performance, and planning. 63 systems across 21 business categories.",
+  alternates: { canonical: "/" },
+};
+
+// Deterministic featured selection -- not randomized per render.
+const FEATURED_SLUGS = [
+  "1099-income",
+  "airbnb",
+  "ecommerce",
+  "electrical-contractor",
+  "restaurant",
+  "roofing",
+  "small-business",
+  "trucking-owner-operator",
+];
+
+// Hero composition covers -- real products, fixed selection.
+const HERO_COVER_SLUGS = ["airbnb", "electrical-contractor", "restaurant", "roofing", "ecommerce", "trucking-owner-operator", "1099-income"];
+
+const TIERS = [
+  {
+    tier: "essential" as const,
+    name: "Essential",
+    body: "The practical foundation — one workbook covering the core entry, tracking, and dashboard sheets.",
+  },
+  {
+    tier: "elite" as const,
+    name: "Elite",
+    body: "Deeper analytics, KPI tracking, forecasting, and reporting built specifically for that industry.",
+  },
+  {
+    tier: "complete" as const,
+    name: "Complete",
+    body: "Both workbooks bundled together, with the full Field Guide and Quick Start.",
+  },
+];
+
+export default function HomePage() {
+  const niches = getNiches();
+  const featured = FEATURED_SLUGS.map((slug) => getProduct(slug, "essential")).filter((p) => !!p);
+  const heroCovers = HERO_COVER_SLUGS.map((slug) => getProduct(slug, "complete")).filter((p) => !!p);
+  const autoRepairComplete = getProduct("auto-repair", "complete")!;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div>
+      {/* ===== HERO ===== */}
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-[1280px] px-5 pb-16 pt-14 sm:px-8 lg:pb-24 lg:pt-20">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+            <Reveal>
+              <p className="text-xs font-semibold uppercase tracking-wider text-accent">
+                Financial intelligence systems for business owners
+              </p>
+              <h1 className="mt-4 font-display text-[2.75rem] font-extrabold leading-[1.02] tracking-tight text-fg sm:text-6xl">
+                Run your business
+                <br />
+                on real numbers.
+              </h1>
+              <p className="mt-6 max-w-lg text-base leading-relaxed text-fg-soft sm:text-lg">
+                Practical financial and operational intelligence systems
+                built around the numbers that matter — revenue, expenses,
+                profitability, cash flow, performance, and planning.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link
+                  href="/products"
+                  className="inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-accent px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-accent-hover"
+                >
+                  Explore the Systems
+                  <ArrowRight className="size-4" />
+                </Link>
+                <Link
+                  href="/industries"
+                  className="inline-flex items-center gap-2 rounded-[var(--radius-control)] border border-border bg-surface px-6 py-3.5 text-sm font-semibold text-fg transition-colors hover:border-fg-soft"
+                >
+                  Find Your Industry
+                </Link>
+              </div>
+              <p className="mt-6 text-sm text-fg-soft">
+                63 systems &middot; 21 business categories &middot; 3 product tiers
+              </p>
+            </Reveal>
+
+            <Reveal delay={120}>
+              <div className="mx-auto w-full max-w-md">
+                <div className="grid w-full grid-cols-3 gap-3">
+                  {heroCovers.slice(0, 6).map((p, i) => (
+                    <div
+                      key={p.id}
+                      className={
+                        "cover-lift relative aspect-[3/4] overflow-hidden rounded-[var(--radius-card)] border border-border bg-surface shadow-[0_20px_40px_-24px_rgba(17,19,24,0.25)] " +
+                        (i === 0 ? "col-span-2 row-span-2" : "")
+                      }
+                    >
+                      {p.coverImage && (
+                        <Image
+                          src={p.coverImage}
+                          alt={`${p.industry} cover`}
+                          fill
+                          className="object-contain p-2"
+                          sizes="200px"
+                          priority={i === 0}
+                        />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* ===== PROBLEM RECOGNITION ===== */}
+      <section className="border-b border-border bg-surface">
+        <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
+          <Reveal>
+            <h2 className="max-w-2xl font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">
+              Your business is moving. Can you see the numbers?
+            </h2>
+            <p className="mt-4 max-w-2xl text-base text-fg-soft">
+              Most owners can see revenue. Fewer can quickly see what&apos;s
+              actually profitable, where costs are growing, which areas need
+              attention, how cash is moving, and what deserves action next.
+              ProfitIQS turns those numbers into structured business
+              intelligence.
+            </p>
+          </Reveal>
+          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { icon: TrendingUp, title: "What's profitable", body: "Margin by job, product, or client — not one blended number." },
+              { icon: Target, title: "Where costs grow", body: "Track expenses against budget before they compound." },
+              { icon: Layers, title: "What needs attention", body: "One score summarizing where the business is fragile." },
+              { icon: Repeat, title: "How cash moves", body: "A monthly routine, not a once-a-year scramble." },
+            ].map((c, i) => (
+              <Reveal key={c.title} delay={i * 70}>
+                <div className="rounded-[var(--radius-card)] border border-border bg-bg p-5">
+                  <c.icon className="size-5 text-accent" />
+                  <h3 className="mt-3 text-sm font-semibold text-fg">{c.title}</h3>
+                  <p className="mt-1.5 text-sm text-fg-soft">{c.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* ===== FIND YOUR SYSTEM ===== */}
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
+          <Reveal>
+            <h2 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">
+              Find your system
+            </h2>
+            <p className="mt-3 max-w-xl text-base text-fg-soft">
+              What kind of business do you run?
+            </p>
+            <Link
+              href="/products"
+              className="mt-6 flex max-w-xl items-center gap-3 rounded-[var(--radius-card)] border border-border bg-surface px-5 py-4 text-fg-soft transition-colors hover:border-fg-soft"
+            >
+              <Search className="size-5 shrink-0" />
+              <span className="text-sm">Search by industry, e.g. &ldquo;restaurant&rdquo; or &ldquo;HVAC&rdquo;</span>
+            </Link>
+          </Reveal>
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            {niches.map((n, i) => (
+              <Reveal key={n.slug} delay={(i % 8) * 40}>
+                <Link
+                  href={`/industries/${n.slug}`}
+                  className="card-hover flex h-full flex-col justify-between rounded-[var(--radius-card)] border border-border bg-surface p-4"
+                >
+                  <div>
+                    <p className="text-[11px] font-medium text-fg-soft">{n.category}</p>
+                    <p className="mt-1 text-sm font-semibold text-fg">{n.shortName}</p>
+                  </div>
+                  <p className="mt-3 text-[11px] font-medium text-accent">3 tiers available</p>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== FEATURED SYSTEMS ===== */}
+      <section className="border-b border-border bg-surface">
+        <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
+          <Reveal>
+            <div className="flex items-end justify-between gap-4">
+              <h2 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">
+                Featured systems
+              </h2>
+              <Link href="/products" className="hidden text-sm font-semibold text-accent sm:inline">
+                View all 63 &rarr;
+              </Link>
+            </div>
+          </Reveal>
+          <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {featured.map((p, i) => (
+              <Reveal key={p.id} delay={(i % 4) * 70}>
+                <ProductCard product={p} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== WHY PROFITIQS ===== */}
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
+          <Reveal>
+            <h2 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Why ProfitIQS</h2>
+          </Reveal>
+          <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { title: "Business-specific", body: "Built around the metrics each business type actually watches, not a generic template." },
+              { title: "Real numbers", body: "Your revenue and expense data becomes a clearer picture of performance." },
+              { title: "Practical", body: "Designed for recurring monthly use, not a one-time analysis." },
+              { title: "Structured", body: "From source data to dashboards, KPI reports, and planning in one workbook." },
+            ].map((b, i) => (
+              <Reveal key={b.title} delay={i * 70}>
+                <h3 className="font-display text-lg font-bold text-fg">{b.title}</h3>
+                <p className="mt-2 text-sm text-fg-soft">{b.body}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== TIERS ===== */}
+      <section className="border-b border-border bg-surface">
+        <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
+          <Reveal>
+            <h2 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Essential, Elite, or Complete</h2>
+            <p className="mt-3 max-w-xl text-base text-fg-soft">
+              Every system uses the same three-tier structure across all 21 industries.
+            </p>
+          </Reveal>
+          <div className="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-3">
+            {TIERS.map((t, i) => {
+              const sample = autoRepairComplete.tier === t.tier ? autoRepairComplete : getProduct("auto-repair", t.tier);
+              const isComplete = t.tier === "complete";
+              return (
+                <Reveal key={t.tier} delay={i * 90}>
+                  <div className={isComplete ? "flex h-full flex-col rounded-[var(--radius-card)] border-2 border-ink bg-bg p-7" : "flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-bg p-7"}>
+                    <h3 className="font-display text-lg font-bold text-fg">{t.name}</h3>
+                    <p className="mt-2 flex-1 text-sm text-fg-soft">{t.body}</p>
+                    {sample?.price !== null && sample?.price !== undefined && (
+                      <p className="mt-4 font-display text-2xl font-extrabold tabular-nums text-fg">
+                        From ${sample.price}
+                      </p>
+                    )}
+                    <Link href={`/${t.tier}`} className="mt-5 text-sm font-semibold text-accent">
+                      See {t.name} systems &rarr;
+                    </Link>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+          <Reveal>
+            <Link href="/compare" className="mt-6 inline-block text-sm font-semibold text-accent">
+              Compare all three tiers in detail &rarr;
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ===== HOW IT WORKS ===== */}
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
+          <Reveal>
+            <h2 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">How it works</h2>
+          </Reveal>
+          <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-3">
+            {[
+              { n: "01", title: "Find your business", body: "Search or browse by industry to find your system." },
+              { n: "02", title: "Choose your level", body: "Essential, Elite, or Complete — whatever fits how deep you want to go." },
+              { n: "03", title: "Open and start tracking", body: "Enter your numbers and the dashboards do the rest." },
+            ].map((s, i) => (
+              <Reveal key={s.n} delay={i * 90}>
+                <span className="font-display text-4xl font-extrabold text-accent-soft">{s.n}</span>
+                <h3 className="mt-3 font-display text-lg font-bold text-fg">{s.title}</h3>
+                <p className="mt-2 text-sm text-fg-soft">{s.body}</p>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal>
+            <p className="mt-10 max-w-2xl border-t border-border pt-8 text-sm text-fg-soft">
+              Your purchase is completed through Digistore24, ProfitIQS&apos;s
+              checkout provider, and digital files are delivered through
+              Digistore24&apos;s Download Vault after payment confirms.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ===== FAQ ===== */}
+      <section className="border-b border-border bg-surface">
+        <div className="mx-auto max-w-2xl px-5 py-16 sm:px-8 lg:py-20">
+          <Reveal>
+            <h2 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Frequently asked questions</h2>
+          </Reveal>
+          <dl className="mt-8 divide-y divide-border">
+            {FAQ_ITEMS.slice(0, 8).map((item, i) => (
+              <Reveal key={item.q} delay={i * 30} className="py-5">
+                <dt className="font-semibold text-fg">{item.q}</dt>
+                <dd className="mt-2 text-sm text-fg-soft">{item.a}</dd>
+              </Reveal>
+            ))}
+          </dl>
+          <Link href="/faq" className="mt-6 inline-block text-sm font-semibold text-accent">
+            See the full FAQ &rarr;
+          </Link>
+        </div>
+      </section>
+
+      {/* ===== AFFILIATE CTA ===== */}
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-[1280px] px-5 py-14 sm:px-8">
+          <Reveal>
+            <div className="flex flex-col items-start justify-between gap-4 rounded-[var(--radius-card)] border border-border bg-surface p-8 sm:flex-row sm:items-center">
+              <div>
+                <h2 className="font-display text-xl font-bold text-fg">Promote ProfitIQS</h2>
+                <p className="mt-1 max-w-md text-sm text-fg-soft">
+                  63 products across 21 categories, sold through Digistore24 — see the affiliate program.
+                </p>
+              </div>
+              <Link href="/affiliate" className="shrink-0 rounded-[var(--radius-control)] border border-border px-5 py-2.5 text-sm font-semibold text-fg hover:border-fg-soft">
+                Affiliate info
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ===== FINAL CTA ===== */}
+      <section className="bg-ink text-white">
+        <div className="mx-auto max-w-2xl px-5 py-20 text-center sm:px-8">
+          <Reveal>
+            <h2 className="font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
+              Find the system built for your business.
+            </h2>
+            <p className="mt-4 text-white/65">
+              63 systems, 21 categories, 3 tiers — one payment, no subscription.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <Link href="/products" className="inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-accent px-7 py-3.5 text-sm font-semibold text-white hover:bg-accent-hover">
+                Explore the Systems
+                <ArrowRight className="size-4" />
+              </Link>
+              <Link href="/industries" className="rounded-[var(--radius-control)] border border-white/25 px-7 py-3.5 text-sm font-semibold text-white hover:bg-white/10">
+                Find Your Industry
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
     </div>
   );
 }

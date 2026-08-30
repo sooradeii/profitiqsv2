@@ -6,12 +6,21 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "audit-products": "tsx scripts/audit-products.ts",
+    "audit-prices": "tsx scripts/audit-prices.ts",
+    "audit-checkouts": "tsx scripts/audit-checkouts.ts",
+    "audit-compliance": "tsx scripts/audit-compliance.ts",
+    "qa-sweep": "node scripts/qa-sweep.mjs",
+    "launch-audit": "tsx scripts/launch-audit.ts"
   },
   "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.37.0",
     "next": "16.3.3",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -20,7 +29,9 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.3",
+    "playwright-core": "^1.62.1",
     "tailwindcss": "^4",
+    "tsx": "^4.23.13",
     "typescript": "^5"
   }
 }
