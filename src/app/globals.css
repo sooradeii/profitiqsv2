@@ -28,6 +28,7 @@
   --danger: #dc2626;
   --ink: #0a0c10;
   --ink-soft: #14171d;
+  --cyan: #06b6d4;
 
   --radius-card: 16px;
   --radius-control: 10px;
@@ -91,6 +92,15 @@
 }
 
 @layer utilities {
+  /* Hero surface -- deep blue-to-cyan gradient instead of flat black.
+     Two radial glows (cyan top-right, blue bottom-left) over a navy base. */
+  .hero-surface {
+    background:
+      radial-gradient(120% 100% at 100% 0%, rgba(6, 182, 212, 0.28), transparent 55%),
+      radial-gradient(100% 100% at 0% 100%, rgba(37, 99, 235, 0.32), transparent 55%),
+      linear-gradient(180deg, #0a1628 0%, #0b1d33 100%);
+  }
+
   /* Scroll-reveal primitive -- opacity + translate only, content always
      present in the DOM. See reveal.tsx. */
   .reveal {

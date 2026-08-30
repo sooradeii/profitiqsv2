@@ -64,7 +64,7 @@ export default function HomePage() {
   return (
     <div>
       {/* ===== HERO — dark, confident, tight tracking ===== */}
-      <section className="bg-ink text-white">
+      <section className="hero-surface text-white">
         <div className="mx-auto max-w-[1280px] px-5 pb-14 pt-16 sm:px-8 lg:pb-20 lg:pt-24">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <Reveal className="min-w-0">
