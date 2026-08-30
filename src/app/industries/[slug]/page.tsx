@@ -47,7 +47,7 @@ export default async function IndustryPage({
       <TrackView event={{ name: "industry_view", slug: niche.slug }} />
       <section className="border-b border-border">
         <div className="mx-auto grid max-w-[1280px] grid-cols-1 gap-10 px-5 py-14 sm:px-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-          <Reveal>
+          <Reveal className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-wide text-accent">{niche.category}</p>
             <h1 className="mt-3 font-display text-4xl font-extrabold tracking-tight text-fg sm:text-5xl">{niche.industry}</h1>
             <p className="mt-4 max-w-lg font-display text-xl font-bold text-accent">{niche.heroLine}</p>

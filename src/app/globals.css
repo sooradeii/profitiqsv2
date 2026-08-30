@@ -1,11 +1,15 @@
 @import "tailwindcss";
 
 /* ProfitIQS design tokens -- centralized, no scattered hex values in
-   components. Values per the explicit brand direction: warm off-white
-   background, clean white surfaces, restrained electric-blue accent used
-   only for CTAs/active states/important numbers, professional emerald for
-   positive/money signals. Single fixed light theme -- no system dark-mode
-   auto-switch, since that would silently override these exact values. */
+   components. Direction: confident, tightly-tracked display type (Syne)
+   over restrained color, real layout-driven depth (bento sizing, shadow,
+   gradient glow) -- not blur. Grounded in real inspection of Linear (Inter
+   Variable, -1.4px tracking on 64px display type, near-black ground) and
+   the documented patterns behind Ramp (bento-grid, size-as-hierarchy) and
+   Mercury (one signature accent on an otherwise restrained palette) --
+   the actually-comparable fintech products for this audience, not a
+   crypto-trading aesthetic. Brand blue/emerald kept from the original
+   spec; pushed with more real depth and a genuine dark hero section. */
 :root {
   --bg: #f7f8fa;
   --surface: #ffffff;
@@ -16,13 +20,16 @@
   --accent: #2563eb;
   --accent-hover: #1d4ed8;
   --accent-soft: #eaf1ff;
+  --accent-glow: rgba(37, 99, 235, 0.35);
   --success: #059669;
   --success-soft: #e7f7f0;
+  --success-glow: rgba(5, 150, 105, 0.35);
   --warning: #d97706;
   --danger: #dc2626;
-  --ink: #0b0d12;
+  --ink: #0a0c10;
+  --ink-soft: #14171d;
 
-  --radius-card: 14px;
+  --radius-card: 16px;
   --radius-control: 10px;
 }
 
@@ -43,9 +50,11 @@
   --color-warning: var(--warning);
   --color-danger: var(--danger);
   --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
 
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-manrope);
+  --font-sans: var(--font-poppins);
+  --font-display: var(--font-syne);
+  --font-mono: var(--font-jetbrains);
 
   --radius-card: var(--radius-card);
   --radius-control: var(--radius-control);
@@ -64,8 +73,16 @@
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    font-weight: 800;
+    letter-spacing: -0.03em;
     text-wrap: balance;
+    /* Safety net: text-wrap:balance can pick a line-break distribution
+       that renders a few pixels wider than the container for certain real
+       headline text at this bold/tight-tracked weight (confirmed via
+       direct measurement -- not theoretical). overflow-wrap lets the
+       browser break mid-word only if balance's chosen arrangement
+       otherwise wouldn't fit, without changing normal wrapping. */
+    overflow-wrap: break-word;
   }
   :focus-visible {
     outline: 2px solid var(--accent);
@@ -74,19 +91,19 @@
 }
 
 @layer utilities {
-  /* Scroll-reveal primitive -- opacity + translate only, 300-600ms range,
-     content always present in the DOM. See reveal.tsx. */
+  /* Scroll-reveal primitive -- opacity + translate only, content always
+     present in the DOM. See reveal.tsx. */
   .reveal {
     opacity: 0;
-    transform: translateY(14px);
-    transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(16px);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .reveal[data-visible="true"] {
     opacity: 1;
     transform: translateY(0);
   }
 
-  /* Card hover lift -- subtle, 150-250ms micro-interaction range. */
+  /* Card hover lift -- 150-250ms micro-interaction range. */
   .card-hover {
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   }
@@ -103,6 +120,53 @@
   .cover-lift:hover {
     transform: translateY(-2px) scale(1.01);
     box-shadow: 0 24px 48px -24px rgba(17, 19, 24, 0.3);
+  }
+
+  /* Real depth via a radial gradient wash and layered shadow -- reads as
+     glow without a single backdrop-filter anywhere on the site. */
+  .glow-card {
+    position: relative;
+    isolation: isolate;
+  }
+  .glow-card::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    background: radial-gradient(120% 120% at 15% 0%, var(--accent-glow), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .glow-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Continuous marquee for the real-data ticker. */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 32s linear infinite;
+  }
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Live-status pulse dot. */
+  .pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: var(--success);
+    animation: pulse-ring 2s ease-in-out infinite;
+  }
+  @keyframes pulse-ring {
+    0%, 100% { box-shadow: 0 0 0 0 var(--success-glow); }
+    50% { box-shadow: 0 0 0 6px rgba(5, 150, 105, 0); }
   }
 }
 

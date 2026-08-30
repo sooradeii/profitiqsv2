@@ -1,22 +1,29 @@
 import type { Metadata } from "next";
-import { Inter, Manrope } from "next/font/google";
+import { Poppins, Syne, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SITE } from "@/lib/site-config";
 
-// Per explicit direction: Inter (UI/body) + Manrope (display/headlines).
-// No serif, no italic display treatment, no more than two families.
-const inter = Inter({
-  variable: "--font-inter",
+// Type direction, revised per explicit request: Poppins for body/UI, Syne
+// for display headlines -- bold, tight negative tracking, real presence.
+// JetBrains Mono for prices/stat numerals so figures read as live data.
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const syne = Syne({
+  variable: "--font-syne",
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+  weight: ["600", "700", "800"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains",
+  subsets: ["latin"],
+  weight: ["500", "700"],
 });
 
 export const metadata: Metadata = {
@@ -62,7 +69,7 @@ const websiteJsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${inter.variable} ${manrope.variable} h-full`}>
+    <html lang="en" className={`${poppins.variable} ${syne.variable} ${jetbrainsMono.variable} h-full`}>
       <body className="flex min-h-full flex-col bg-bg text-fg antialiased">
         <script
           type="application/ld+json"

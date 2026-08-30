@@ -89,7 +89,7 @@ export default async function ProductPage({
       {/* Hero */}
       <section className="border-b border-border">
         <div className="mx-auto grid max-w-[1280px] grid-cols-1 gap-12 px-5 py-14 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:py-20">
-          <Reveal>
+          <Reveal className="min-w-0">
             <div>
               <p className="text-xs font-semibold uppercase tracking-wide text-accent">
                 {product.category} &middot; {product.tierLabel}

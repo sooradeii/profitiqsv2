@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Search, TrendingUp, Layers, Target, Repeat } from "lucide-react";
-import { getNiches, getProduct } from "@/lib/products";
+import { getNiches, getProduct, PRODUCTS } from "@/lib/products";
 import { FAQ_ITEMS } from "@/lib/faq";
 import { Reveal } from "@/components/reveal";
 import { ProductCard } from "@/components/product-card";
+import { StatCounter } from "@/components/stat-counter";
+import { Ticker } from "@/components/ticker";
 
 export const metadata: Metadata = {
   title: "ProfitIQS — Financial Intelligence Systems for Business Owners",
@@ -53,22 +55,29 @@ export default function HomePage() {
   const heroCovers = HERO_COVER_SLUGS.map((slug) => getProduct(slug, "complete")).filter((p) => !!p);
   const autoRepairComplete = getProduct("auto-repair", "complete")!;
 
+  // Real ticker data: every industry paired with its real Essential price.
+  const tickerItems = niches.map((n) => ({
+    label: n.shortName,
+    value: `$${getProduct(n.slug, "essential")?.price ?? "—"}`,
+  }));
+
   return (
     <div>
-      {/* ===== HERO ===== */}
-      <section className="border-b border-border">
-        <div className="mx-auto max-w-[1280px] px-5 pb-16 pt-14 sm:px-8 lg:pb-24 lg:pt-20">
+      {/* ===== HERO — dark, confident, tight tracking ===== */}
+      <section className="bg-ink text-white">
+        <div className="mx-auto max-w-[1280px] px-5 pb-14 pt-16 sm:px-8 lg:pb-20 lg:pt-24">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-            <Reveal>
-              <p className="text-xs font-semibold uppercase tracking-wider text-accent">
-                Financial intelligence systems for business owners
-              </p>
-              <h1 className="mt-4 font-display text-[2.75rem] font-extrabold leading-[1.02] tracking-tight text-fg sm:text-6xl">
+            <Reveal className="min-w-0">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5">
+                <span className="pulse-dot" />
+                <span className="font-mono text-[11px] font-medium text-white/70">63 real systems &middot; live catalog</span>
+              </div>
+              <h1 className="mt-5 font-display text-[2.85rem] font-extrabold leading-[0.98] tracking-[-0.03em] sm:text-[4rem]">
                 Run your business
                 <br />
                 on real numbers.
               </h1>
-              <p className="mt-6 max-w-lg text-base leading-relaxed text-fg-soft sm:text-lg">
+              <p className="mt-6 max-w-lg text-base leading-relaxed text-white/60 sm:text-lg">
                 Practical financial and operational intelligence systems
                 built around the numbers that matter — revenue, expenses,
                 profitability, cash flow, performance, and planning.
@@ -83,14 +92,25 @@ export default function HomePage() {
                 </Link>
                 <Link
                   href="/industries"
-                  className="inline-flex items-center gap-2 rounded-[var(--radius-control)] border border-border bg-surface px-6 py-3.5 text-sm font-semibold text-fg transition-colors hover:border-fg-soft"
+                  className="inline-flex items-center gap-2 rounded-[var(--radius-control)] border border-white/20 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
                 >
                   Find Your Industry
                 </Link>
               </div>
-              <p className="mt-6 text-sm text-fg-soft">
-                63 systems &middot; 21 business categories &middot; 3 product tiers
-              </p>
+              <div className="mt-10 flex gap-8 border-t border-white/10 pt-6">
+                <div>
+                  <p className="font-display text-3xl font-extrabold tabular-nums"><StatCounter value={PRODUCTS.length} /></p>
+                  <p className="mt-1 font-mono text-[11px] text-white/45">Real systems</p>
+                </div>
+                <div>
+                  <p className="font-display text-3xl font-extrabold tabular-nums"><StatCounter value={niches.length} /></p>
+                  <p className="mt-1 font-mono text-[11px] text-white/45">Categories</p>
+                </div>
+                <div>
+                  <p className="font-display text-3xl font-extrabold tabular-nums">3</p>
+                  <p className="mt-1 font-mono text-[11px] text-white/45">Tiers each</p>
+                </div>
+              </div>
             </Reveal>
 
             <Reveal delay={120}>
@@ -100,7 +120,7 @@ export default function HomePage() {
                     <div
                       key={p.id}
                       className={
-                        "cover-lift relative aspect-[3/4] overflow-hidden rounded-[var(--radius-card)] border border-border bg-surface shadow-[0_20px_40px_-24px_rgba(17,19,24,0.25)] " +
+                        "glow-card cover-lift relative aspect-[3/4] overflow-hidden rounded-[var(--radius-card)] border border-white/10 bg-white shadow-[0_20px_50px_-20px_rgba(0,0,0,0.6)] " +
                         (i === 0 ? "col-span-2 row-span-2" : "")
                       }
                     >
@@ -123,30 +143,42 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== PROBLEM RECOGNITION ===== */}
+      {/* Real-data ticker -- every industry + its real Essential price */}
+      <Ticker items={tickerItems} />
+
+      {/* ===== PROBLEM RECOGNITION — bento grid, size-as-hierarchy ===== */}
       <section className="border-b border-border bg-surface">
         <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
           <Reveal>
-            <h2 className="max-w-2xl font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">
+            <h2 className="max-w-2xl font-display text-3xl tracking-tight text-fg sm:text-4xl">
               Your business is moving. Can you see the numbers?
             </h2>
             <p className="mt-4 max-w-2xl text-base text-fg-soft">
               Most owners can see revenue. Fewer can quickly see what&apos;s
               actually profitable, where costs are growing, which areas need
               attention, how cash is moving, and what deserves action next.
-              ProfitIQS turns those numbers into structured business
-              intelligence.
             </p>
           </Reveal>
-          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-4">
+            <Reveal className="sm:col-span-2 sm:row-span-2">
+              <div className="glow-card flex h-full flex-col justify-between rounded-[var(--radius-card)] border border-border bg-ink p-7 text-white">
+                <TrendingUp className="size-6 text-accent" />
+                <div>
+                  <h3 className="mt-6 font-display text-xl">What&apos;s profitable</h3>
+                  <p className="mt-2 text-sm text-white/60">
+                    Margin by job, product, or client — not one blended
+                    number that hides the ones losing you money.
+                  </p>
+                </div>
+              </div>
+            </Reveal>
             {[
-              { icon: TrendingUp, title: "What's profitable", body: "Margin by job, product, or client — not one blended number." },
               { icon: Target, title: "Where costs grow", body: "Track expenses against budget before they compound." },
               { icon: Layers, title: "What needs attention", body: "One score summarizing where the business is fragile." },
               { icon: Repeat, title: "How cash moves", body: "A monthly routine, not a once-a-year scramble." },
             ].map((c, i) => (
-              <Reveal key={c.title} delay={i * 70}>
-                <div className="rounded-[var(--radius-card)] border border-border bg-bg p-5">
+              <Reveal key={c.title} delay={i * 70} className="sm:col-span-2">
+                <div className="glow-card rounded-[var(--radius-card)] border border-border bg-bg p-5">
                   <c.icon className="size-5 text-accent" />
                   <h3 className="mt-3 text-sm font-semibold text-fg">{c.title}</h3>
                   <p className="mt-1.5 text-sm text-fg-soft">{c.body}</p>
@@ -161,7 +193,7 @@ export default function HomePage() {
       <section className="border-b border-border">
         <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
           <Reveal>
-            <h2 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">
+            <h2 className="font-display text-3xl tracking-tight text-fg sm:text-4xl">
               Find your system
             </h2>
             <p className="mt-3 max-w-xl text-base text-fg-soft">
@@ -199,7 +231,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
           <Reveal>
             <div className="flex items-end justify-between gap-4">
-              <h2 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">
+              <h2 className="font-display text-3xl tracking-tight text-fg sm:text-4xl">
                 Featured systems
               </h2>
               <Link href="/products" className="hidden text-sm font-semibold text-accent sm:inline">
@@ -221,7 +253,7 @@ export default function HomePage() {
       <section className="border-b border-border">
         <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
           <Reveal>
-            <h2 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Why ProfitIQS</h2>
+            <h2 className="font-display text-3xl tracking-tight text-fg sm:text-4xl">Why ProfitIQS</h2>
           </Reveal>
           <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {[
@@ -231,7 +263,7 @@ export default function HomePage() {
               { title: "Structured", body: "From source data to dashboards, KPI reports, and planning in one workbook." },
             ].map((b, i) => (
               <Reveal key={b.title} delay={i * 70}>
-                <h3 className="font-display text-lg font-bold text-fg">{b.title}</h3>
+                <h3 className="font-display text-lg text-fg">{b.title}</h3>
                 <p className="mt-2 text-sm text-fg-soft">{b.body}</p>
               </Reveal>
             ))}
@@ -243,7 +275,7 @@ export default function HomePage() {
       <section className="border-b border-border bg-surface">
         <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
           <Reveal>
-            <h2 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Essential, Elite, or Complete</h2>
+            <h2 className="font-display text-3xl tracking-tight text-fg sm:text-4xl">Essential, Elite, or Complete</h2>
             <p className="mt-3 max-w-xl text-base text-fg-soft">
               Every system uses the same three-tier structure across all 21 industries.
             </p>
@@ -254,12 +286,12 @@ export default function HomePage() {
               const isComplete = t.tier === "complete";
               return (
                 <Reveal key={t.tier} delay={i * 90}>
-                  <div className={isComplete ? "flex h-full flex-col rounded-[var(--radius-card)] border-2 border-ink bg-bg p-7" : "flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-bg p-7"}>
-                    <h3 className="font-display text-lg font-bold text-fg">{t.name}</h3>
+                  <div className={isComplete ? "glow-card flex h-full flex-col rounded-[var(--radius-card)] border-2 border-ink bg-bg p-7" : "glow-card flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-bg p-7"}>
+                    <h3 className="font-display text-lg text-fg">{t.name}</h3>
                     <p className="mt-2 flex-1 text-sm text-fg-soft">{t.body}</p>
                     {sample?.price !== null && sample?.price !== undefined && (
-                      <p className="mt-4 font-display text-2xl font-extrabold tabular-nums text-fg">
-                        From ${sample.price}
+                      <p className="mt-4 font-mono text-2xl font-bold tabular-nums text-fg">
+                        From <StatCounter value={sample.price} prefix="$" duration={800} />
                       </p>
                     )}
                     <Link href={`/${t.tier}`} className="mt-5 text-sm font-semibold text-accent">
@@ -282,7 +314,7 @@ export default function HomePage() {
       <section className="border-b border-border">
         <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
           <Reveal>
-            <h2 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">How it works</h2>
+            <h2 className="font-display text-3xl tracking-tight text-fg sm:text-4xl">How it works</h2>
           </Reveal>
           <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-3">
             {[
@@ -291,8 +323,8 @@ export default function HomePage() {
               { n: "03", title: "Open and start tracking", body: "Enter your numbers and the dashboards do the rest." },
             ].map((s, i) => (
               <Reveal key={s.n} delay={i * 90}>
-                <span className="font-display text-4xl font-extrabold text-accent-soft">{s.n}</span>
-                <h3 className="mt-3 font-display text-lg font-bold text-fg">{s.title}</h3>
+                <span className="font-mono text-4xl font-bold text-accent-soft">{s.n}</span>
+                <h3 className="mt-3 font-display text-lg text-fg">{s.title}</h3>
                 <p className="mt-2 text-sm text-fg-soft">{s.body}</p>
               </Reveal>
             ))}
@@ -311,7 +343,7 @@ export default function HomePage() {
       <section className="border-b border-border bg-surface">
         <div className="mx-auto max-w-2xl px-5 py-16 sm:px-8 lg:py-20">
           <Reveal>
-            <h2 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Frequently asked questions</h2>
+            <h2 className="font-display text-3xl tracking-tight text-fg sm:text-4xl">Frequently asked questions</h2>
           </Reveal>
           <dl className="mt-8 divide-y divide-border">
             {FAQ_ITEMS.slice(0, 8).map((item, i) => (
@@ -333,7 +365,7 @@ export default function HomePage() {
           <Reveal>
             <div className="flex flex-col items-start justify-between gap-4 rounded-[var(--radius-card)] border border-border bg-surface p-8 sm:flex-row sm:items-center">
               <div>
-                <h2 className="font-display text-xl font-bold text-fg">Promote ProfitIQS</h2>
+                <h2 className="font-display text-xl text-fg">Promote ProfitIQS</h2>
                 <p className="mt-1 max-w-md text-sm text-fg-soft">
                   63 products across 21 categories, sold through Digistore24 — see the affiliate program.
                 </p>
@@ -350,7 +382,7 @@ export default function HomePage() {
       <section className="bg-ink text-white">
         <div className="mx-auto max-w-2xl px-5 py-20 text-center sm:px-8">
           <Reveal>
-            <h2 className="font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
+            <h2 className="font-display text-3xl tracking-tight sm:text-4xl">
               Find the system built for your business.
             </h2>
             <p className="mt-4 text-white/65">
