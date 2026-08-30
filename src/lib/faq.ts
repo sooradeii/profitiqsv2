@@ -53,6 +53,6 @@ export const FAQ_ITEMS = [
   },
   {
     q: "What is the refund policy?",
-    a: "A 90-day return window, per ProfitIQS's standard policy and the return period currently configured on Digistore24. See the Refund Policy page for the current details shown at checkout.",
+    a: "We're finalizing the exact return window with Digistore24 and don't publish a specific number of days here until that's confirmed. The authoritative return period for your purchase is always the one shown on the Digistore24 checkout and order pages. See the Refund Policy page for details.",
   },
 ];

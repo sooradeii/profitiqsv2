@@ -65,24 +65,24 @@ export default function HomePage() {
     <div>
       {/* ===== HERO — dark, confident, tight tracking ===== */}
       <section className="hero-surface text-white">
-        <div className="mx-auto max-w-[1280px] px-5 pb-14 pt-16 sm:px-8 lg:pb-20 lg:pt-24">
+        <div className="mx-auto max-w-[1280px] px-5 pb-10 pt-12 sm:px-8 lg:pb-14 lg:pt-16">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <Reveal className="min-w-0">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5">
                 <span className="pulse-dot" />
                 <span className="font-mono text-[11px] font-medium text-white/70">63 real systems &middot; live catalog</span>
               </div>
-              <h1 className="mt-5 font-display text-[2.85rem] font-extrabold leading-[0.98] tracking-[-0.03em] sm:text-[4rem]">
+              <h1 className="mt-5 font-display text-[2.6rem] font-extrabold leading-[1.02] tracking-[-0.02em] sm:text-[3.5rem]">
                 Run your business
                 <br />
                 on real numbers.
               </h1>
-              <p className="mt-6 max-w-lg text-base leading-relaxed text-white/60 sm:text-lg">
+              <p className="mt-5 max-w-lg text-base leading-relaxed text-white/60 sm:text-lg">
                 Practical financial and operational intelligence systems
                 built around the numbers that matter — revenue, expenses,
                 profitability, cash flow, performance, and planning.
               </p>
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-7 flex flex-wrap gap-3">
                 <Link
                   href="/products"
                   className="inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-white px-6 py-3.5 text-sm font-semibold text-ink transition-colors hover:bg-white/90"
@@ -97,7 +97,7 @@ export default function HomePage() {
                   Find Your Industry
                 </Link>
               </div>
-              <div className="mt-10 flex gap-8 border-t border-white/10 pt-6">
+              <div className="mt-8 flex gap-8 border-t border-white/10 pt-5">
                 <div>
                   <p className="font-display text-3xl font-extrabold tabular-nums"><StatCounter value={PRODUCTS.length} /></p>
                   <p className="mt-1 font-mono text-[11px] text-white/45">Real systems</p>

@@ -8,10 +8,14 @@ export const SITE = {
   url: "https://www.profitiqs.com",
 };
 
-/** Confirmed via two independent real sources that agree (see products.ts
- * header): DS24_MASTER_CATALOG.json's own refund_policy field and the
- * live Digistore24 CSV export both say 90 days. Not a guess. */
-export const REFUND_DAYS = 90;
+/** UNRESOLVED as of 2026-08-31 -- see products.ts header for the full
+ * conflict (structured data says 90 days everywhere; a separate
+ * Digistore24 review communication indicated a 60-day maximum). The
+ * canonical export used site-wide is REFUND_POLICY_STATUS / REFUND_DAYS
+ * from "@/lib/products" -- kept in sync here for anyone importing from
+ * site-config instead. */
+export const REFUND_POLICY_STATUS: "confirmed" | "unconfirmed" = "unconfirmed";
+export const REFUND_DAYS: number | null = null;
 
 /**
  * REAL BLOCKER -- do not fill these with invented values. No legal entity

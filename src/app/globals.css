@@ -56,8 +56,8 @@
   --color-cyan: var(--cyan);
   --color-cyan-soft: var(--cyan-soft);
 
-  --font-sans: var(--font-poppins);
-  --font-display: var(--font-syne);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-manrope);
   --font-mono: var(--font-jetbrains);
 
   --radius-card: var(--radius-card);
@@ -77,8 +77,8 @@
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    font-weight: 800;
-    letter-spacing: -0.03em;
+    font-weight: 700;
+    letter-spacing: -0.015em;
     text-wrap: balance;
     /* Safety net: text-wrap:balance can pick a line-break distribution
        that renders a few pixels wider than the container for certain real
@@ -88,6 +88,13 @@
        otherwise wouldn't fit, without changing normal wrapping. */
     overflow-wrap: break-word;
   }
+  /* H1 carries slightly more weight/tightness than H2-H4 -- authoritative
+     without tipping into the novelty-geometric territory Manrope avoids
+     at rest. */
+  h1 {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
   :focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
@@ -95,29 +102,30 @@
 }
 
 @layer utilities {
-  /* Hero surface -- the vivid, fully-saturated version of the same
-     cyan/magenta/blue family that tints the page canvas: a true colored
-     background, not a glow floating on black. */
+  /* Hero surface -- deep electric blue grounding into controlled violet,
+     with magenta reduced to a subtle atmospheric wash and cyan to a faint
+     highlight, layered as radial light rather than a vivid diagonal
+     rainbow band. Expensive, not loud. */
   .hero-surface {
     background:
-      radial-gradient(120% 100% at 100% 0%, rgba(34, 211, 238, 0.4), transparent 55%),
-      radial-gradient(100% 100% at 0% 100%, rgba(217, 70, 239, 0.4), transparent 55%),
-      linear-gradient(135deg, #1d4ed8 0%, #7c3aed 30%, #c026d3 60%, #0891b2 100%);
+      radial-gradient(40% 40% at 92% 8%, rgba(34, 211, 238, 0.14), transparent 60%),
+      radial-gradient(60% 55% at 88% 78%, rgba(192, 38, 212, 0.16), transparent 65%),
+      radial-gradient(70% 65% at 20% 15%, rgba(124, 58, 237, 0.4), transparent 60%),
+      linear-gradient(180deg, #0a1130 0%, #12112f 55%, #170f38 100%);
   }
 
-  /* CTA surface -- same vivid system, glows mirrored, for the other
-     spotlight sections (final CTAs, colorful bento tile). */
+  /* CTA surface -- same restrained system, glows mirrored. */
   .cta-surface {
     background:
-      radial-gradient(90% 120% at 100% 100%, rgba(34, 211, 238, 0.35), transparent 55%),
-      radial-gradient(100% 100% at 0% 0%, rgba(217, 70, 239, 0.35), transparent 55%),
-      linear-gradient(135deg, #1d4ed8 0%, #7c3aed 30%, #c026d3 60%, #0891b2 100%);
+      radial-gradient(40% 40% at 8% 90%, rgba(34, 211, 238, 0.14), transparent 60%),
+      radial-gradient(60% 55% at 12% 15%, rgba(192, 38, 212, 0.16), transparent 65%),
+      radial-gradient(70% 65% at 80% 85%, rgba(124, 58, 237, 0.38), transparent 60%),
+      linear-gradient(180deg, #0a1130 0%, #12112f 55%, #170f38 100%);
   }
 
-  /* Ticker band -- a thin vivid slice of the same gradient instead of a
-     near-black strip. */
+  /* Ticker band -- calm and low-contrast, no visible color band. */
   .ticker-surface {
-    background: linear-gradient(90deg, #1d4ed8, #7c3aed, #c026d3);
+    background: linear-gradient(90deg, #12112f, #170f38);
   }
 
   /* Scroll-reveal primitive -- opacity + translate only, content always
@@ -171,11 +179,12 @@
     opacity: 1;
   }
 
-  /* Continuous marquee for the real-data ticker. */
+  /* Continuous marquee for the real-data ticker -- slow and calm, a
+     background ambient detail rather than an attention-grabbing loop. */
   .marquee-track {
     display: flex;
     width: max-content;
-    animation: marquee 32s linear infinite;
+    animation: marquee 55s linear infinite;
   }
   .marquee-track:hover {
     animation-play-state: paused;

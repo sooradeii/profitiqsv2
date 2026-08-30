@@ -133,7 +133,7 @@ export default async function ProductPage({
 
               <div className="mt-6 flex flex-col gap-2 text-xs text-fg-soft">
                 <span className="flex items-center gap-1.5"><Download className="size-3.5" /> Digital product — downloadable after purchase, delivered via Digistore24.</span>
-                <span className="flex items-center gap-1.5"><ShieldCheck className="size-3.5" /> {product.refundDays}-day return window — see the <Link href="/refund-policy" className="underline">refund policy</Link>.</span>
+                <span className="flex items-center gap-1.5"><ShieldCheck className="size-3.5" /> Eligible for return via Digistore24 — see the <Link href="/refund-policy" className="underline">refund policy</Link>.</span>
               </div>
             </div>
           </Reveal>

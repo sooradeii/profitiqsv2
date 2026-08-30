@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { REFUND_DAYS } from "@/lib/products";
+import { REFUND_POLICY_STATUS } from "@/lib/products";
 import { SITE } from "@/lib/site-config";
 import { Reveal } from "@/components/reveal";
 
@@ -16,16 +16,19 @@ export default function RefundPolicyPage() {
         <h1 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Refund Policy</h1>
         <p className="mt-2 text-sm text-fg-soft">Last updated: August 2026</p>
 
-        <div className="mt-8 rounded-[var(--radius-card)] border border-border bg-surface p-6">
-          <p className="text-sm font-semibold text-fg">{REFUND_DAYS}-day return window</p>
-          <p className="mt-2 text-sm text-fg-soft">
-            ProfitIQS purchases are eligible for a return within {REFUND_DAYS} days
-            of purchase, per ProfitIQS&apos;s standard return policy and the
-            return period currently configured on Digistore24 for both
-            consumer and business buyers. This figure comes from two
-            independent real sources that agree — it is not an estimate.
-          </p>
-        </div>
+        {REFUND_POLICY_STATUS === "unconfirmed" && (
+          <div className="mt-8 rounded-[var(--radius-card)] border border-warning/40 bg-warning/10 p-6">
+            <p className="text-sm font-semibold text-fg">Return window: being finalized with Digistore24</p>
+            <p className="mt-2 text-sm text-fg-soft">
+              ProfitIQS purchases are eligible for a return, processed through
+              Digistore24, our checkout provider. We are not publishing an
+              exact number of days on this page while we finalize the return
+              window directly with Digistore24. The authoritative return
+              period for your purchase is always the one shown to you on the
+              Digistore24 checkout and order pages at the time you buy.
+            </p>
+          </div>
+        )}
 
         <div className="mt-8 space-y-5 text-fg-soft">
           <p>

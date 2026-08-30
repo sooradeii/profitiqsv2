@@ -49,6 +49,17 @@ function main() {
   const legalConfirmed = /LEGAL_ENTITY\.confirmed/.test(legalInfoContent);
   console.log(`\nLEGAL INFORMATION: ${legalConfirmed ? "references LEGAL_ENTITY.confirmed gate (BLOCKED until real data provided)" : "WARNING -- no confirmation gate found"}`);
 
+  const PRODUCTS_LIB = path.resolve(__dirname, "..", "src", "lib", "products.ts");
+  const productsSrc = fs.readFileSync(PRODUCTS_LIB, "utf-8");
+  const approvalGated = /canBuyNow[\s\S]{0,120}approvalStatus === "approved"/.test(productsSrc);
+  console.log(`\nBUY NOW GATING: ${approvalGated ? "canBuyNow() requires approvalStatus === \"approved\" (checkout URL alone is not enough)" : "BLOCKED -- canBuyNow() does not gate on real approval status"}`);
+  if (!approvalGated) pass = false;
+
+  const refundPageContent = fs.readFileSync(path.join(APP_DIR, "refund-policy", "page.tsx"), "utf-8");
+  const hardcodedRefundDays = /\b\d{1,3}-day\b/i.test(refundPageContent);
+  console.log(`REFUND POLICY PAGE: ${hardcodedRefundDays ? "BLOCKED -- publishes a specific day count while the policy is unconfirmed" : "no hardcoded day count (consistent with unconfirmed status)"}`);
+  if (hardcodedRefundDays) pass = false;
+
   const files = walk(APP_DIR);
   const productPage = files.find((f) => f.includes(path.join("products", "[id]", "page.tsx")));
   const digitalDisclosure = productPage

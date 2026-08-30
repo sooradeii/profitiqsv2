@@ -8,22 +8,33 @@
 //     are the literal real feature names from the real product, not
 //     invented marketing copy.
 //
-// Refund policy: 90 days, confirmed via TWO independent real sources that
-// agree -- DS24_MASTER_CATALOG.json's own refund_policy field ("ProfitIQS
-// Standard 90-Day Return Policy") AND the live Digistore24 CSV export
-// ("DS-us: 90 days/90 days" on every row). Not a guess.
+// Refund policy: UNRESOLVED as of 2026-08-31. DS24_MASTER_CATALOG.json's
+// own refund_policy field ("ProfitIQS Standard 90-Day Return Policy") and
+// the live Digistore24 CSV export ("DS-us: 90 days/90 days" on every row)
+// both say 90 days with zero variance in the structured data -- previously
+// treated as confirmed on that basis. A separate Digistore24 review
+// communication has since indicated a 60-day maximum requirement for this
+// refund category. These two real signals conflict and have not been
+// reconciled directly with Digistore24. Per policy: never publish a
+// specific number while sources disagree -- REFUND_DAYS is null until one
+// is confirmed authoritative. Do not restore 90 (or set 60) without a
+// verified resolution.
 //
-// Approval status: real Digistore24 review state as of the CSV export.
-// Per explicit product decision, Buy Now shows the real checkout link for
-// every product that has one, regardless of review state -- including the
-// one product Digistore24 has actively rejected (see REFUND_DAYS /
-// approvalStatus below). This is a deliberate choice, not a data bug.
+// Approval status: real Digistore24 review state as of the CSV export
+// (0 approved / 62 pending / 1 rejected). Buy Now now requires
+// approvalStatus === "approved" -- a checkout URL existing is NOT
+// sufficient on its own. Every product currently shows "Coming Soon"
+// because none are yet approved; this is the correct, compliant state
+// until Digistore24 approves listings, not a bug.
 
 export type Tier = "essential" | "elite" | "complete";
 
 export type ApprovalStatus = "approved" | "pending" | "rejected" | "coming_soon";
 
-export const REFUND_DAYS = 90;
+export type RefundPolicyStatus = "confirmed" | "unconfirmed";
+
+export const REFUND_POLICY_STATUS: RefundPolicyStatus = "unconfirmed";
+export const REFUND_DAYS: number | null = null;
 
 export interface Product {
   id: string;
@@ -47,7 +58,7 @@ export interface Product {
   /** Real sheet/tab names from the actual workbook file -- not invented. */
   features: string[];
   includedFiles: string[];
-  refundDays: number;
+  refundDays: number | null;
   tags: string[];
 }
 
@@ -3784,6 +3795,6 @@ export function getCheckoutUrl(product: Product): string | null {
 }
 
 export function canBuyNow(product: Product): boolean {
-  return !!getCheckoutUrl(product);
+  return product.approvalStatus === "approved" && !!getCheckoutUrl(product);
 }
 
