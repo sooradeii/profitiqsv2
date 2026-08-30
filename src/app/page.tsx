@@ -323,7 +323,7 @@ export default function HomePage() {
               { n: "03", title: "Open and start tracking", body: "Enter your numbers and the dashboards do the rest." },
             ].map((s, i) => (
               <Reveal key={s.n} delay={i * 90}>
-                <span className="font-mono text-4xl font-bold text-accent-soft">{s.n}</span>
+                <span className="font-mono text-7xl font-extrabold text-gold/35">{s.n}</span>
                 <h3 className="mt-3 font-display text-lg text-fg">{s.title}</h3>
                 <p className="mt-2 text-sm text-fg-soft">{s.body}</p>
               </Reveal>

@@ -11,12 +11,12 @@
    crypto-trading aesthetic. Brand blue/emerald kept from the original
    spec; pushed with more real depth and a genuine dark hero section. */
 :root {
-  --bg: #f8f4ec;
+  --bg: #fafafa;
   --surface: #ffffff;
-  --surface-muted: #efe6d5;
-  --foreground: #1a1611;
-  --foreground-soft: #5c5544;
-  --border: #e5dcc6;
+  --surface-muted: #f2f3f5;
+  --foreground: #0d0f14;
+  --foreground-soft: #565b66;
+  --border: #e6e7eb;
   --accent: #6d28d9;
   --accent-hover: #5b21b6;
   --accent-soft: #f3ecfb;
