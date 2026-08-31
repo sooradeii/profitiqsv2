@@ -74,7 +74,7 @@ export default function HomePage() {
             <Reveal className="min-w-0">
               <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5">
                 <span className="pulse-dot" />
-                <span className="font-mono text-[11px] font-medium text-fg-soft">63 real systems &middot; live catalog</span>
+                <span className="font-mono text-[11px] font-medium text-fg-soft">63 real systems &middot; 21 business categories</span>
               </div>
               <h1 className="mt-5 font-display text-[2.6rem] font-extrabold leading-[1.02] tracking-[-0.02em] text-fg sm:text-[3.5rem]">
                 Run your business

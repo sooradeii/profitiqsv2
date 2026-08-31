@@ -29,9 +29,10 @@ export default function AboutPage() {
             where the tier supports it.
           </p>
           <p>
-            Every system is a real Excel workbook — no login, no monthly
-            bill, no dashboard that logs you out. You own the file outright
-            for as long as your business runs.
+            Every system is a real Excel workbook — no monthly bill, no
+            dashboard that logs you out. You receive the actual Excel files
+            for your business to use under the included license terms — no
+            login or subscription required.
           </p>
         </div>
       </Reveal>

@@ -24,9 +24,8 @@ export default function PrivacyPolicyPage() {
             <h2 className="font-display text-lg font-bold text-fg">Checkout &amp; payment data</h2>
             <p className="mt-2 text-sm">
               All purchases are processed by Digistore24, our checkout
-              provider. Digistore24 collects and processes your payment and
-              billing information directly — ProfitIQS does not receive or
-              store your payment card details.
+              provider. ProfitIQS does not process or store your
+              payment-card details through this website.
             </p>
           </section>
           <section>
