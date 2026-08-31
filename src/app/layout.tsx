@@ -1,18 +1,27 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Poppins, Caveat } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SITE } from "@/lib/site-config";
 
-// Type direction, final: Poppins as the single typeface across the entire
-// public site -- display, body, and numerals -- per explicit instruction.
-// Weight carries the hierarchy instead of switching families: 400-500
-// body, 600 labels, 700 subheadings, 800 headlines/prices/metrics.
+// Type direction: Poppins is the single typeface for the entire public
+// site -- display, body, and numerals. Weight carries the hierarchy
+// instead of switching families: 400-500 body, 600 labels, 700
+// subheadings, 800 headlines/prices/metrics. Caveat added as one narrow,
+// deliberate exception -- a clean, legible handwriting-style accent used
+// only on the hero's second headline line, for warmth/trust rather than
+// as a system-wide serif/script.
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
+});
+
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+  weight: ["600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -58,7 +67,7 @@ const websiteJsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${poppins.variable} h-full`}>
+    <html lang="en" className={`${poppins.variable} ${caveat.variable} h-full`}>
       <body className="flex min-h-full flex-col bg-bg text-fg antialiased">
         <script
           type="application/ld+json"

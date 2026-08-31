@@ -21,11 +21,13 @@
 // verified resolution.
 //
 // Approval status: real Digistore24 review state as of the CSV export
-// (0 approved / 62 pending / 1 rejected). Buy Now now requires
-// approvalStatus === "approved" -- a checkout URL existing is NOT
-// sufficient on its own. Every product currently shows "Coming Soon"
-// because none are yet approved; this is the correct, compliant state
-// until Digistore24 approves listings, not a bug.
+// (0 approved / 62 pending / 1 rejected), kept on every product record
+// and surfaced in the audit scripts. Explicit product decision: Buy Now
+// shows the real checkout link whenever one exists, regardless of review
+// state -- Digistore24's own site review needs the sales pages actually
+// linked to real checkout, so the site is not gated on approval status.
+// This was gated on approvalStatus === "approved" briefly; reverted per
+// direct instruction (see canBuyNow below for the current rule).
 
 export type Tier = "essential" | "elite" | "complete";
 
@@ -3787,17 +3789,19 @@ export function getCategories(): string[] {
 
 /** Centralized checkout URL helper -- returns the real Digistore24 URL if
  * one exists. Never call product.digistoreCheckoutUrl directly from a
- * component -- always through this helper so the rule lives in one place.
- * A URL existing does NOT mean the product is sellable -- see canBuyNow. */
+ * component -- always through this helper so the rule lives in one place. */
 export function getCheckoutUrl(product: Product): string | null {
   return product.digistoreCheckoutUrl;
 }
 
-/** Buy Now requires real Digistore24 approval, not just a mapped checkout
- * URL (see file header -- 0/63 approved as of the last CSV export, so
- * every product currently renders "Coming Soon" until Digistore24
- * actually approves each listing). */
+/** Explicit product decision: Buy Now shows the real checkout link for
+ * every product that has one, regardless of Digistore24's own review
+ * state -- including the one product Digistore24 has actively rejected
+ * (see approvalStatus below). Digistore24's own review of the site
+ * requires the sales pages to actually link to real checkout, so the
+ * site is not gated on approval state -- approvalStatus is informational
+ * only, surfaced in the audit scripts, not a display gate. */
 export function canBuyNow(product: Product): boolean {
-  return product.approvalStatus === "approved" && !!getCheckoutUrl(product);
+  return !!getCheckoutUrl(product);
 }
 

@@ -99,7 +99,7 @@ function main() {
   }
   const rejected = PRODUCTS.filter((p) => p.approvalStatus === "rejected");
   if (rejected.length > 0) {
-    console.log(`\n⚠  ${rejected.length} product(s) REJECTED by Digistore24 (canBuyNow() correctly returns false -- shows Coming Soon, not Buy Now):`);
+    console.log(`\n⚠  ${rejected.length} product(s) REJECTED by Digistore24 (Buy Now still shows the real link per explicit product decision):`);
     rejected.forEach((p) => console.log(`   - ${p.industry} — ${p.tierLabel} (${p.digistoreProductId}): ${p.approvalStatusRaw}`));
   }
 

@@ -55,11 +55,15 @@ export default function HomePage() {
   const heroCovers = HERO_COVER_SLUGS.map((slug) => getProduct(slug, "complete")).filter((p) => !!p);
   const autoRepairComplete = getProduct("auto-repair", "complete")!;
 
-  // Real ticker data: every industry paired with its real Essential price.
-  const tickerItems = niches.map((n) => ({
-    label: n.shortName,
-    value: `$${getProduct(n.slug, "essential")?.price ?? "—"}`,
-  }));
+  // Ecosystem ticker -- structural facts derived from real data, not a
+  // price list.
+  const tickerItems = [
+    `${niches.length} Business Categories`,
+    `${PRODUCTS.length} Financial Intelligence Systems`,
+    "Essential",
+    "Elite",
+    "Complete",
+  ];
 
   return (
     <div>
@@ -74,8 +78,9 @@ export default function HomePage() {
               </div>
               <h1 className="mt-5 font-display text-[2.6rem] font-extrabold leading-[1.02] tracking-[-0.02em] text-fg sm:text-[3.5rem]">
                 Run your business
-                <br />
-                <span className="text-accent">on real numbers.</span>
+                <span className="-mt-1 block font-handwritten text-[3.4rem] font-bold leading-[0.85] tracking-normal text-accent sm:text-[4.4rem]">
+                  on real numbers.
+                </span>
               </h1>
               <p className="mt-5 max-w-lg text-base leading-relaxed text-fg-soft sm:text-lg">
                 Practical financial and operational intelligence systems

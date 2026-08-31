@@ -58,6 +58,7 @@
   --font-sans: var(--font-poppins);
   --font-display: var(--font-poppins);
   --font-mono: var(--font-poppins);
+  --font-handwritten: var(--font-caveat);
 
   --radius-card: var(--radius-card);
   --radius-control: var(--radius-control);
@@ -102,9 +103,11 @@
      base. "Hero, not villain": light first impression, not a dark wall. */
   .hero-surface {
     background:
-      radial-gradient(70% 60% at 10% 15%, rgba(37, 99, 235, 0.1), transparent 60%),
-      radial-gradient(70% 60% at 92% 10%, rgba(124, 58, 237, 0.1), transparent 60%),
-      linear-gradient(180deg, #f8fafc 0%, #ffffff 60%);
+      radial-gradient(60% 55% at 6% 8%, rgba(37, 99, 235, 0.16), transparent 58%),
+      radial-gradient(65% 55% at 96% 4%, rgba(124, 58, 237, 0.15), transparent 58%),
+      radial-gradient(55% 50% at 100% 100%, rgba(79, 70, 229, 0.1), transparent 60%),
+      radial-gradient(50% 45% at 0% 100%, rgba(37, 99, 235, 0.08), transparent 60%),
+      linear-gradient(180deg, #f8fafc 0%, #ffffff 55%);
   }
 
   /* CTA surface -- deep blue grounding into indigo/violet, atmospheric
@@ -177,7 +180,7 @@
   .marquee-track {
     display: flex;
     width: max-content;
-    animation: marquee 55s linear infinite;
+    animation: marquee 70s linear infinite;
   }
   .marquee-track:hover {
     animation-play-state: paused;

@@ -51,9 +51,11 @@ function main() {
 
   const PRODUCTS_LIB = path.resolve(__dirname, "..", "src", "lib", "products.ts");
   const productsSrc = fs.readFileSync(PRODUCTS_LIB, "utf-8");
-  const approvalGated = /canBuyNow[\s\S]{0,120}approvalStatus === "approved"/.test(productsSrc);
-  console.log(`\nBUY NOW GATING: ${approvalGated ? "canBuyNow() requires approvalStatus === \"approved\" (checkout URL alone is not enough)" : "BLOCKED -- canBuyNow() does not gate on real approval status"}`);
-  if (!approvalGated) pass = false;
+  const checkoutGated = /canBuyNow[\s\S]{0,120}getCheckoutUrl\(product\)/.test(productsSrc);
+  const approvalTracked = /approvalStatus:\s*ApprovalStatus/.test(productsSrc);
+  console.log(`\nBUY NOW GATING: ${checkoutGated ? "canBuyNow() shows the real checkout link whenever one exists -- Digistore24 approval state is tracked but not a display gate, per explicit product decision" : "WARNING -- could not confirm canBuyNow() is grounded in a real checkout URL"}`);
+  console.log(`APPROVAL STATE TRACKED: ${approvalTracked ? "every product record carries real approvalStatus for audit visibility" : "WARNING -- approvalStatus field not found on Product"}`);
+  if (!checkoutGated) pass = false;
 
   const refundPageContent = fs.readFileSync(path.join(APP_DIR, "refund-policy", "page.tsx"), "utf-8");
   const hardcodedRefundDays = /\b\d{1,3}-day\b/i.test(refundPageContent);

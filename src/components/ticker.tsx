@@ -1,15 +1,16 @@
-/** Continuous-scroll ticker of real product data -- duplicated once for a
- * seamless loop (see .marquee-track in globals.css). Pauses on hover. */
-export function Ticker({ items }: { items: { label: string; value: string }[] }) {
-  const track = [...items, ...items];
+/** Continuous-scroll ecosystem ticker -- a premium information strip
+ * (business-category / system / tier counts), not a price list. Repeated
+ * enough times to loop seamlessly even with a short item set (see
+ * .marquee-track in globals.css). Pauses on hover. */
+export function Ticker({ items }: { items: string[] }) {
+  const track = [...items, ...items, ...items, ...items];
   return (
     <div className="ticker-surface overflow-hidden border-y border-white/10 py-2.5">
-      <div className="marquee-track gap-8">
+      <div className="marquee-track gap-3">
         {track.map((item, i) => (
-          <span key={`${item.label}-${i}`} className="flex shrink-0 items-center gap-2 whitespace-nowrap px-2 font-mono text-[11px] text-white/40">
-            {item.label}
-            <span className="font-semibold text-white/70">{item.value}</span>
-            <span className="text-white/20" aria-hidden>&bull;</span>
+          <span key={`${item}-${i}`} className="flex shrink-0 items-center gap-3 whitespace-nowrap px-1">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/55">{item}</span>
+            <span className="text-accent/50" aria-hidden>&bull;</span>
           </span>
         ))}
       </div>
