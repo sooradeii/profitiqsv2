@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Mail } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import { SITE } from "@/lib/site-config";
 import { Reveal } from "@/components/reveal";
 
@@ -18,13 +18,22 @@ export default function ContactPage() {
           Questions about a product, a purchase, or anything else — messages
           are read directly, not routed through a ticket system.
         </p>
-        <a
-          href={`mailto:${SITE.supportEmail}`}
-          className="mt-8 inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-accent px-6 py-3.5 text-sm font-semibold text-white hover:bg-accent-hover"
-        >
-          <Mail className="size-4" />
-          {SITE.supportEmail}
-        </a>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <a
+            href={`mailto:${SITE.supportEmail}`}
+            className="inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-accent px-6 py-3.5 text-sm font-semibold text-white hover:bg-accent-hover"
+          >
+            <Mail className="size-4" />
+            {SITE.supportEmail}
+          </a>
+          <a
+            href={`tel:${SITE.supportPhone.replace(/\s/g, "")}`}
+            className="inline-flex items-center gap-2 rounded-[var(--radius-control)] border border-border px-6 py-3.5 text-sm font-semibold text-fg hover:border-fg-soft"
+          >
+            <Phone className="size-4" />
+            {SITE.supportPhone}
+          </a>
+        </div>
         <p className="mt-6 text-sm text-fg-soft">
           For a product issue, please include the product name, tier, what
           you were trying to do, and what happened instead — it helps us

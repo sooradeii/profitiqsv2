@@ -23,7 +23,10 @@ export function SiteFooter() {
         </div>
         <div className="mt-12 flex flex-col gap-2 border-t border-border pt-6 text-xs text-fg-soft sm:flex-row sm:items-center sm:justify-between">
           <p>&copy; {new Date().getFullYear()} {SITE.legalMark}. All rights reserved.</p>
-          <a href={`mailto:${SITE.supportEmail}`} className="hover:text-fg">{SITE.supportEmail}</a>
+          <div className="flex flex-wrap gap-x-4 gap-y-1">
+            <a href={`mailto:${SITE.supportEmail}`} className="hover:text-fg">{SITE.supportEmail}</a>
+            <a href={`tel:${SITE.supportPhone.replace(/\s/g, "")}`} className="hover:text-fg">{SITE.supportPhone}</a>
+          </div>
         </div>
       </div>
     </footer>

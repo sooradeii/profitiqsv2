@@ -23,7 +23,7 @@ function checkRoutesExist(): boolean {
     "page.tsx", "products/page.tsx", "products/[id]/page.tsx",
     "industries/page.tsx", "industries/[slug]/page.tsx",
     "essential/page.tsx", "elite/page.tsx", "complete/page.tsx",
-    "compare/page.tsx", "affiliate/page.tsx", "about/page.tsx",
+    "compare/page.tsx", "about/page.tsx",
     "contact/page.tsx", "faq/page.tsx", "legal-information/page.tsx",
     "privacy-policy/page.tsx", "terms/page.tsx", "refund-policy/page.tsx",
     "disclaimer/page.tsx", "robots.ts", "sitemap.ts", "not-found.tsx",
@@ -42,7 +42,7 @@ function checkSeoMetadata(): boolean {
   let ok = true;
   const pages = [
     "page.tsx", "products/page.tsx", "industries/page.tsx", "essential/page.tsx",
-    "elite/page.tsx", "complete/page.tsx", "compare/page.tsx", "affiliate/page.tsx",
+    "elite/page.tsx", "complete/page.tsx", "compare/page.tsx",
     "about/page.tsx", "contact/page.tsx", "faq/page.tsx", "legal-information/page.tsx",
     "privacy-policy/page.tsx", "terms/page.tsx", "refund-policy/page.tsx", "disclaimer/page.tsx",
     "products/[id]/page.tsx", "industries/[slug]/page.tsx",

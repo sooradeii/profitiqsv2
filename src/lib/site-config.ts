@@ -5,39 +5,43 @@ export const SITE = {
   legalMark: "ProfitIQS™",
   tagline: "Financial Intelligence Systems",
   supportEmail: "support@profitiqs.com",
+  supportPhone: "+91 8925416836",
   url: "https://www.profitiqs.com",
 };
 
-/** UNRESOLVED as of 2026-08-31 -- see products.ts header for the full
- * conflict (structured data says 90 days everywhere; a separate
- * Digistore24 review communication indicated a 60-day maximum). The
- * canonical export used site-wide is REFUND_POLICY_STATUS / REFUND_DAYS
- * from "@/lib/products" -- kept in sync here for anyone importing from
- * site-config instead. */
-export const REFUND_POLICY_STATUS: "confirmed" | "unconfirmed" = "unconfirmed";
-export const REFUND_DAYS: number | null = null;
+/** CONFIRMED via direct Digistore24 Compliance feedback (Erica, DS24
+ * Compliance): 60 days -- see products.ts header for the full history.
+ * The canonical export used site-wide is REFUND_POLICY_STATUS /
+ * REFUND_DAYS from "@/lib/products" -- kept in sync here for anyone
+ * importing from site-config instead. */
+export const REFUND_POLICY_STATUS: "confirmed" | "unconfirmed" = "confirmed";
+export const REFUND_DAYS: number | null = 60;
 
 /**
- * REAL BLOCKER -- do not fill these with invented values. No legal entity
- * name, registered address, or VAT ID exists in any source file provided
- * for this project (checked DS24_MANUAL_PLAYBOOK.md, DS24_MASTER_CATALOG,
- * the old site's own /legal page, and the products root directory).
- * `/legal-information` renders an honest "pending" state instead of
- * fabricated placeholders, and the compliance/launch audits report this
- * section BLOCKED until real values are supplied here.
+ * CONFIRMED via direct Digistore24 Compliance feedback (Erica, DS24
+ * Compliance). Profit IQS / ProfitIQS is operated by an individual
+ * (Sabari B), not a registered company -- do not describe it as an LLC,
+ * corporation, Pvt Ltd, GmbH, Inc., or any other company type. No VAT ID
+ * or commercial register number exists; both are correctly disclosed as
+ * "None" rather than omitted or invented.
  */
 export const LEGAL_ENTITY = {
-  legalName: null as string | null,
-  address: null as string | null,
+  legalName: "Sabari B" as string | null,
+  isRegisteredCompany: false,
+  address: "144, Shri Ganapathi Nagar, Morai, Avadi, Chennai-55, India" as string | null,
+  email: "support@profitiqs.com" as string | null,
+  phone: "+91 8925416836" as string | null,
+  contactPerson: "Sabari B" as string | null,
+  responsibleForContent: "Sabari B" as string | null,
+  commercialRegister: null as string | null,
   vatId: null as string | null,
-  confirmed: false,
+  confirmed: true,
 };
 
 export const MAIN_NAV = [
   { label: "Products", href: "/products" },
   { label: "Industries", href: "/industries" },
   { label: "Compare", href: "/compare" },
-  { label: "Affiliates", href: "/affiliate" },
   { label: "About", href: "/about" },
   { label: "FAQ", href: "/faq" },
 ];
@@ -56,7 +60,6 @@ export const FOOTER_LINKS = {
   Company: [
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
-    { label: "Affiliates", href: "/affiliate" },
     { label: "FAQ", href: "/faq" },
   ],
   Legal: [

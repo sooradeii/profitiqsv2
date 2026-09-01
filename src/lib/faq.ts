@@ -1,3 +1,5 @@
+import { REFUND_DAYS } from "@/lib/products";
+
 export const FAQ_ITEMS = [
   {
     q: "What is ProfitIQS?",
@@ -53,6 +55,6 @@ export const FAQ_ITEMS = [
   },
   {
     q: "What is the refund policy?",
-    a: "We're finalizing the exact return window with Digistore24 and don't publish a specific number of days here until that's confirmed. The authoritative return period for your purchase is always the one shown on the Digistore24 checkout and order pages. See the Refund Policy page for details.",
+    a: `A ${REFUND_DAYS}-day return window, processed through Digistore24. See the Refund Policy page for details.`,
   },
 ];

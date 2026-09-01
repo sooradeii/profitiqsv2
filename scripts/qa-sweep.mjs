@@ -18,7 +18,7 @@ const productIds = [...productsSrc.matchAll(/\bid:\s*"([a-z0-9-]+-(?:essential|e
 
 const STATIC_ROUTES = [
   "/", "/products", "/industries", "/essential", "/elite", "/complete",
-  "/compare", "/affiliate", "/about", "/contact", "/faq",
+  "/compare", "/about", "/contact", "/faq",
   "/legal-information", "/privacy-policy", "/terms", "/refund-policy", "/disclaimer",
 ];
 

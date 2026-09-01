@@ -8,26 +8,23 @@
 //     are the literal real feature names from the real product, not
 //     invented marketing copy.
 //
-// Refund policy: UNRESOLVED as of 2026-08-31. DS24_MASTER_CATALOG.json's
-// own refund_policy field ("ProfitIQS Standard 90-Day Return Policy") and
-// the live Digistore24 CSV export ("DS-us: 90 days/90 days" on every row)
-// both say 90 days with zero variance in the structured data -- previously
-// treated as confirmed on that basis. A separate Digistore24 review
-// communication has since indicated a 60-day maximum requirement for this
-// refund category. These two real signals conflict and have not been
-// reconciled directly with Digistore24. Per policy: never publish a
-// specific number while sources disagree -- REFUND_DAYS is null until one
-// is confirmed authoritative. Do not restore 90 (or set 60) without a
-// verified resolution.
+// Refund policy: CONFIRMED as of direct Digistore24 Compliance feedback
+// (Erica, DS24 Compliance) -- 60 days. This resolves the earlier conflict
+// between the structured catalog data (which said 90 days) and an earlier
+// DS24 reviewer communication (which indicated a 60-day maximum): DS24
+// Compliance has now explicitly stated the requirement is "at least 60
+// days" and confirmed 60 days as the number ProfitIQS is using. Do not
+// change this without a new, equally direct confirmation.
 //
 // Approval status: real Digistore24 review state as of the CSV export
 // (0 approved / 62 pending / 1 rejected), kept on every product record
-// and surfaced in the audit scripts. Explicit product decision: Buy Now
-// shows the real checkout link whenever one exists, regardless of review
-// state -- Digistore24's own site review needs the sales pages actually
-// linked to real checkout, so the site is not gated on approval status.
-// This was gated on approvalStatus === "approved" briefly; reverted per
-// direct instruction (see canBuyNow below for the current rule).
+// and surfaced in the audit scripts for visibility. Buy Now display is
+// NOT driven by this field -- see DS24_ACTIVE_PRODUCT_IDS and canBuyNow
+// below for the current (id-based) rule, per direct Digistore24
+// Compliance feedback: only products actually submitted to Digistore24
+// may be shown as purchasable; the rest of the 63-product catalog is
+// still being submitted and must show Coming Soon regardless of whether
+// a checkout URL is already mapped for it.
 
 export type Tier = "essential" | "elite" | "complete";
 
@@ -35,8 +32,8 @@ export type ApprovalStatus = "approved" | "pending" | "rejected" | "coming_soon"
 
 export type RefundPolicyStatus = "confirmed" | "unconfirmed";
 
-export const REFUND_POLICY_STATUS: RefundPolicyStatus = "unconfirmed";
-export const REFUND_DAYS: number | null = null;
+export const REFUND_POLICY_STATUS: RefundPolicyStatus = "confirmed";
+export const REFUND_DAYS: number | null = 60;
 
 export interface Product {
   id: string;
@@ -3794,14 +3791,27 @@ export function getCheckoutUrl(product: Product): string | null {
   return product.digistoreCheckoutUrl;
 }
 
-/** Explicit product decision: Buy Now shows the real checkout link for
- * every product that has one, regardless of Digistore24's own review
- * state -- including the one product Digistore24 has actively rejected
- * (see approvalStatus below). Digistore24's own review of the site
- * requires the sales pages to actually link to real checkout, so the
- * site is not gated on approval state -- approvalStatus is informational
- * only, surfaced in the audit scripts, not a display gate. */
+/** Products actually submitted to Digistore24 and confirmed safe to
+ * present as purchasable right now, per direct Digistore24 Compliance
+ * feedback (Erica, DS24 Compliance): "products displayed on the sales
+ * page must be products that have been submitted for approval." Auto
+ * Repair Complete (720175) has had a completed test purchase and is
+ * currently under active review -- the rest of the 63-product catalog
+ * has mapped checkout URLs already (see DS24_CSV_EXPORT.csv) but has
+ * NOT yet been submitted to Digistore24, so it must not be presented as
+ * purchasable yet even though a URL exists. Update this list only as
+ * additional products are actually submitted and confirmed. */
+export const DS24_ACTIVE_PRODUCT_IDS: string[] = ["720175"];
+
+/** Buy Now shows the real checkout link only for products on
+ * DS24_ACTIVE_PRODUCT_IDS -- a mapped checkout URL existing is not
+ * sufficient on its own (see above). Every other product renders Coming
+ * Soon until it is actually submitted to Digistore24. */
 export function canBuyNow(product: Product): boolean {
-  return !!getCheckoutUrl(product);
+  return (
+    !!product.digistoreProductId &&
+    DS24_ACTIVE_PRODUCT_IDS.includes(product.digistoreProductId) &&
+    !!getCheckoutUrl(product)
+  );
 }
 

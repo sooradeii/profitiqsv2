@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { AlertTriangle } from "lucide-react";
 import { LEGAL_ENTITY, SITE } from "@/lib/site-config";
 import { Reveal } from "@/components/reveal";
 
@@ -15,22 +14,39 @@ export default function LegalInformationPage() {
       <Reveal>
         <h1 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Legal Information</h1>
 
-        {!LEGAL_ENTITY.confirmed && (
-          <div className="mt-6 flex items-start gap-3 rounded-[var(--radius-card)] border border-warning/30 bg-warning/5 p-5">
-            <AlertTriangle className="mt-0.5 size-5 shrink-0 text-warning" />
-            <div>
-              <p className="text-sm font-semibold text-fg">Legal entity details pending</p>
-              <p className="mt-1 text-sm text-fg-soft">
-                The registered business name, address, and VAT ID for
-                ProfitIQS have not been provided yet. Nothing is published
-                here until real values are confirmed — this page will not
-                display placeholder or invented information.
-              </p>
-            </div>
-          </div>
-        )}
-
         <div className="mt-8 space-y-5 text-fg-soft">
+          <section>
+            <h2 className="font-display text-lg font-bold text-fg">Operator</h2>
+            <p className="mt-2 text-sm">
+              {LEGAL_ENTITY.legalName}, operating under the brand Profit IQS
+              (ProfitIQS). Profit IQS is not currently a registered company
+              or legal entity — it is operated by an individual.
+            </p>
+          </section>
+          <section>
+            <h2 className="font-display text-lg font-bold text-fg">Address</h2>
+            <p className="mt-2 whitespace-pre-line text-sm">{LEGAL_ENTITY.address}</p>
+          </section>
+          <section>
+            <h2 className="font-display text-lg font-bold text-fg">Contact</h2>
+            <p className="mt-2 text-sm">
+              Email: <a href={`mailto:${LEGAL_ENTITY.email}`} className="font-semibold text-accent">{LEGAL_ENTITY.email}</a>
+              <br />
+              Phone: <a href={`tel:${LEGAL_ENTITY.phone?.replace(/\s/g, "")}`} className="font-semibold text-accent">{LEGAL_ENTITY.phone}</a>
+            </p>
+          </section>
+          <section>
+            <h2 className="font-display text-lg font-bold text-fg">Contact person / responsible for website content</h2>
+            <p className="mt-2 text-sm">{LEGAL_ENTITY.contactPerson}</p>
+          </section>
+          <section>
+            <h2 className="font-display text-lg font-bold text-fg">Commercial register</h2>
+            <p className="mt-2 text-sm">None. Profit IQS is not a registered company.</p>
+          </section>
+          <section>
+            <h2 className="font-display text-lg font-bold text-fg">VAT ID</h2>
+            <p className="mt-2 text-sm">None.</p>
+          </section>
           <section>
             <h2 className="font-display text-lg font-bold text-fg">Digital products</h2>
             <p className="mt-2 text-sm">
@@ -48,7 +64,7 @@ export default function LegalInformationPage() {
             </p>
           </section>
           <section>
-            <h2 className="font-display text-lg font-bold text-fg">Contact</h2>
+            <h2 className="font-display text-lg font-bold text-fg">General contact</h2>
             <p className="mt-2 text-sm">
               <a href={`mailto:${SITE.supportEmail}`} className="font-semibold text-accent">{SITE.supportEmail}</a>
             </p>

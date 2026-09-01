@@ -55,6 +55,16 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
           <section>
+            <h2 className="font-display text-lg font-bold text-fg">Newsletter</h2>
+            <p className="mt-2 text-sm">
+              ProfitIQS does not currently operate a newsletter or
+              marketing email list. If that changes in the future, every
+              newsletter email will include a clear, working unsubscribe
+              link, and you can also opt out at any time by emailing{" "}
+              {SITE.supportEmail}.
+            </p>
+          </section>
+          <section>
             <h2 className="font-display text-lg font-bold text-fg">Contact</h2>
             <p className="mt-2 text-sm">
               <a href={`mailto:${SITE.supportEmail}`} className="font-semibold text-accent">{SITE.supportEmail}</a>

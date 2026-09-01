@@ -364,25 +364,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== AFFILIATE CTA ===== */}
-      <section className="border-b border-border">
-        <div className="mx-auto max-w-[1280px] px-5 py-14 sm:px-8">
-          <Reveal>
-            <div className="flex flex-col items-start justify-between gap-4 rounded-[var(--radius-card)] border border-border bg-surface p-8 sm:flex-row sm:items-center">
-              <div>
-                <h2 className="font-display text-xl text-fg">Promote ProfitIQS</h2>
-                <p className="mt-1 max-w-md text-sm text-fg-soft">
-                  63 products across 21 categories, sold through Digistore24 — see the affiliate program.
-                </p>
-              </div>
-              <Link href="/affiliate" className="shrink-0 rounded-[var(--radius-control)] border border-border px-5 py-2.5 text-sm font-semibold text-fg hover:border-fg-soft">
-                Affiliate info
-              </Link>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
       {/* ===== FINAL CTA ===== */}
       <section className="cta-surface text-white">
         <div className="mx-auto max-w-2xl px-5 py-20 text-center sm:px-8">

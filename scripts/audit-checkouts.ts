@@ -1,4 +1,4 @@
-import { PRODUCTS } from "../src/lib/products";
+import { PRODUCTS, canBuyNow } from "../src/lib/products";
 import { loadCsvExport } from "./lib/sources";
 import { matchCsvRow } from "./lib/match";
 
@@ -46,6 +46,8 @@ function main() {
   for (const status of ["approved", "pending", "rejected", "coming_soon"] as const) {
     console.log(`${status.toUpperCase()}: ${PRODUCTS.filter((p) => p.approvalStatus === status).length} / ${PRODUCTS.length}`);
   }
+  const purchasable = PRODUCTS.filter((p) => canBuyNow(p));
+  console.log(`\nCURRENTLY PURCHASABLE (submitted to Digistore24, Buy Now live): ${purchasable.length} / ${PRODUCTS.length} -- ${purchasable.map((p) => p.digistoreProductId).join(", ") || "none"}`);
 
   const ok = missing === 0 && wrongMappings === 0 && duplicateUrls.length === 0;
   console.log(`\nRESULT: ${ok ? "PASS" : "FAIL"}`);

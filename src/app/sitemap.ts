@@ -11,7 +11,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/elite",
     "/complete",
     "/compare",
-    "/affiliate",
     "/about",
     "/contact",
     "/faq",

@@ -1,5 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
+import { PRODUCTS, REFUND_DAYS, REFUND_POLICY_STATUS, DS24_ACTIVE_PRODUCT_IDS, canBuyNow } from "../src/lib/products";
+import { LEGAL_ENTITY } from "../src/lib/site-config";
 
 const APP_DIR = path.resolve(__dirname, "..", "src", "app");
 
@@ -20,6 +22,9 @@ const FORBIDDEN_PATTERNS: { label: string; re: RegExp }[] = [
   { label: "competing payment processor mention", re: /\b(stripe checkout|paypal checkout|gumroad checkout|shopify checkout)\b/i },
   { label: "\"10x\" / hype superlative", re: /\b10x\b|revolutionary|game[- ]chang(er|ing)|secret (formula|method)|(?<!are not )a hack\b/i },
   { label: "unqualified 'lifetime' claim", re: /\blifetime (access|guarantee|deal)\b/i },
+  { label: "Digistore24 used as a trust/marketing claim", re: /digistore24\s+(trusted|badge|approved|certified)/i },
+  { label: "conflicting 90-day refund claim", re: /\b90[- ]days?\b/i },
+  { label: "affiliate/commission recruitment content", re: /\b(affiliate|commission per sale|earn \d+%|partner program|affiliate link|affiliate signup|affiliate opportunity)\b/i },
 ];
 
 function walk(dir: string, out: string[] = []): string[] {
@@ -45,22 +50,23 @@ function main() {
     if (!exists) pass = false;
   }
 
-  const legalInfoContent = fs.readFileSync(path.join(APP_DIR, "legal-information", "page.tsx"), "utf-8");
-  const legalConfirmed = /LEGAL_ENTITY\.confirmed/.test(legalInfoContent);
-  console.log(`\nLEGAL INFORMATION: ${legalConfirmed ? "references LEGAL_ENTITY.confirmed gate (BLOCKED until real data provided)" : "WARNING -- no confirmation gate found"}`);
+  console.log(`\nAFFILIATE ROUTE REMOVED: ${!fs.existsSync(path.join(APP_DIR, "affiliate")) ? "OK -- /affiliate does not exist" : "BLOCKED -- /affiliate still exists"}`);
+  if (fs.existsSync(path.join(APP_DIR, "affiliate"))) pass = false;
 
-  const PRODUCTS_LIB = path.resolve(__dirname, "..", "src", "lib", "products.ts");
-  const productsSrc = fs.readFileSync(PRODUCTS_LIB, "utf-8");
-  const checkoutGated = /canBuyNow[\s\S]{0,120}getCheckoutUrl\(product\)/.test(productsSrc);
-  const approvalTracked = /approvalStatus:\s*ApprovalStatus/.test(productsSrc);
-  console.log(`\nBUY NOW GATING: ${checkoutGated ? "canBuyNow() shows the real checkout link whenever one exists -- Digistore24 approval state is tracked but not a display gate, per explicit product decision" : "WARNING -- could not confirm canBuyNow() is grounded in a real checkout URL"}`);
-  console.log(`APPROVAL STATE TRACKED: ${approvalTracked ? "every product record carries real approvalStatus for audit visibility" : "WARNING -- approvalStatus field not found on Product"}`);
-  if (!checkoutGated) pass = false;
+  const legalConfirmed = LEGAL_ENTITY.confirmed === true && !!LEGAL_ENTITY.legalName && !!LEGAL_ENTITY.address && !!LEGAL_ENTITY.email && !!LEGAL_ENTITY.phone;
+  console.log(`\nLEGAL INFORMATION: ${legalConfirmed ? `CONFIRMED -- ${LEGAL_ENTITY.legalName}, real address/email/phone present, not a registered company (correctly disclosed)` : "BLOCKED -- LEGAL_ENTITY is missing required real values"}`);
+  if (!legalConfirmed) pass = false;
 
-  const refundPageContent = fs.readFileSync(path.join(APP_DIR, "refund-policy", "page.tsx"), "utf-8");
-  const hardcodedRefundDays = /\b\d{1,3}-day\b/i.test(refundPageContent);
-  console.log(`REFUND POLICY PAGE: ${hardcodedRefundDays ? "BLOCKED -- publishes a specific day count while the policy is unconfirmed" : "no hardcoded day count (consistent with unconfirmed status)"}`);
-  if (hardcodedRefundDays) pass = false;
+  const refundConfirmed = REFUND_POLICY_STATUS === "confirmed" && REFUND_DAYS === 60;
+  console.log(`REFUND POLICY: ${refundConfirmed ? "CONFIRMED -- 60 days (Digistore24 Compliance, minimum 60-day requirement met)" : "BLOCKED -- refund policy not confirmed at 60 days"}`);
+  if (!refundConfirmed) pass = false;
+
+  const dsActiveOk = DS24_ACTIVE_PRODUCT_IDS.length > 0 && DS24_ACTIVE_PRODUCT_IDS.every((id) => PRODUCTS.some((p) => p.digistoreProductId === id));
+  const gatingCorrect = PRODUCTS.every((p) => canBuyNow(p) === (!!p.digistoreProductId && DS24_ACTIVE_PRODUCT_IDS.includes(p.digistoreProductId) && !!p.digistoreCheckoutUrl));
+  const purchasable = PRODUCTS.filter((p) => canBuyNow(p));
+  console.log(`\nBUY NOW GATING: ${gatingCorrect && dsActiveOk ? `OK -- canBuyNow() true only for DS24_ACTIVE_PRODUCT_IDS (${DS24_ACTIVE_PRODUCT_IDS.join(", ")})` : "BLOCKED -- canBuyNow() does not match the id-based gate"}`);
+  console.log(`CURRENTLY PURCHASABLE: ${purchasable.length} / ${PRODUCTS.length} -- ${purchasable.map((p) => `${p.id} (${p.digistoreProductId})`).join(", ") || "none"}`);
+  if (!gatingCorrect || !dsActiveOk) pass = false;
 
   const files = walk(APP_DIR);
   const productPage = files.find((f) => f.includes(path.join("products", "[id]", "page.tsx")));

@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Check, Download, ShieldCheck, Mail } from "lucide-react";
-import { PRODUCTS, getProductById, getProductsByNiche, canBuyNow } from "@/lib/products";
+import { PRODUCTS, REFUND_DAYS, getProductById, getProductsByNiche, canBuyNow } from "@/lib/products";
 import { SITE } from "@/lib/site-config";
 import { Reveal } from "@/components/reveal";
 import { TrackView } from "@/components/track-view";
@@ -133,7 +133,7 @@ export default async function ProductPage({
 
               <div className="mt-6 flex flex-col gap-2 text-xs text-fg-soft">
                 <span className="flex items-center gap-1.5"><Download className="size-3.5" /> Digital product — downloadable after purchase, delivered via Digistore24.</span>
-                <span className="flex items-center gap-1.5"><ShieldCheck className="size-3.5" /> Refunds are handled through Digistore24. See the <Link href="/refund-policy" className="underline">Refund Policy</Link> for current information.</span>
+                <span className="flex items-center gap-1.5"><ShieldCheck className="size-3.5" /> {REFUND_DAYS}-day return window via Digistore24 — see the <Link href="/refund-policy" className="underline">Refund Policy</Link>.</span>
               </div>
             </div>
           </Reveal>

@@ -1,4 +1,4 @@
-import { PRODUCTS } from "../src/lib/products";
+import { PRODUCTS, canBuyNow } from "../src/lib/products";
 import { loadMasterCatalog, loadCsvExport } from "./lib/sources";
 import { matchCsvRow, catalogRow } from "./lib/match";
 
@@ -97,11 +97,10 @@ function main() {
     const count = PRODUCTS.filter((p) => p.approvalStatus === status).length;
     console.log(`${status.toUpperCase()}: ${count} / ${total}`);
   }
-  const rejected = PRODUCTS.filter((p) => p.approvalStatus === "rejected");
-  if (rejected.length > 0) {
-    console.log(`\n⚠  ${rejected.length} product(s) REJECTED by Digistore24 (Buy Now still shows the real link per explicit product decision):`);
-    rejected.forEach((p) => console.log(`   - ${p.industry} — ${p.tierLabel} (${p.digistoreProductId}): ${p.approvalStatusRaw}`));
-  }
+  const purchasable = PRODUCTS.filter((p) => canBuyNow(p));
+  console.log(`\nCURRENTLY PURCHASABLE (Buy Now live): ${purchasable.length} / ${total}`);
+  purchasable.forEach((p) => console.log(`   - ${p.industry} — ${p.tierLabel} (${p.digistoreProductId}): ${p.approvalStatusRaw}`));
+  console.log(`COMING SOON (not yet submitted to Digistore24): ${total - purchasable.length} / ${total}`);
 
   console.log("\n================================================");
   console.log("RESULT:", pass ? "PASS" : "FAIL");
