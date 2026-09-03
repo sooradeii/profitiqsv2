@@ -3352,7 +3352,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "roofing-complete",
-    canonicalName: "Roofing Profit Intelligence System - Complete 2026",
+    canonicalName: "Roofing Contractor Profit Intelligence System - Complete 2026",
     displayName: "Roofing Profit Intelligence System™ — Complete 2026",
     slug: "roofing",
     tier: "complete",

@@ -13,7 +13,13 @@ export function StatCounter({
   suffix?: string;
   duration?: number;
 }) {
-  const [display, setDisplay] = useState(0);
+  // Starts at the real final value, not 0 -- this is real pricing/stat
+  // content (e.g. "$97"), and must never render as "$0" or "0" for a
+  // crawler, a pre-hydration paint, a no-JS visitor, or a viewer who
+  // scrolls past before the animation would trigger. The count-up is a
+  // bonus effect for whoever actually watches it happen, applied by
+  // resetting to 0 right as the animation starts -- never as the default.
+  const [display, setDisplay] = useState(value);
   const ref = useRef<HTMLSpanElement>(null);
   const started = useRef(false);
 
@@ -27,6 +33,7 @@ export function StatCounter({
       ([entry]) => {
         if (entry.isIntersecting && !started.current) {
           started.current = true;
+          setDisplay(0);
           const start = performance.now();
           const tick = (now: number) => {
             const progress = effectiveDuration === 0 ? 1 : Math.min((now - start) / effectiveDuration, 1);
