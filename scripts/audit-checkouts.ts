@@ -47,7 +47,7 @@ function main() {
     console.log(`${status.toUpperCase()}: ${PRODUCTS.filter((p) => p.approvalStatus === status).length} / ${PRODUCTS.length}`);
   }
   const purchasable = PRODUCTS.filter((p) => canBuyNow(p));
-  console.log(`\nCURRENTLY PURCHASABLE (submitted to Digistore24, Buy Now live): ${purchasable.length} / ${PRODUCTS.length} -- ${purchasable.map((p) => p.digistoreProductId).join(", ") || "none"}`);
+  console.log(`\nBUY NOW LIVE (real checkout URL mapped): ${purchasable.length} / ${PRODUCTS.length}`);
 
   const ok = missing === 0 && wrongMappings === 0 && duplicateUrls.length === 0;
   console.log(`\nRESULT: ${ok ? "PASS" : "FAIL"}`);

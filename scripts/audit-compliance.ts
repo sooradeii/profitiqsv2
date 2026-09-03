@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { PRODUCTS, REFUND_DAYS, REFUND_POLICY_STATUS, DS24_ACTIVE_PRODUCT_IDS, canBuyNow } from "../src/lib/products";
+import { PRODUCTS, REFUND_DAYS, REFUND_POLICY_STATUS, canBuyNow } from "../src/lib/products";
 import { LEGAL_ENTITY } from "../src/lib/site-config";
 
 const APP_DIR = path.resolve(__dirname, "..", "src", "app");
@@ -61,12 +61,31 @@ function main() {
   console.log(`REFUND POLICY: ${refundConfirmed ? "CONFIRMED -- 60 days (Digistore24 Compliance, minimum 60-day requirement met)" : "BLOCKED -- refund policy not confirmed at 60 days"}`);
   if (!refundConfirmed) pass = false;
 
-  const dsActiveOk = DS24_ACTIVE_PRODUCT_IDS.length > 0 && DS24_ACTIVE_PRODUCT_IDS.every((id) => PRODUCTS.some((p) => p.digistoreProductId === id));
-  const gatingCorrect = PRODUCTS.every((p) => canBuyNow(p) === (!!p.digistoreProductId && DS24_ACTIVE_PRODUCT_IDS.includes(p.digistoreProductId) && !!p.digistoreCheckoutUrl));
+  // Per direct, explicit Digistore24 Compliance instruction: every product
+  // with a real checkout URL must show a working Buy Now button -- Coming
+  // Soon is only for products with no mapped checkout URL at all.
+  const gatingCorrect = PRODUCTS.every((p) => canBuyNow(p) === !!p.digistoreCheckoutUrl);
   const purchasable = PRODUCTS.filter((p) => canBuyNow(p));
-  console.log(`\nBUY NOW GATING: ${gatingCorrect && dsActiveOk ? `OK -- canBuyNow() true only for DS24_ACTIVE_PRODUCT_IDS (${DS24_ACTIVE_PRODUCT_IDS.join(", ")})` : "BLOCKED -- canBuyNow() does not match the id-based gate"}`);
-  console.log(`CURRENTLY PURCHASABLE: ${purchasable.length} / ${PRODUCTS.length} -- ${purchasable.map((p) => `${p.id} (${p.digistoreProductId})`).join(", ") || "none"}`);
-  if (!gatingCorrect || !dsActiveOk) pass = false;
+  const comingSoon = PRODUCTS.filter((p) => !canBuyNow(p));
+  console.log(`\nBUY NOW GATING: ${gatingCorrect ? "OK -- canBuyNow() true whenever a real checkout URL exists" : "BLOCKED -- canBuyNow() does not match digistoreCheckoutUrl presence"}`);
+  console.log(`BUY NOW LIVE: ${purchasable.length} / ${PRODUCTS.length}`);
+  console.log(`COMING SOON (no checkout URL mapped): ${comingSoon.length} / ${PRODUCTS.length}${comingSoon.length ? " -- " + comingSoon.map((p) => p.id).join(", ") : ""}`);
+  if (!gatingCorrect) pass = false;
+
+  // Verify every Buy Now link actually points at THAT product's own real
+  // Digistore24 checkout URL, in the exact expected URL shape, with the
+  // embedded product ID matching digistoreProductId -- catches a wrong-
+  // product-linked-to-another's-checkout bug programmatically.
+  let checkoutMismatches = 0;
+  for (const p of purchasable) {
+    const expected = `https://www.checkout-ds24.com/product/${p.digistoreProductId}`;
+    if (p.digistoreCheckoutUrl !== expected) {
+      checkoutMismatches++;
+      console.log(`  ⚠  CHECKOUT URL MISMATCH: ${p.id} -- expected ${expected}, got ${p.digistoreCheckoutUrl}`);
+    }
+  }
+  console.log(`CHECKOUT URL SHAPE/ID MATCH: ${checkoutMismatches === 0 ? `OK -- all ${purchasable.length} purchasable products link to their own correct product ID` : `BLOCKED -- ${checkoutMismatches} mismatch(es)`}`);
+  if (checkoutMismatches > 0) pass = false;
 
   const files = walk(APP_DIR);
   const productPage = files.find((f) => f.includes(path.join("products", "[id]", "page.tsx")));

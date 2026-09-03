@@ -98,9 +98,12 @@ function main() {
     console.log(`${status.toUpperCase()}: ${count} / ${total}`);
   }
   const purchasable = PRODUCTS.filter((p) => canBuyNow(p));
-  console.log(`\nCURRENTLY PURCHASABLE (Buy Now live): ${purchasable.length} / ${total}`);
-  purchasable.forEach((p) => console.log(`   - ${p.industry} — ${p.tierLabel} (${p.digistoreProductId}): ${p.approvalStatusRaw}`));
-  console.log(`COMING SOON (not yet submitted to Digistore24): ${total - purchasable.length} / ${total}`);
+  const comingSoon = PRODUCTS.filter((p) => !canBuyNow(p));
+  console.log(`\nBUY NOW LIVE (real checkout URL mapped): ${purchasable.length} / ${total}`);
+  console.log(`COMING SOON (no checkout URL mapped): ${comingSoon.length} / ${total}`);
+  if (comingSoon.length > 0) {
+    comingSoon.forEach((p) => console.log(`   - ${p.industry} — ${p.tierLabel} (${p.id}): no checkout URL`));
+  }
 
   console.log("\n================================================");
   console.log("RESULT:", pass ? "PASS" : "FAIL");

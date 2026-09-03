@@ -19,12 +19,18 @@
 // Approval status: real Digistore24 review state as of the CSV export
 // (0 approved / 62 pending / 1 rejected), kept on every product record
 // and surfaced in the audit scripts for visibility. Buy Now display is
-// NOT driven by this field -- see DS24_ACTIVE_PRODUCT_IDS and canBuyNow
-// below for the current (id-based) rule, per direct Digistore24
-// Compliance feedback: only products actually submitted to Digistore24
-// may be shown as purchasable; the rest of the 63-product catalog is
-// still being submitted and must show Coming Soon regardless of whether
-// a checkout URL is already mapped for it.
+// NOT gated on this field -- see canBuyNow below. Per direct Digistore24
+// Compliance feedback: "all sales pages must integrate to Digistore24
+// and all buy buttons must be working and redirecting to Digistore24
+// checkout" -- every one of the 63 products already has a real
+// Digistore24 product/checkout URL (that's where digistoreCheckoutUrl
+// comes from -- it only exists because the product was actually created
+// in Digistore24's system), so every one gets a working Buy Now button.
+// A prior, narrower reading of separate DS24 Compliance feedback
+// restricted this to a single actively-reviewed product
+// (DS24_ACTIVE_PRODUCT_IDS); superseded by this explicit, repeated
+// instruction. Do not re-narrow this without equally explicit
+// confirmation.
 
 export type Tier = "essential" | "elite" | "complete";
 
@@ -2713,11 +2719,11 @@ export const PRODUCTS: Product[] = [
     approvalStatusRaw: "DS-us: new",
     coverImage: "/assets/covers/Property_Management_Profit_Intelligence_System_Essential_2026_Cover.png",
     features: [
-      "Property_Setup",
-      "Rent_Entry",
-      "Expense_Entry",
-      "Vacancy_Tracker",
-      "Property_Pnl",
+      "Property Setup",
+      "Rent Entry",
+      "Expense Entry",
+      "Vacancy Tracker",
+      "Property P&L",
       "Dashboard",
       "Setup",
       "Tax & Deductions",
@@ -2817,11 +2823,11 @@ export const PRODUCTS: Product[] = [
     approvalStatusRaw: "DS-us: new",
     coverImage: "/assets/covers/Property_Management_Profit_Intelligence_System_Complete_2026_Cover.png",
     features: [
-      "Property_Setup",
-      "Rent_Entry",
-      "Expense_Entry",
-      "Vacancy_Tracker",
-      "Property_Pnl",
+      "Property Setup",
+      "Rent Entry",
+      "Expense Entry",
+      "Vacancy Tracker",
+      "Property P&L",
       "Dashboard",
       "Setup",
       "Tax & Deductions",
@@ -3303,33 +3309,33 @@ export const PRODUCTS: Product[] = [
     approvalStatusRaw: "DS-us: new",
     coverImage: "/assets/covers/Roofing_Profit_Intelligence_System_Elite_2026_Cover.png",
     features: [
-      "- Start Here",
-      "- Executive Dashboard",
-      "- Executive Summary",
-      "- Lead Tracker",
-      "- Estimate Center",
-      "- Job Management",
-      "- Job Costing",
-      "- Revenue Tracker",
-      "- Expense Tracker",
-      "- Customer Database",
-      "- AR Aging",
-      "- Cash Flow Center",
-      "- Crew Performance",
-      "- KPI Scorecard",
-      "- Business Health Score",
-      "- Profit Leak Detector",
-      "- Forecasting Center",
-      "- Benchmarking Center",
-      "- Customer Analytics Center",
-      "- Tax Setup",
-      "- Tax Reserve & VAT Center",
-      "- Deduction Maximizer",
-      "- Tax Readiness Center",
-      "- Accountant Summary",
-      "- Glossary",
-      "- Changelog",
-      "- Core Engine",
+      "Start Here",
+      "Executive Dashboard",
+      "Executive Summary",
+      "Lead Tracker",
+      "Estimate Center",
+      "Job Management",
+      "Job Costing",
+      "Revenue Tracker",
+      "Expense Tracker",
+      "Customer Database",
+      "AR Aging",
+      "Cash Flow Center",
+      "Crew Performance",
+      "KPI Scorecard",
+      "Business Health Score",
+      "Profit Leak Detector",
+      "Forecasting Center",
+      "Benchmarking Center",
+      "Customer Analytics Center",
+      "Tax Setup",
+      "Tax Reserve & VAT Center",
+      "Deduction Maximizer",
+      "Tax Readiness Center",
+      "Accountant Summary",
+      "Glossary",
+      "Changelog",
+      "Core Engine",
     ],
     includedFiles: [
       "Roofing Elite Workbook",
@@ -3371,33 +3377,33 @@ export const PRODUCTS: Product[] = [
       "Dashboard",
       "Accountant Export",
       "Business Health Snapshot",
-      "- Start Here",
-      "- Executive Dashboard",
-      "- Executive Summary",
-      "- Lead Tracker",
-      "- Estimate Center",
-      "- Job Management",
-      "- Job Costing",
-      "- Revenue Tracker",
-      "- Expense Tracker",
-      "- Customer Database",
-      "- AR Aging",
-      "- Cash Flow Center",
-      "- Crew Performance",
-      "- KPI Scorecard",
-      "- Business Health Score",
-      "- Profit Leak Detector",
-      "- Forecasting Center",
-      "- Benchmarking Center",
-      "- Customer Analytics Center",
-      "- Tax Setup",
-      "- Tax Reserve & VAT Center",
-      "- Deduction Maximizer",
-      "- Tax Readiness Center",
-      "- Accountant Summary",
-      "- Glossary",
-      "- Changelog",
-      "- Core Engine",
+      "Start Here",
+      "Executive Dashboard",
+      "Executive Summary",
+      "Lead Tracker",
+      "Estimate Center",
+      "Job Management",
+      "Job Costing",
+      "Revenue Tracker",
+      "Expense Tracker",
+      "Customer Database",
+      "AR Aging",
+      "Cash Flow Center",
+      "Crew Performance",
+      "KPI Scorecard",
+      "Business Health Score",
+      "Profit Leak Detector",
+      "Forecasting Center",
+      "Benchmarking Center",
+      "Customer Analytics Center",
+      "Tax Setup",
+      "Tax Reserve & VAT Center",
+      "Deduction Maximizer",
+      "Tax Readiness Center",
+      "Accountant Summary",
+      "Glossary",
+      "Changelog",
+      "Core Engine",
     ],
     includedFiles: [
       "Roofing Essential Workbook",
@@ -3791,27 +3797,15 @@ export function getCheckoutUrl(product: Product): string | null {
   return product.digistoreCheckoutUrl;
 }
 
-/** Products actually submitted to Digistore24 and confirmed safe to
- * present as purchasable right now, per direct Digistore24 Compliance
- * feedback (Erica, DS24 Compliance): "products displayed on the sales
- * page must be products that have been submitted for approval." Auto
- * Repair Complete (720175) has had a completed test purchase and is
- * currently under active review -- the rest of the 63-product catalog
- * has mapped checkout URLs already (see DS24_CSV_EXPORT.csv) but has
- * NOT yet been submitted to Digistore24, so it must not be presented as
- * purchasable yet even though a URL exists. Update this list only as
- * additional products are actually submitted and confirmed. */
-export const DS24_ACTIVE_PRODUCT_IDS: string[] = ["720175"];
-
-/** Buy Now shows the real checkout link only for products on
- * DS24_ACTIVE_PRODUCT_IDS -- a mapped checkout URL existing is not
- * sufficient on its own (see above). Every other product renders Coming
- * Soon until it is actually submitted to Digistore24. */
+/** Buy Now shows the real checkout link for every product that has one.
+ * Per direct, explicit, repeated Digistore24 Compliance instruction:
+ * "do not keep a product as Coming Soon simply because Digistore24
+ * approval has not happened yet -- if a product already has a real
+ * Digistore24 checkout URL, its sales page must have a working Buy Now
+ * button pointing to that checkout." A product with no checkout URL
+ * (there are currently none in this catalog -- all 63 are mapped)
+ * would correctly show Coming Soon instead. */
 export function canBuyNow(product: Product): boolean {
-  return (
-    !!product.digistoreProductId &&
-    DS24_ACTIVE_PRODUCT_IDS.includes(product.digistoreProductId) &&
-    !!getCheckoutUrl(product)
-  );
+  return !!getCheckoutUrl(product);
 }
 
