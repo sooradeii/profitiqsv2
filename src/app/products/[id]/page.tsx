@@ -8,6 +8,9 @@ import { SITE } from "@/lib/site-config";
 import { Reveal } from "@/components/reveal";
 import { TrackView } from "@/components/track-view";
 import { BuyNowLink } from "@/components/buy-now-link";
+import { DigistorePromocode } from "@/components/digistore-promocode";
+import { DigistoreTrustBadge } from "@/components/digistore-trust-badge";
+import { DigistoreBadgeOffset } from "@/components/digistore-badge-offset";
 
 export function generateStaticParams() {
   return PRODUCTS.map((p) => ({ id: p.id }));
@@ -81,6 +84,11 @@ export default async function ProductPage({
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <TrackView event={{ name: "product_view", productId: product.id, slug: product.slug, tier: product.tier }} />
+      {product.digistoreProductId && (
+        <DigistorePromocode referenceProductId={product.digistoreProductId} />
+      )}
+      <DigistoreTrustBadge />
+      <DigistoreBadgeOffset />
 
       <nav className="border-b border-border px-5 py-3 text-xs text-fg-soft sm:px-8">
         <Link href="/">Home</Link> / <Link href="/products">Products</Link> / {product.industry} {product.tierLabel}
