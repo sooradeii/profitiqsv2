@@ -33,8 +33,8 @@
   --radius-control: 10px;
 
   /* Live height of Digistore24's own sticky top/bottom trust-badge bars
-     (present on industry and product pages), measured and set by
-     DigistoreBadgeOffset once DS24's script renders them -- 0px
+     (present on industry, product, and thank-you pages), measured and
+     set by DigistoreBadgeOffset once DS24's script renders them -- 0px
      everywhere else, so this is a no-op on every other page. */
   --ds24-top-offset: 0px;
   --ds24-bottom-offset: 0px;
