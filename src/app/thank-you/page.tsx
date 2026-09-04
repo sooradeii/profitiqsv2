@@ -31,7 +31,8 @@ export default function ThankYouPage() {
         <p className="mt-4 text-base text-fg-soft">
           Your purchase was completed successfully. This order was
           processed and charged by Digistore24, ProfitIQS&apos;s checkout
-          provider — not by ProfitIQS directly.
+          provider — not by ProfitIQS directly. Your credit card
+          statement will show a charge from Digistore24.
         </p>
 
         <div className="mt-10 space-y-6 rounded-[var(--radius-card)] border border-border bg-surface p-6 text-left sm:p-8">
