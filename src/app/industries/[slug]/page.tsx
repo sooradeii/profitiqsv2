@@ -7,6 +7,7 @@ import { Reveal } from "@/components/reveal";
 import { TrackView } from "@/components/track-view";
 import { BuyNowLink } from "@/components/buy-now-link";
 import { DigistorePromocode } from "@/components/digistore-promocode";
+import { DigistoreTrustBadge } from "@/components/digistore-trust-badge";
 
 export function generateStaticParams() {
   return getNiches().map((n) => ({ slug: n.slug }));
@@ -49,6 +50,7 @@ export default async function IndustryPage({
       {complete?.digistoreProductId && (
         <DigistorePromocode referenceProductId={complete.digistoreProductId} />
       )}
+      <DigistoreTrustBadge />
       <section className="border-b border-border">
         <div className="mx-auto grid max-w-[1280px] grid-cols-1 gap-10 px-5 py-14 sm:px-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <Reveal className="min-w-0">

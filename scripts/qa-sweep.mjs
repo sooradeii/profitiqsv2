@@ -20,6 +20,7 @@ const STATIC_ROUTES = [
   "/", "/products", "/industries", "/essential", "/elite", "/complete",
   "/compare", "/about", "/contact", "/faq",
   "/legal-information", "/privacy-policy", "/terms", "/refund-policy", "/disclaimer",
+  "/thank-you",
 ];
 
 const routes = [

@@ -26,7 +26,7 @@ function checkRoutesExist(): boolean {
     "compare/page.tsx", "about/page.tsx",
     "contact/page.tsx", "faq/page.tsx", "legal-information/page.tsx",
     "privacy-policy/page.tsx", "terms/page.tsx", "refund-policy/page.tsx",
-    "disclaimer/page.tsx", "robots.ts", "sitemap.ts", "not-found.tsx",
+    "disclaimer/page.tsx", "thank-you/page.tsx", "robots.ts", "sitemap.ts", "not-found.tsx",
   ];
   let ok = true;
   for (const rel of expected) {
@@ -45,7 +45,7 @@ function checkSeoMetadata(): boolean {
     "elite/page.tsx", "complete/page.tsx", "compare/page.tsx",
     "about/page.tsx", "contact/page.tsx", "faq/page.tsx", "legal-information/page.tsx",
     "privacy-policy/page.tsx", "terms/page.tsx", "refund-policy/page.tsx", "disclaimer/page.tsx",
-    "products/[id]/page.tsx", "industries/[slug]/page.tsx",
+    "thank-you/page.tsx", "products/[id]/page.tsx", "industries/[slug]/page.tsx",
   ];
   for (const rel of pages) {
     const full = path.join(APP_DIR, rel);
