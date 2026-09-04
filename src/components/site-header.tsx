@@ -27,10 +27,11 @@ export function SiteHeader() {
 
   return (
     <header
+      style={{ top: "var(--ds24-top-offset, 0px)" }}
       className={
         scrolled
-          ? "sticky top-0 z-50 border-b border-border bg-surface/95 backdrop-blur transition-shadow duration-200 shadow-[0_1px_0_0_rgba(17,19,24,0.04),0_8px_24px_-16px_rgba(17,19,24,0.15)]"
-          : "sticky top-0 z-50 border-b border-transparent bg-surface/95 backdrop-blur transition-shadow duration-200"
+          ? "sticky z-50 border-b border-border bg-surface/95 backdrop-blur transition-shadow duration-200 shadow-[0_1px_0_0_rgba(17,19,24,0.04),0_8px_24px_-16px_rgba(17,19,24,0.15)]"
+          : "sticky z-50 border-b border-transparent bg-surface/95 backdrop-blur transition-shadow duration-200"
       }
     >
       <div className={`mx-auto flex w-full max-w-[1280px] items-center justify-between px-5 transition-[height] duration-200 sm:px-8 ${scrolled ? "h-14" : "h-16"}`}>

@@ -68,7 +68,10 @@ const websiteJsonLd = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${poppins.variable} ${caveat.variable} h-full`}>
-      <body className="flex min-h-full flex-col bg-bg text-fg antialiased">
+      <body
+        className="flex min-h-full flex-col bg-bg text-fg antialiased"
+        style={{ paddingBottom: "var(--ds24-bottom-offset, 0px)" }}
+      >
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
