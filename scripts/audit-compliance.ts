@@ -25,6 +25,7 @@ const FORBIDDEN_PATTERNS: { label: string; re: RegExp }[] = [
   { label: "Digistore24 used as a trust/marketing claim", re: /digistore24\s+(trusted|badge|approved|certified)/i },
   { label: "conflicting 90-day refund claim", re: /\b90[- ]days?\b/i },
   { label: "affiliate/commission recruitment content", re: /\b(affiliate|commission per sale|earn \d+%|partner program|affiliate link|affiliate signup|affiliate opportunity)\b/i },
+  { label: "unsupported financial-outcome claim", re: /\b(make money|get rich|double your (revenue|profit|income)s?|increase your (profit|revenue|income)s? by|guaranteed roi|earn \$\d)/i },
 ];
 
 function walk(dir: string, out: string[] = []): string[] {

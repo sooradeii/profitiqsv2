@@ -2,13 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { ShieldCheck } from "lucide-react";
 import { getNiches, getProductsByNiche, canBuyNow } from "@/lib/products";
 import { Reveal } from "@/components/reveal";
 import { TrackView } from "@/components/track-view";
 import { BuyNowLink } from "@/components/buy-now-link";
 import { DigistorePromocode } from "@/components/digistore-promocode";
-import { DigistoreTrustBadge } from "@/components/digistore-trust-badge";
-import { DigistoreBadgeOffset } from "@/components/digistore-badge-offset";
 
 export function generateStaticParams() {
   return getNiches().map((n) => ({ slug: n.slug }));
@@ -51,8 +50,6 @@ export default async function IndustryPage({
       {complete?.digistoreProductId && (
         <DigistorePromocode referenceProductId={complete.digistoreProductId} />
       )}
-      <DigistoreTrustBadge />
-      <DigistoreBadgeOffset />
       <section className="border-b border-border">
         <div className="mx-auto grid max-w-[1280px] grid-cols-1 gap-10 px-5 py-14 sm:px-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <Reveal className="min-w-0">
@@ -74,6 +71,9 @@ export default async function IndustryPage({
       <section className="mx-auto max-w-[1280px] px-5 py-14 sm:px-8">
         <Reveal>
           <h2 className="font-display text-2xl font-extrabold tracking-tight text-fg">Choose your tier</h2>
+          <p className="mt-2 flex items-center gap-1.5 text-sm font-semibold text-success">
+            <ShieldCheck className="size-4" /> 60-day money-back guarantee, no questions asked
+          </p>
         </Reveal>
         <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-3">
           {products.map((p, i) => {

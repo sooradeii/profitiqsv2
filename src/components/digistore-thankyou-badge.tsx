@@ -2,9 +2,9 @@ import Script from "next/script";
 
 /**
  * Digistore24 Thank You Page Trust Badge -- exact code as provided by
- * Digistore24, unmodified. A separate badge/cid from the Sales Page
- * badge (see digistore-trust-badge.tsx) -- DS24 issues one per page
- * type from their dashboard.
+ * Digistore24, unmodified. Sales Page badge usage was removed per
+ * Digistore24 Compliance (Regine) request; this Thank You Page badge
+ * was not part of that request and remains.
  */
 export function DigistoreThankYouBadge() {
   return (

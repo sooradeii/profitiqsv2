@@ -9,8 +9,6 @@ import { Reveal } from "@/components/reveal";
 import { TrackView } from "@/components/track-view";
 import { BuyNowLink } from "@/components/buy-now-link";
 import { DigistorePromocode } from "@/components/digistore-promocode";
-import { DigistoreTrustBadge } from "@/components/digistore-trust-badge";
-import { DigistoreBadgeOffset } from "@/components/digistore-badge-offset";
 
 export function generateStaticParams() {
   return PRODUCTS.map((p) => ({ id: p.id }));
@@ -87,8 +85,6 @@ export default async function ProductPage({
       {product.digistoreProductId && (
         <DigistorePromocode referenceProductId={product.digistoreProductId} />
       )}
-      <DigistoreTrustBadge />
-      <DigistoreBadgeOffset />
 
       <nav className="border-b border-border px-5 py-3 text-xs text-fg-soft sm:px-8">
         <Link href="/">Home</Link> / <Link href="/products">Products</Link> / {product.industry} {product.tierLabel}
@@ -118,6 +114,9 @@ export default async function ProductPage({
                 )}
                 <span className="rounded-full bg-surface-muted px-3 py-1 text-xs font-medium text-fg-soft">one-time payment</span>
               </div>
+              <p className="mt-3 flex items-center gap-1.5 text-sm font-semibold text-success">
+                <ShieldCheck className="size-4" /> 60-day money-back guarantee, no questions asked
+              </p>
 
               <div className="mt-6 flex flex-wrap gap-3">
                 {buyNow ? (
