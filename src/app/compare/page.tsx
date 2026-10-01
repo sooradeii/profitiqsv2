@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { Check, Minus } from "lucide-react";
 import { getProduct } from "@/lib/products";
+import { REVIEW_MODE } from "@/lib/site-config";
 import { Reveal } from "@/components/reveal";
 
 export const metadata: Metadata = {
@@ -22,6 +24,8 @@ const ROWS = [
 ];
 
 export default function ComparePage() {
+  // TEMPORARY Digistore24 review mode -- see src/lib/site-config.ts.
+  if (REVIEW_MODE) notFound();
   const sample = {
     essential: getProduct("auto-repair", "essential"),
     elite: getProduct("auto-repair", "elite"),

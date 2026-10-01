@@ -16,17 +16,53 @@ const productsSrc = readFileSync(path.join(SITE_ROOT, "src", "lib", "products.ts
 const slugs = [...new Set([...productsSrc.matchAll(/\bslug:\s*"([a-z0-9-]+)"/g)].map((m) => m[1]))];
 const productIds = [...productsSrc.matchAll(/\bid:\s*"([a-z0-9-]+-(?:essential|elite|complete))"/g)].map((m) => m[1]);
 
-const STATIC_ROUTES = [
-  "/", "/products", "/industries", "/essential", "/elite", "/complete",
-  "/compare", "/about", "/contact", "/faq",
-  "/legal-information", "/privacy-policy", "/terms", "/refund-policy", "/disclaimer",
-  "/thank-you",
-];
+// Read REVIEW_MODE / PUBLISHED_PRODUCTS the same way products.ts is read
+// above -- parsed from source, not imported, so this plain .mjs script
+// doesn't need a TS loader. Keeps this sweep honest about exactly what
+// the live site currently gates, instead of hardcoding route
+// expectations that could drift from src/lib/site-config.ts.
+const siteConfigSrc = readFileSync(path.join(SITE_ROOT, "src", "lib", "site-config.ts"), "utf-8");
+const REVIEW_MODE = /\bREVIEW_MODE\s*=\s*true/.test(siteConfigSrc);
+const PUBLISHED_PRODUCTS = REVIEW_MODE
+  ? [...siteConfigSrc.matchAll(/"([a-z0-9-]+)"/g)]
+      .map((m) => m[1])
+      .filter((id) => productIds.includes(id))
+  : productIds;
+const PUBLISHED_NICHE_SLUGS = REVIEW_MODE
+  ? [...new Set(PUBLISHED_PRODUCTS.map((id) => id.replace(/-(essential|elite|complete)$/, "")))]
+  : slugs;
+
+const STATIC_ROUTES = REVIEW_MODE
+  ? [
+      "/", "/how-it-works", "/about", "/contact", "/faq",
+      "/legal-information", "/privacy-policy", "/terms", "/refund-policy", "/disclaimer",
+      "/thank-you",
+    ]
+  : [
+      "/", "/products", "/industries", "/essential", "/elite", "/complete",
+      "/compare", "/about", "/contact", "/faq",
+      "/legal-information", "/privacy-policy", "/terms", "/refund-policy", "/disclaimer",
+      "/thank-you",
+    ];
+
+// Catalog-listing routes that are disabled outright (not data-driven)
+// while REVIEW_MODE is on -- swept too, but expected to 404, which
+// proves the gate is actually working instead of just assuming it.
+const DISABLED_STATIC_ROUTES = REVIEW_MODE
+  ? ["/products", "/industries", "/essential", "/elite", "/complete", "/compare"]
+  : [];
 
 const routes = [
-  ...STATIC_ROUTES,
-  ...slugs.map((s) => `/industries/${s}`),
-  ...productIds.map((id) => `/products/${id}`),
+  ...STATIC_ROUTES.map((r) => ({ route: r, expectedStatus: 200 })),
+  ...DISABLED_STATIC_ROUTES.map((r) => ({ route: r, expectedStatus: 404 })),
+  ...slugs.map((s) => ({
+    route: `/industries/${s}`,
+    expectedStatus: REVIEW_MODE ? (PUBLISHED_NICHE_SLUGS.includes(s) ? 200 : 404) : 200,
+  })),
+  ...productIds.map((id) => ({
+    route: `/products/${id}`,
+    expectedStatus: REVIEW_MODE ? (PUBLISHED_PRODUCTS.includes(id) ? 200 : 404) : 200,
+  })),
 ];
 
 const VIEWPORTS = [
@@ -48,7 +84,7 @@ const FORBIDDEN_PHRASES = [
 let totalChecks = 0;
 const failures = [];
 
-async function checkRoute(context, route) {
+async function checkRoute(context, route, expectedStatus) {
   for (const vp of VIEWPORTS) {
     totalChecks++;
     const page = await context.newPage();
@@ -68,7 +104,24 @@ async function checkRoute(context, route) {
       continue;
     }
 
-    if (status !== 200) failures.push({ route, viewport: vp.name, kind: "http-status", detail: `got ${status}` });
+    if (status !== expectedStatus) failures.push({ route, viewport: vp.name, kind: "http-status", detail: `expected ${expectedStatus}, got ${status}` });
+
+    // A route expected to 404 (review-mode-hidden product/industry/
+    // catalog page) only needs its status + the page-health checks
+    // below -- its content is the generic not-found page, not
+    // product content, so skip the forbidden-phrase scan for it.
+    if (expectedStatus !== 200) {
+      const overflow404 = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
+      if (overflow404) failures.push({ route, viewport: vp.name, kind: "horizontal-overflow", detail: "404 page overflow" });
+      // Chromium itself logs "Failed to load resource: ... 404" for the
+      // main-frame navigation whenever the server correctly returns the
+      // expected 404 -- that's the status check above confirming success,
+      // not an application error, so it's excluded here specifically.
+      const realErrors = consoleErrors.filter((e) => !/Failed to load resource.*404/.test(e));
+      if (realErrors.length > 0) failures.push({ route, viewport: vp.name, kind: "console-error", detail: realErrors.slice(0, 3).join(" | ").slice(0, 300) });
+      await page.close();
+      continue;
+    }
 
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
     if (overflow) {
@@ -95,7 +148,7 @@ async function main() {
   console.log(`QA SWEEP: ${routes.length} routes x ${VIEWPORTS.length} viewports = ${routes.length * VIEWPORTS.length} checks\n`);
   const browser = await chromium.launch();
   const context = await browser.newContext();
-  for (const route of routes) await checkRoute(context, route);
+  for (const r of routes) await checkRoute(context, r.route, r.expectedStatus);
   await browser.close();
 
   console.log(`Total checks run: ${totalChecks}`);

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { PRODUCTS } from "@/lib/products";
+import { REVIEW_MODE } from "@/lib/site-config";
 import { Reveal } from "@/components/reveal";
 import { ProductCard } from "@/components/product-card";
 import { TrackView } from "@/components/track-view";
@@ -11,6 +13,8 @@ export const metadata: Metadata = {
 };
 
 export default function ElitePage() {
+  // TEMPORARY Digistore24 review mode -- see src/lib/site-config.ts.
+  if (REVIEW_MODE) notFound();
   const products = PRODUCTS.filter((p) => p.tier === "elite");
   return (
     <div className="mx-auto max-w-[1280px] px-5 py-14 sm:px-8 lg:py-20">

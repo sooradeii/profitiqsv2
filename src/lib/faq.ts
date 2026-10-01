@@ -1,13 +1,60 @@
 import { REFUND_DAYS } from "@/lib/products";
 
+/** TEMPORARY Digistore24 review-mode FAQ, focused on the single
+ * published product instead of the full 21-category catalog -- see
+ * REVIEW_MODE in site-config.ts. FAQ_ITEMS below is untouched and
+ * will be used again once the full catalog is restored. */
+export const REVIEW_FAQ_ITEMS = [
+  {
+    q: "What is ProfitIQS?",
+    a: "ProfitIQS builds business management systems for business owners — Excel-based workbooks built around the specific numbers a business actually tracks, not a generic spreadsheet template.",
+  },
+  {
+    q: "What is the Auto Repair Shop — Complete system?",
+    a: "A business management system built specifically for independent auto repair shops, covering repair order entry, parts and labor tracking, technician performance, inventory, cash flow, and reporting — in one Excel workbook plus a Field Guide and Quick Start.",
+  },
+  {
+    q: "Is this a digital product?",
+    a: "Yes. It's a downloadable Excel workbook and supporting documents, delivered after purchase. There is no physical shipment.",
+  },
+  {
+    q: "What's included in the Complete tier?",
+    a: "Both the Essential and Elite workbooks for Auto Repair Shop, bundled together in one purchase, along with the Field Guide and Quick Start.",
+  },
+  {
+    q: "How is it delivered?",
+    a: "The purchase is processed through Digistore24. After checkout, Digistore24's own order confirmation and Download Vault handle delivering your files.",
+  },
+  {
+    q: "Do I need Excel experience?",
+    a: "No advanced experience is required. The system ships with a Field Guide and Quick Start walking through setup and every sheet.",
+  },
+  {
+    q: "How is payment processed?",
+    a: "All payment processing is handled entirely by Digistore24. ProfitIQS does not run its own checkout, and does not receive or store your payment details.",
+  },
+  {
+    q: "How are downloads delivered?",
+    a: "Through Digistore24's Download Vault, tied to your order confirmation from checkout.",
+  },
+  {
+    q: "What is the refund policy?",
+    a: `A ${REFUND_DAYS}-day return window, processed through Digistore24. See the Refund Policy page for details.`,
+  },
+  {
+    q: "How do I get support?",
+    a: "Email support@profitiqs.com with the product name and what you need — messages are read directly, not routed through a ticket system.",
+  },
+];
+
 export const FAQ_ITEMS = [
   {
     q: "What is ProfitIQS?",
-    a: "ProfitIQS builds financial and operational intelligence systems for business owners — Excel-based workbooks built around the specific numbers each industry actually tracks, not a generic spreadsheet template.",
+    a: "ProfitIQS builds business management systems for business owners — Excel-based workbooks built around the specific numbers each industry actually tracks, not a generic spreadsheet template.",
   },
   {
     q: "Who are these systems for?",
-    a: "Business owners and operators across 21 categories — from auto repair shops and HVAC contractors to Airbnb hosts and ecommerce sellers — who want a clearer picture of revenue, cost, and profitability than a generic bookkeeping tool provides.",
+    a: "Business owners and operators across 21 categories — from auto repair shops and HVAC contractors to Airbnb hosts and ecommerce sellers — who want a clearer picture of revenue, cost, and margin than a generic bookkeeping tool provides.",
   },
   {
     q: "Are these digital products?",

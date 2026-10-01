@@ -4,14 +4,24 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ShieldCheck } from "lucide-react";
 import { getNiches, getProductsByNiche, canBuyNow } from "@/lib/products";
+import { REVIEW_MODE, isPublishedNicheSlug, isPublishedProduct } from "@/lib/site-config";
 import { Reveal } from "@/components/reveal";
 import { TrackView } from "@/components/track-view";
 import { BuyNowLink } from "@/components/buy-now-link";
 import { DigistorePromocode } from "@/components/digistore-promocode";
 
 export function generateStaticParams() {
-  return getNiches().map((n) => ({ slug: n.slug }));
+  // TEMPORARY Digistore24 review mode: only the published niche
+  // (Auto Repair) is generated -- every other industry page 404s.
+  const niches = REVIEW_MODE ? getNiches().filter((n) => isPublishedNicheSlug(n.slug)) : getNiches();
+  return niches.map((n) => ({ slug: n.slug }));
 }
+
+// Literal boolean required by Next.js (can't statically parse a
+// computed expression) -- keep in sync by hand with REVIEW_MODE in
+// src/lib/site-config.ts. See the matching comment in
+// src/app/products/[id]/page.tsx for the full explanation.
+export const dynamicParams = false;
 
 export async function generateMetadata({
   params,
@@ -19,6 +29,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+  if (!isPublishedNicheSlug(slug)) return {};
   const niche = getNiches().find((n) => n.slug === slug);
   if (!niche) return {};
   return {
@@ -36,12 +47,13 @@ export default async function IndustryPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  if (!isPublishedNicheSlug(slug)) notFound();
   const niche = getNiches().find((n) => n.slug === slug);
   if (!niche) notFound();
 
-  const products = getProductsByNiche(slug).sort(
-    (a, b) => TIER_ORDER.indexOf(a.tier) - TIER_ORDER.indexOf(b.tier),
-  );
+  const products = getProductsByNiche(slug)
+    .filter((p) => isPublishedProduct(p.id))
+    .sort((a, b) => TIER_ORDER.indexOf(a.tier) - TIER_ORDER.indexOf(b.tier));
   const complete = products.find((p) => p.tier === "complete");
 
   return (

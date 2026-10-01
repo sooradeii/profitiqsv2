@@ -11,8 +11,11 @@
     "audit-prices": "tsx scripts/audit-prices.ts",
     "audit-checkouts": "tsx scripts/audit-checkouts.ts",
     "audit-compliance": "tsx scripts/audit-compliance.ts",
+    "audit-review-mode": "tsx scripts/audit-review-mode.ts",
     "qa-sweep": "node scripts/qa-sweep.mjs",
-    "launch-audit": "tsx scripts/launch-audit.ts"
+    "launch-audit": "tsx scripts/launch-audit.ts",
+    "stage5-link-audit": "tsx scripts/stage5-link-audit.ts",
+    "stage5-product-audit": "tsx scripts/stage5-product-audit.ts"
   },
   "dependencies": {
     "clsx": "^2.1.1",

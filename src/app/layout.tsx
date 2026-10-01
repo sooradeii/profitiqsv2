@@ -3,7 +3,7 @@ import { Poppins, Caveat } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { SITE } from "@/lib/site-config";
+import { SITE, REVIEW_MODE } from "@/lib/site-config";
 
 // Type direction: Poppins is the single typeface for the entire public
 // site -- display, body, and numerals. Weight carries the hierarchy
@@ -24,27 +24,32 @@ const caveat = Caveat({
   weight: ["600", "700"],
 });
 
+const DEFAULT_TITLE = REVIEW_MODE
+  ? `${SITE.name} — Auto Repair Shop Business Intelligence System`
+  : `${SITE.name} — Business Management Systems for Business Owners`;
+
+const DEFAULT_DESCRIPTION = REVIEW_MODE
+  ? "A business intelligence system built specifically for independent auto repair shops — repair order tracking, parts and labor, inventory, cash flow, and reporting in one workbook."
+  : "Practical business management systems built around the numbers that matter — revenue, expenses, cash flow, performance, and planning. 63 systems across 21 business categories.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `${SITE.name} — Financial Intelligence Systems for Business Owners`,
+    default: DEFAULT_TITLE,
     template: `%s | ${SITE.name}`,
   },
-  description:
-    "Practical financial and operational intelligence systems built around the numbers that matter — revenue, expenses, profitability, cash flow, performance, and planning. 63 systems across 21 business categories.",
+  description: DEFAULT_DESCRIPTION,
   openGraph: {
     type: "website",
     siteName: SITE.name,
-    title: `${SITE.name} — Financial Intelligence Systems for Business Owners`,
-    description:
-      "Practical financial and operational intelligence systems built around the numbers that matter.",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
     url: SITE.url,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE.name} — Financial Intelligence Systems for Business Owners`,
-    description:
-      "Practical financial and operational intelligence systems built around the numbers that matter.",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
   },
   alternates: { canonical: "/" },
 };

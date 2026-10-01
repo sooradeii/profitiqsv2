@@ -1,20 +1,32 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Search, TrendingUp, Layers, Target, Repeat } from "lucide-react";
-import { getNiches, getProduct, PRODUCTS } from "@/lib/products";
-import { FAQ_ITEMS } from "@/lib/faq";
+import { ArrowRight, Check, Download, ShieldCheck, Search } from "lucide-react";
+import { TrendingUp, Layers, Target, Repeat } from "lucide-react";
+import { getNiches, getProduct, getProductById, getProductsByNiche, canBuyNow, PRODUCTS } from "@/lib/products";
+import { FAQ_ITEMS, REVIEW_FAQ_ITEMS } from "@/lib/faq";
+import { REVIEW_MODE, REVIEW_PRIMARY_PRODUCT_ID, REVIEW_PRIMARY_NICHE_SLUG, SITE } from "@/lib/site-config";
 import { Reveal } from "@/components/reveal";
 import { ProductCard } from "@/components/product-card";
 import { StatCounter } from "@/components/stat-counter";
 import { Ticker } from "@/components/ticker";
+import { BuyNowLink } from "@/components/buy-now-link";
 
-export const metadata: Metadata = {
-  title: "ProfitIQS — Financial Intelligence Systems for Business Owners",
+const FULL_CATALOG_METADATA: Metadata = {
+  title: "ProfitIQS — Business Management Systems for Business Owners",
   description:
-    "Practical financial and operational intelligence systems built around the numbers that matter — revenue, expenses, profitability, cash flow, performance, and planning. 63 systems across 21 business categories.",
+    "Practical business management systems built around the numbers that matter — revenue, expenses, cash flow, performance, and planning. 63 systems across 21 business categories.",
   alternates: { canonical: "/" },
 };
+
+const REVIEW_METADATA: Metadata = {
+  title: "ProfitIQS — Auto Repair Shop Business Intelligence System",
+  description:
+    "A business intelligence system built specifically for independent auto repair shops — repair order tracking, parts and labor, inventory, cash flow, and reporting in one workbook.",
+  alternates: { canonical: "/" },
+};
+
+export const metadata: Metadata = REVIEW_MODE ? REVIEW_METADATA : FULL_CATALOG_METADATA;
 
 // Deterministic featured selection -- not randomized per render.
 const FEATURED_SLUGS = [
@@ -50,6 +62,15 @@ const TIERS = [
 ];
 
 export default function HomePage() {
+  if (REVIEW_MODE) return <ReviewHomePage />;
+  return <FullCatalogHomePage />;
+}
+
+// ============================================================================
+// Full-catalog homepage -- UNCHANGED, kept intact for when the other 20
+// industries / 60 products are restored (flip REVIEW_MODE to false).
+// ============================================================================
+function FullCatalogHomePage() {
   const niches = getNiches();
   const featured = FEATURED_SLUGS.map((slug) => getProduct(slug, "essential")).filter((p) => !!p);
   const heroCovers = HERO_COVER_SLUGS.map((slug) => getProduct(slug, "complete")).filter((p) => !!p);
@@ -59,7 +80,7 @@ export default function HomePage() {
   // price list.
   const tickerItems = [
     `${niches.length} Business Categories`,
-    `${PRODUCTS.length} Financial Intelligence Systems`,
+    `${PRODUCTS.length} Business Management Systems`,
     "Essential",
     "Elite",
     "Complete",
@@ -83,9 +104,9 @@ export default function HomePage() {
                 </span>
               </h1>
               <p className="mt-5 max-w-lg text-base leading-relaxed text-fg-soft sm:text-lg">
-                Practical financial and operational intelligence systems
-                built around the numbers that matter — revenue, expenses,
-                profitability, cash flow, performance, and planning.
+                Practical business management systems built around the
+                numbers that matter — revenue, expenses, cash flow,
+                performance, and planning.
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link
@@ -159,8 +180,8 @@ export default function HomePage() {
               Your business is moving. Can you see the numbers?
             </h2>
             <p className="mt-4 max-w-2xl text-base text-fg-soft">
-              Most owners can see revenue. Fewer can quickly see what&apos;s
-              actually profitable, where costs are growing, which areas need
+              Most owners can see revenue. Fewer can quickly see margin by
+              job or client, where costs are growing, which areas need
               attention, how cash is moving, and what deserves action next.
             </p>
           </Reveal>
@@ -169,10 +190,10 @@ export default function HomePage() {
               <div className="glow-card cta-surface flex h-full flex-col justify-between rounded-[var(--radius-card)] border border-border p-7 text-white">
                 <TrendingUp className="size-6 text-accent" />
                 <div>
-                  <h3 className="mt-6 font-display text-xl">What&apos;s profitable</h3>
+                  <h3 className="mt-6 font-display text-xl">Margin by job or client</h3>
                   <p className="mt-2 text-sm text-white/60">
-                    Margin by job, product, or client — not one blended
-                    number that hides the ones losing you money.
+                    Cost and revenue broken out by job, product, or client
+                    — not one blended number that hides the details.
                   </p>
                 </div>
               </div>
@@ -383,6 +404,289 @@ export default function HomePage() {
                 Find Your Industry
               </Link>
             </div>
+          </Reveal>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+const REVIEW_TIER_ORDER = ["essential", "elite", "complete"] as const;
+
+// ============================================================================
+// TEMPORARY Digistore24 review-mode homepage -- focused entirely on the
+// single published niche (Auto Repair Shop, all 3 tiers -- Complete is
+// Digistore24 product 720175, the one under active review). Built from
+// real product data only; no invented customers, testimonials, numbers,
+// or claims. See REVIEW_MODE in src/lib/site-config.ts to restore the
+// full-catalog homepage above.
+// ============================================================================
+function ReviewHomePage() {
+  const product = getProductById(REVIEW_PRIMARY_PRODUCT_ID);
+  if (!product) return null; // can't happen -- REVIEW_PRIMARY_PRODUCT_ID always points at a real product
+  const buyNow = canBuyNow(product);
+  const faqPreview = REVIEW_FAQ_ITEMS.slice(0, 6);
+  const tiers = getProductsByNiche(REVIEW_PRIMARY_NICHE_SLUG).sort(
+    (a, b) => REVIEW_TIER_ORDER.indexOf(a.tier) - REVIEW_TIER_ORDER.indexOf(b.tier),
+  );
+
+  return (
+    <div>
+      {/* ===== HERO ===== */}
+      <section className="hero-surface">
+        <div className="mx-auto max-w-[1280px] px-5 pb-10 pt-12 sm:px-8 lg:pb-14 lg:pt-16">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+            <Reveal className="min-w-0">
+              <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5">
+                <span className="pulse-dot" />
+                <span className="font-mono text-[11px] font-medium text-fg-soft">{product.category} &middot; {product.tierLabel}</span>
+              </div>
+              <h1 className="mt-5 font-display text-[2.6rem] font-extrabold leading-[1.02] tracking-[-0.02em] text-fg sm:text-[3.5rem]">
+                Business intelligence systems
+                <span className="-mt-1 block font-handwritten text-[3.4rem] font-bold leading-[0.85] tracking-normal text-accent sm:text-[4.4rem]">
+                  built around real numbers.
+                </span>
+              </h1>
+              <p className="mt-5 max-w-lg text-base leading-relaxed text-fg-soft sm:text-lg">
+                {product.heroLine} The {product.industry} system tracks
+                repair orders, parts, labor, and shop performance in one
+                Excel workbook — built specifically for independent auto
+                repair shops.
+              </p>
+              <div className="mt-7 flex flex-wrap items-center gap-3">
+                {buyNow ? (
+                  <BuyNowLink
+                    productId={product.id}
+                    price={product.price}
+                    url={product.digistoreCheckoutUrl!}
+                    className="inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-success px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:opacity-90"
+                  >
+                    Buy Now — ${product.price}
+                  </BuyNowLink>
+                ) : (
+                  <Link href={`/products/${product.id}`} className="inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-accent px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-accent-hover">
+                    View the system
+                    <ArrowRight className="size-4" />
+                  </Link>
+                )}
+                <Link
+                  href={`/products/${product.id}`}
+                  className="inline-flex items-center gap-2 rounded-[var(--radius-control)] border border-border px-6 py-3.5 text-sm font-semibold text-fg transition-colors hover:bg-surface-muted"
+                >
+                  See what&apos;s included
+                </Link>
+              </div>
+              <p className="mt-5 flex items-center gap-1.5 text-sm font-semibold text-success">
+                <ShieldCheck className="size-4" /> 60-day money-back guarantee, no questions asked
+              </p>
+            </Reveal>
+
+            <Reveal delay={120}>
+              {product.coverImage && (
+                <div className="cover-lift relative mx-auto aspect-[3/4] w-full max-w-sm overflow-hidden rounded-[var(--radius-card)] border border-border bg-white shadow-[0_20px_50px_-20px_rgba(17,19,24,0.25)]">
+                  <Image
+                    src={product.coverImage}
+                    alt={`${product.industry} cover`}
+                    fill
+                    className="object-contain p-4"
+                    sizes="400px"
+                    priority
+                  />
+                </div>
+              )}
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== WHO IT'S FOR ===== */}
+      <section className="border-b border-border bg-surface">
+        <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
+          <Reveal>
+            <h2 className="max-w-2xl font-display text-3xl tracking-tight text-fg sm:text-4xl">Who it&apos;s for</h2>
+            <p className="mt-4 max-w-2xl text-base text-fg-soft">{product.audience}</p>
+          </Reveal>
+          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-4">
+            <Reveal className="sm:col-span-2 sm:row-span-2">
+              <div className="glow-card cta-surface flex h-full flex-col justify-between rounded-[var(--radius-card)] border border-border p-7 text-white">
+                <TrendingUp className="size-6 text-accent" />
+                <div>
+                  <h3 className="mt-6 font-display text-xl">The real cost behind every repair order</h3>
+                  <p className="mt-2 text-sm text-white/60">
+                    Not just what you bill — labor, parts, and margin
+                    broken out per repair order, not one blended number.
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+            {[
+              { icon: Target, title: "Technician performance", body: "See labor sales and productivity by technician." },
+              { icon: Layers, title: "Inventory and suppliers", body: "Track parts inventory and supplier activity in one place." },
+              { icon: Repeat, title: "Monthly cash flow", body: "A monthly routine for reviewing cash flow and revenue." },
+            ].map((c, i) => (
+              <Reveal key={c.title} delay={i * 70} className="sm:col-span-2">
+                <div className="glow-card rounded-[var(--radius-card)] border border-border bg-bg p-5">
+                  <c.icon className="size-5 text-accent" />
+                  <h3 className="mt-3 text-sm font-semibold text-fg">{c.title}</h3>
+                  <p className="mt-1.5 text-sm text-fg-soft">{c.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== WHAT'S INCLUDED ===== */}
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
+          <Reveal>
+            <h2 className="font-display text-3xl tracking-tight text-fg sm:text-4xl">What&apos;s included</h2>
+            <p className="mt-3 max-w-xl text-base text-fg-soft">
+              The Complete edition — both the Essential and Elite workbooks, bundled together.
+            </p>
+          </Reveal>
+          <ul className="mt-8 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+            {product.includedFiles.map((f) => (
+              <li key={f} className="flex items-start gap-2.5 rounded-[var(--radius-control)] border border-border bg-surface p-3.5 text-sm text-fg">
+                <Check className="mt-0.5 size-4 shrink-0 text-success" />
+                {f}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* ===== ESSENTIAL / ELITE / COMPLETE -- 3 real, live tiers ===== */}
+      <section className="border-b border-border bg-surface">
+        <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
+          <Reveal>
+            <h2 className="font-display text-3xl tracking-tight text-fg sm:text-4xl">Choose your tier</h2>
+            <p className="mt-3 max-w-xl text-base text-fg-soft">
+              {product.industry} is available in all three tiers.
+            </p>
+          </Reveal>
+          <div className="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-3">
+            {tiers.map((t, i) => {
+              const tierBuyNow = canBuyNow(t);
+              const isComplete = t.tier === "complete";
+              return (
+                <Reveal key={t.id} delay={i * 90}>
+                  <div className={isComplete ? "glow-card flex h-full flex-col rounded-[var(--radius-card)] border-2 border-violet bg-violet-soft p-7" : "glow-card flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-bg p-7"}>
+                    <h3 className="font-display text-lg text-fg">{t.tierLabel}</h3>
+                    {t.price !== null && <p className="mt-2 font-display text-2xl font-extrabold text-fg">${t.price}</p>}
+                    <ul className="mt-4 flex-1 space-y-1.5 text-sm text-fg-soft">
+                      {t.features.slice(0, 5).map((f) => <li key={f}>&#10003; {f}</li>)}
+                    </ul>
+                    <div className="mt-5 flex flex-col gap-2">
+                      <Link href={`/products/${t.id}`} className="rounded-[var(--radius-control)] border border-border px-4 py-2.5 text-center text-sm font-semibold text-fg hover:border-fg-soft">
+                        View details
+                      </Link>
+                      {tierBuyNow && (
+                        <BuyNowLink
+                          productId={t.id}
+                          price={t.price}
+                          url={t.digistoreCheckoutUrl!}
+                          className="rounded-[var(--radius-control)] bg-success px-4 py-2.5 text-center text-sm font-semibold text-white hover:opacity-90"
+                        >
+                          Buy Now
+                        </BuyNowLink>
+                      )}
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== HOW IT WORKS ===== */}
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
+          <Reveal>
+            <h2 className="font-display text-3xl tracking-tight text-fg sm:text-4xl">How it works</h2>
+          </Reveal>
+          <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-3">
+            {[
+              { n: "01", title: "Review the product", body: "See what's included and who it's for on the product page." },
+              { n: "02", title: "Buy Now via Digistore24", body: "Checkout runs entirely on Digistore24, ProfitIQS's checkout provider." },
+              { n: "03", title: "Download and start tracking", body: "Your files arrive through Digistore24's Download Vault." },
+            ].map((s, i) => (
+              <Reveal key={s.n} delay={i * 90}>
+                <span className="font-mono text-7xl font-extrabold text-violet/30">{s.n}</span>
+                <h3 className="mt-3 font-display text-lg text-fg">{s.title}</h3>
+                <p className="mt-2 text-sm text-fg-soft">{s.body}</p>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal>
+            <p className="mt-10 max-w-2xl border-t border-border pt-8 text-sm text-fg-soft">
+              Your purchase is completed through Digistore24, ProfitIQS&apos;s
+              checkout provider, and digital files are delivered through
+              Digistore24&apos;s Download Vault after payment confirms.
+              ProfitIQS does not process or store your payment details.
+            </p>
+            <Link href="/how-it-works" className="mt-4 inline-block text-sm font-semibold text-accent">
+              See the full flow &rarr;
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ===== FAQ ===== */}
+      <section className="border-b border-border bg-surface">
+        <div className="mx-auto max-w-2xl px-5 py-16 sm:px-8 lg:py-20">
+          <Reveal>
+            <h2 className="font-display text-3xl tracking-tight text-fg sm:text-4xl">Frequently asked questions</h2>
+          </Reveal>
+          <dl className="mt-8 divide-y divide-border">
+            {faqPreview.map((item, i) => (
+              <Reveal key={item.q} delay={i * 30} className="py-5">
+                <dt className="font-semibold text-fg">{item.q}</dt>
+                <dd className="mt-2 text-sm text-fg-soft">{item.a}</dd>
+              </Reveal>
+            ))}
+          </dl>
+          <Link href="/faq" className="mt-6 inline-block text-sm font-semibold text-accent">
+            See the full FAQ &rarr;
+          </Link>
+        </div>
+      </section>
+
+      {/* ===== FINAL CTA ===== */}
+      <section className="cta-surface text-white">
+        <div className="mx-auto max-w-2xl px-5 py-20 text-center sm:px-8">
+          <Reveal>
+            <h2 className="font-display text-3xl tracking-tight sm:text-4xl">
+              {product.industry} — {product.tierLabel}
+            </h2>
+            <p className="mt-4 text-white/65">
+              ${product.price} — one-time payment, no subscription.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              {buyNow ? (
+                <BuyNowLink
+                  productId={product.id}
+                  price={product.price}
+                  url={product.digistoreCheckoutUrl!}
+                  className="inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-white px-7 py-3.5 text-sm font-semibold text-ink hover:bg-white/90"
+                >
+                  Buy Now — ${product.price}
+                  <ArrowRight className="size-4" />
+                </BuyNowLink>
+              ) : (
+                <Link href={`/products/${product.id}`} className="inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-white px-7 py-3.5 text-sm font-semibold text-ink hover:bg-white/90">
+                  View the system
+                  <ArrowRight className="size-4" />
+                </Link>
+              )}
+              <Link href={`/products/${product.id}`} className="rounded-[var(--radius-control)] border border-white/30 px-7 py-3.5 text-sm font-semibold text-white hover:bg-white/10">
+                View full details
+              </Link>
+            </div>
+            <p className="mt-6 flex items-center justify-center gap-1.5 text-xs text-white/50">
+              <Download className="size-3.5" /> Delivered via Digistore24&apos;s Download Vault &middot; {SITE.supportEmail}
+            </p>
           </Reveal>
         </div>
       </section>

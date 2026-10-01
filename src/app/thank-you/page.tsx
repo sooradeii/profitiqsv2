@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckCircle2, Mail, Phone } from "lucide-react";
-import { SITE } from "@/lib/site-config";
+import { SITE, REVIEW_MODE } from "@/lib/site-config";
 import { Reveal } from "@/components/reveal";
 import { DigistoreThankYouBadge } from "@/components/digistore-thankyou-badge";
 import { DigistoreBadgeOffset } from "@/components/digistore-badge-offset";
@@ -82,8 +82,12 @@ export default function ThankYouPage() {
 
         <p className="mt-8 text-sm text-fg-soft">
           <Link href="/refund-policy" className="font-semibold text-accent">Refund Policy</Link>
-          {" · "}
-          <Link href="/products" className="font-semibold text-accent">Browse more systems</Link>
+          {!REVIEW_MODE && (
+            <>
+              {" · "}
+              <Link href="/products" className="font-semibold text-accent">Browse more systems</Link>
+            </>
+          )}
         </p>
       </Reveal>
     </div>

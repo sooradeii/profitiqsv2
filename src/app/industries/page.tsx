@@ -1,16 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import { getNiches, getProductsByNiche } from "@/lib/products";
+import { REVIEW_MODE } from "@/lib/site-config";
 import { Reveal } from "@/components/reveal";
 
 export const metadata: Metadata = {
   title: "Industries",
-  description: "21 business categories ProfitIQS builds financial intelligence systems for.",
+  description: "21 business categories ProfitIQS builds business management systems for.",
   alternates: { canonical: "/industries" },
 };
 
 export default function IndustriesPage() {
+  // TEMPORARY Digistore24 review mode: the full industries catalog is
+  // not publicly browsable while only one product is published. The
+  // route, data, and this page's code all stay intact -- see
+  // REVIEW_MODE in src/lib/site-config.ts.
+  if (REVIEW_MODE) notFound();
   const niches = getNiches();
   return (
     <div className="mx-auto max-w-[1280px] px-5 py-14 sm:px-8 lg:py-20">

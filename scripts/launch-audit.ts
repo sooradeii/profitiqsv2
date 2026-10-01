@@ -23,7 +23,7 @@ function checkRoutesExist(): boolean {
     "page.tsx", "products/page.tsx", "products/[id]/page.tsx",
     "industries/page.tsx", "industries/[slug]/page.tsx",
     "essential/page.tsx", "elite/page.tsx", "complete/page.tsx",
-    "compare/page.tsx", "about/page.tsx",
+    "compare/page.tsx", "about/page.tsx", "how-it-works/page.tsx",
     "contact/page.tsx", "faq/page.tsx", "legal-information/page.tsx",
     "privacy-policy/page.tsx", "terms/page.tsx", "refund-policy/page.tsx",
     "disclaimer/page.tsx", "thank-you/page.tsx", "robots.ts", "sitemap.ts", "not-found.tsx",
@@ -43,7 +43,8 @@ function checkSeoMetadata(): boolean {
   const pages = [
     "page.tsx", "products/page.tsx", "industries/page.tsx", "essential/page.tsx",
     "elite/page.tsx", "complete/page.tsx", "compare/page.tsx",
-    "about/page.tsx", "contact/page.tsx", "faq/page.tsx", "legal-information/page.tsx",
+    "about/page.tsx", "contact/page.tsx", "faq/page.tsx", "how-it-works/page.tsx",
+    "legal-information/page.tsx",
     "privacy-policy/page.tsx", "terms/page.tsx", "refund-policy/page.tsx", "disclaimer/page.tsx",
     "thank-you/page.tsx", "products/[id]/page.tsx", "industries/[slug]/page.tsx",
   ];
@@ -154,6 +155,10 @@ async function main() {
   const complianceOk = runCheck("  audit-compliance", "npm run audit-compliance");
   console.log("");
 
+  console.log("REVIEW MODE");
+  const reviewModeOk = runCheck("  audit-review-mode", "npm run audit-review-mode");
+  console.log("");
+
   console.log("BUILD");
   const buildOk = runCheck("  next build", "npm run build");
   console.log("");
@@ -172,7 +177,7 @@ async function main() {
 
   const allOk =
     catalogOk && pricesOk && productsOk && coversOk && checkoutsOk &&
-    routesOk && seoOk && complianceOk && buildOk && lintOk && qaOk;
+    routesOk && seoOk && complianceOk && reviewModeOk && buildOk && lintOk && qaOk;
   const legalBlocked = !LEGAL_ENTITY.confirmed;
 
   console.log("================================================");

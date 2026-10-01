@@ -4,15 +4,27 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Check, Download, ShieldCheck, Mail } from "lucide-react";
 import { PRODUCTS, REFUND_DAYS, getProductById, getProductsByNiche, canBuyNow } from "@/lib/products";
-import { SITE } from "@/lib/site-config";
+import { SITE, REVIEW_MODE, isPublishedProduct } from "@/lib/site-config";
 import { Reveal } from "@/components/reveal";
 import { TrackView } from "@/components/track-view";
 import { BuyNowLink } from "@/components/buy-now-link";
 import { DigistorePromocode } from "@/components/digistore-promocode";
 
 export function generateStaticParams() {
-  return PRODUCTS.map((p) => ({ id: p.id }));
+  return (REVIEW_MODE ? PRODUCTS.filter((p) => isPublishedProduct(p.id)) : PRODUCTS).map((p) => ({ id: p.id }));
 }
+
+// In review mode, any product id not statically generated above (i.e.
+// not published) must 404 instead of silently rendering via on-demand
+// SSR -- that's the whole point of the gate. Next.js requires this
+// field to be a literal boolean it can statically parse (not a
+// computed `!REVIEW_MODE` expression) -- keep this in sync by hand
+// with REVIEW_MODE in src/lib/site-config.ts (true there -> false
+// here, and vice versa). `npm run audit-review-mode` checks this
+// literal stays in sync; qa-sweep.mjs's http-status checks catch the
+// runtime symptom of a mismatch too (a "hidden" product would come
+// back 200 via SSR fallback instead of 404).
+export const dynamicParams = false;
 
 export async function generateMetadata({
   params,
@@ -21,7 +33,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const product = getProductById(id);
-  if (!product) return {};
+  if (!product || !isPublishedProduct(product.id)) return {};
   return {
     title: `${product.industry} — ${product.tierLabel}`,
     description: product.heroLine,
@@ -34,6 +46,12 @@ export async function generateMetadata({
 
 const TIER_ORDER = ["essential", "elite", "complete"] as const;
 
+const TIER_EXPLANATIONS = [
+  { tier: "essential" as const, label: "Essential", body: "The practical foundation — one workbook covering the core entry, tracking, and dashboard sheets." },
+  { tier: "elite" as const, label: "Elite", body: "Deeper analytics, KPI tracking, forecasting, and reporting built specifically for the industry." },
+  { tier: "complete" as const, label: "Complete", body: "Both the Essential and Elite workbooks bundled together, with the full Field Guide and Quick Start." },
+];
+
 export default async function ProductPage({
   params,
 }: {
@@ -41,11 +59,11 @@ export default async function ProductPage({
 }) {
   const { id } = await params;
   const product = getProductById(id);
-  if (!product) notFound();
+  if (!product || !isPublishedProduct(product.id)) notFound();
 
-  const siblingTiers = getProductsByNiche(product.slug).sort(
-    (a, b) => TIER_ORDER.indexOf(a.tier) - TIER_ORDER.indexOf(b.tier),
-  );
+  const siblingTiers = getProductsByNiche(product.slug)
+    .filter((p) => isPublishedProduct(p.id))
+    .sort((a, b) => TIER_ORDER.indexOf(a.tier) - TIER_ORDER.indexOf(b.tier));
   const buyNow = canBuyNow(product);
 
   const jsonLd = {
@@ -70,11 +88,17 @@ export default async function ProductPage({
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: SITE.url },
-      { "@type": "ListItem", position: 2, name: "Products", item: `${SITE.url}/products` },
-      { "@type": "ListItem", position: 3, name: `${product.industry} — ${product.tierLabel}`, item: `${SITE.url}/products/${product.id}` },
-    ],
+    itemListElement: REVIEW_MODE
+      ? [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE.url },
+          { "@type": "ListItem", position: 2, name: product.industry, item: `${SITE.url}/industries/${product.slug}` },
+          { "@type": "ListItem", position: 3, name: product.tierLabel, item: `${SITE.url}/products/${product.id}` },
+        ]
+      : [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE.url },
+          { "@type": "ListItem", position: 2, name: "Products", item: `${SITE.url}/products` },
+          { "@type": "ListItem", position: 3, name: `${product.industry} — ${product.tierLabel}`, item: `${SITE.url}/products/${product.id}` },
+        ],
   };
 
   return (
@@ -87,7 +111,15 @@ export default async function ProductPage({
       )}
 
       <nav className="border-b border-border px-5 py-3 text-xs text-fg-soft sm:px-8">
-        <Link href="/">Home</Link> / <Link href="/products">Products</Link> / {product.industry} {product.tierLabel}
+        {REVIEW_MODE ? (
+          <>
+            <Link href="/">Home</Link> / <Link href={`/industries/${product.slug}`}>{product.industry}</Link> / {product.tierLabel}
+          </>
+        ) : (
+          <>
+            <Link href="/">Home</Link> / <Link href="/products">Products</Link> / {product.industry} {product.tierLabel}
+          </>
+        )}
       </nav>
 
       {/* Hero */}
@@ -210,12 +242,38 @@ export default async function ProductPage({
         </div>
       </section>
 
-      {/* Tier context */}
+      {/* Tier context -- when only this one tier is publicly published
+          (review mode), explain what Essential/Elite/Complete mean
+          instead of linking to sibling tier pages that would 404 */}
       <section className="border-b border-border">
         <div className="mx-auto max-w-[1280px] px-5 py-14 sm:px-8">
           <Reveal>
-            <h2 className="font-display text-2xl font-extrabold tracking-tight text-fg">Compare the {product.industry} tiers</h2>
+            <h2 className="font-display text-2xl font-extrabold tracking-tight text-fg">
+              {siblingTiers.length > 1 ? `Compare the ${product.industry} tiers` : "Essential, Elite, and Complete"}
+            </h2>
           </Reveal>
+          {siblingTiers.length <= 1 ? (
+            <div className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-3">
+              {TIER_EXPLANATIONS.map((t, i) => {
+                const isCurrent = t.tier === product.tier;
+                return (
+                  <Reveal key={t.tier} delay={i * 80}>
+                    <div
+                      className={
+                        isCurrent
+                          ? "flex h-full flex-col rounded-[var(--radius-card)] border-2 border-violet bg-violet-soft p-6"
+                          : "flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-bg p-6"
+                      }
+                    >
+                      <h3 className="font-display text-lg font-bold text-fg">{t.label}</h3>
+                      <p className="mt-2 flex-1 text-sm text-fg-soft">{t.body}</p>
+                      {isCurrent && <span className="mt-4 text-xs font-semibold text-accent">This is what you&apos;re getting</span>}
+                    </div>
+                  </Reveal>
+                );
+              })}
+            </div>
+          ) : (
           <div className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-3">
             {siblingTiers.map((sib, i) => {
               const isCurrent = sib.id === product.id;
@@ -242,6 +300,7 @@ export default async function ProductPage({
               );
             })}
           </div>
+          )}
         </div>
       </section>
 

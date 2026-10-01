@@ -3,7 +3,7 @@ import { Reveal } from "@/components/reveal";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Why ProfitIQS builds financial intelligence systems for business owners.",
+  description: "Why ProfitIQS builds business management systems for business owners.",
   alternates: { canonical: "/about" },
 };
 
@@ -16,8 +16,8 @@ export default function AboutPage() {
           <p>
             ProfitIQS exists to turn messy business numbers into practical
             operating visibility. Most business owners can see revenue.
-            Fewer can quickly see what&apos;s actually profitable, where
-            costs are growing, and what deserves attention.
+            Fewer can quickly see margin by job or client, where costs
+            are growing, and what deserves attention.
           </p>
           <p>
             Instead of one generic spreadsheet template, ProfitIQS builds a

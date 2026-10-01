@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
-import { SITE, MAIN_NAV } from "@/lib/site-config";
+import { SITE, MAIN_NAV, REVIEW_MODE, REVIEW_PRIMARY_PRODUCT_ID } from "@/lib/site-config";
+
+const HEADER_CTA = REVIEW_MODE
+  ? { href: `/products/${REVIEW_PRIMARY_PRODUCT_ID}`, label: "Buy Now" }
+  : { href: "/industries", label: "Find Your System" };
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -56,10 +60,10 @@ export function SiteHeader() {
 
         <div className="hidden lg:block">
           <Link
-            href="/industries"
+            href={HEADER_CTA.href}
             className="rounded-[var(--radius-control)] bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-hover"
           >
-            Find Your System
+            {HEADER_CTA.label}
           </Link>
         </div>
 
@@ -88,11 +92,11 @@ export function SiteHeader() {
               </Link>
             ))}
             <Link
-              href="/industries"
+              href={HEADER_CTA.href}
               onClick={() => setMobileOpen(false)}
               className="mt-2 rounded-[var(--radius-control)] bg-accent px-3 py-3 text-center text-sm font-semibold text-white"
             >
-              Find Your System
+              {HEADER_CTA.label}
             </Link>
           </nav>
         </div>
