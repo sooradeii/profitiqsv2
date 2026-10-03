@@ -3,8 +3,6 @@ import Link from "next/link";
 import { CheckCircle2, Mail, Phone } from "lucide-react";
 import { SITE, REVIEW_MODE } from "@/lib/site-config";
 import { Reveal } from "@/components/reveal";
-import { DigistoreThankYouBadge } from "@/components/digistore-thankyou-badge";
-import { DigistoreBadgeOffset } from "@/components/digistore-badge-offset";
 
 // Reached only via Digistore24's post-checkout redirect, never organic
 // navigation -- excluded from the sitemap and from search indexing, and
@@ -19,8 +17,6 @@ export const metadata: Metadata = {
 export default function ThankYouPage() {
   return (
     <div className="mx-auto max-w-2xl px-5 py-14 text-center sm:px-8 lg:py-20">
-      <DigistoreThankYouBadge />
-      <DigistoreBadgeOffset />
       <Reveal>
         <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-success-soft">
           <CheckCircle2 className="size-7 text-success" />

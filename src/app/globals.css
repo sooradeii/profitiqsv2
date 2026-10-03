@@ -31,28 +31,6 @@
 
   --radius-card: 16px;
   --radius-control: 10px;
-
-  /* Live height of Digistore24's own sticky top/bottom trust-badge bars
-     (present only on the Thank You page -- the Sales Page badge was
-     removed from industry/product pages per Digistore24 Compliance
-     request), measured and set by DigistoreBadgeOffset once DS24's
-     script renders them -- 0px everywhere else, so this is a no-op on
-     every other page. */
-  --ds24-top-offset: 0px;
-  --ds24-bottom-offset: 0px;
-}
-
-/* Digistore24's trust badge opens its own "Secure Order" popup dialog
-   (.ds24b-modal > .ds24b-dialog, including its real close button) when
-   clicked. The actual fixed-position wrapper, .ds24b-modal, sets
-   z-index:11 -- lower than our sticky header's z-index:50 -- so our
-   header was winning the stacking order and swallowing clicks meant
-   for DS24's close button. This does not touch DS24's script or
-   markup, only raises our own stylesheet's priority for their known
-   modal wrapper class so it always paints (and receives clicks) above
-   our own chrome. */
-.ds24b-modal {
-  z-index: 2147483001 !important;
 }
 
 @theme inline {
