@@ -42,13 +42,13 @@ export const LEGAL_ENTITY = {
 /**
  * TEMPORARY Digistore24 compliance review mode. While true, the public
  * site exposes only the niches listed in PUBLISHED_PRODUCTS, all 3
- * tiers each (currently 10 niches / 30 products: 1099 Contractor,
- * Airbnb, Auto Repair Shop, Cleaning Service, Dental Practice,
- * Digital Marketing Agency, Ecommerce, Electrical Contractor, HVAC,
- * Pest Control) -- everything else (the remaining industries/products,
- * the full catalog pages) stays completely intact in the codebase and
- * data (PRODUCTS, routes, components) but is not publicly reachable:
- * product/industry pages
+ * tiers each (currently 11 niches / 33 products: 1099 Contractor,
+ * Airbnb, Auto Repair Shop, Cleaning Service, Construction Job Cost,
+ * Dental Practice, Digital Marketing Agency, Ecommerce, Electrical
+ * Contractor, HVAC, Pest Control) -- everything else (the remaining
+ * industries/products, the full catalog pages) stays completely
+ * intact in the codebase and data (PRODUCTS, routes, components) but
+ * is not publicly reachable: product/industry pages
  * for anything not published return a real 404, catalog-listing
  * routes (/products, /essential, /elite, /complete, /compare) stay
  * disabled outright (/industries is enabled, filtered to the
@@ -77,6 +77,9 @@ export const PUBLISHED_PRODUCTS: string[] = [
   "cleaning-service-essential",
   "cleaning-service-elite",
   "cleaning-service-complete",
+  "construction-essential",
+  "construction-elite",
+  "construction-complete",
   "dental-practice-essential",
   "dental-practice-elite",
   "dental-practice-complete",
