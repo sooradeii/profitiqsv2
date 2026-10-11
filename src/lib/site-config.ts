@@ -1,4 +1,5 @@
 // Central site configuration. Never hardcode these values in components.
+import { getNiches } from "./products";
 
 export const SITE = {
   name: "ProfitIQS",
@@ -40,15 +41,18 @@ export const LEGAL_ENTITY = {
 
 /**
  * TEMPORARY Digistore24 compliance review mode. While true, the public
- * site exposes only one niche -- Auto Repair Shop, all 3 tiers (the
- * products listed in PUBLISHED_PRODUCTS, by `Product.id`) -- everything
- * else (the other 20 industries / 60 products, the full catalog pages)
- * stays completely intact in the codebase and data (PRODUCTS, routes,
+ * site exposes only the niches listed in PUBLISHED_PRODUCTS, all 3
+ * tiers each (currently 7 niches / 21 products: 1099 Contractor,
+ * Airbnb, Auto Repair Shop, Cleaning Service, Dental Practice,
+ * Electrical Contractor, Pest Control) -- everything else (the
+ * remaining industries/products, the full catalog pages) stays
+ * completely intact in the codebase and data (PRODUCTS, routes,
  * components) but is not publicly reachable: product/industry pages
  * for anything not published return a real 404, catalog-listing
- * routes (/products, /industries, /essential, /elite, /complete,
- * /compare) are disabled outright, and both the sitemap and
- * robots.txt only reference published routes.
+ * routes (/products, /essential, /elite, /complete, /compare) stay
+ * disabled outright (/industries is enabled, filtered to the
+ * published niches -- see src/app/industries/page.tsx), and both the
+ * sitemap and robots.txt only reference published routes.
  *
  * To restore the full catalog later: set REVIEW_MODE to false (or
  * expand PUBLISHED_PRODUCTS to the full PRODUCTS id list). No other
@@ -60,9 +64,27 @@ export const LEGAL_ENTITY = {
  */
 export const REVIEW_MODE = true;
 export const PUBLISHED_PRODUCTS: string[] = [
+  "1099-income-essential",
+  "1099-income-elite",
+  "1099-income-complete",
+  "airbnb-essential",
+  "airbnb-elite",
+  "airbnb-complete",
   "auto-repair-essential",
   "auto-repair-elite",
   "auto-repair-complete",
+  "cleaning-service-essential",
+  "cleaning-service-elite",
+  "cleaning-service-complete",
+  "dental-practice-essential",
+  "dental-practice-elite",
+  "dental-practice-complete",
+  "electrical-contractor-essential",
+  "electrical-contractor-elite",
+  "electrical-contractor-complete",
+  "pest-control-essential",
+  "pest-control-elite",
+  "pest-control-complete",
 ];
 
 export function isPublishedProduct(productId: string): boolean {
@@ -89,8 +111,10 @@ export function isPublishedNicheSlug(slug: string): boolean {
 export const REVIEW_PRIMARY_PRODUCT_ID =
   PUBLISHED_PRODUCTS.find((id) => id.endsWith("-complete")) ?? PUBLISHED_PRODUCTS[0] ?? "auto-repair-complete";
 
-/** The published niche's industry page -- shows all 3 tiers together.
- * This is what "Auto Repair" in the nav links to. */
+/** The flagship published niche -- first in PUBLISHED_NICHE_SLUGS
+ * (Auto Repair). Used by the review homepage hero and the header's
+ * Buy Now CTA; the other published niches are reachable via the
+ * Industries nav link. */
 export const REVIEW_PRIMARY_NICHE_SLUG = PUBLISHED_NICHE_SLUGS[0] ?? "auto-repair";
 
 const FULL_MAIN_NAV = [
@@ -102,7 +126,7 @@ const FULL_MAIN_NAV = [
 ];
 
 const REVIEW_MAIN_NAV = [
-  { label: "Auto Repair", href: `/industries/${REVIEW_PRIMARY_NICHE_SLUG}` },
+  { label: "Industries", href: "/industries" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "FAQ", href: "/faq" },
   { label: "About", href: "/about" },
@@ -137,11 +161,10 @@ const FULL_FOOTER_LINKS = {
 };
 
 const REVIEW_FOOTER_LINKS = {
-  "Auto Repair Shop": [
-    { label: "Essential", href: "/products/auto-repair-essential" },
-    { label: "Elite", href: "/products/auto-repair-elite" },
-    { label: "Complete", href: "/products/auto-repair-complete" },
-  ],
+  Industries: PUBLISHED_NICHE_SLUGS.map((slug) => {
+    const niche = getNiches().find((n) => n.slug === slug);
+    return { label: niche?.shortName ?? slug, href: `/industries/${slug}` };
+  }),
   Product: [
     { label: "How It Works", href: "/how-it-works" },
     { label: "FAQ", href: "/faq" },

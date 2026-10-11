@@ -34,7 +34,7 @@ const PUBLISHED_NICHE_SLUGS = REVIEW_MODE
 
 const STATIC_ROUTES = REVIEW_MODE
   ? [
-      "/", "/how-it-works", "/about", "/contact", "/faq",
+      "/", "/industries", "/how-it-works", "/about", "/contact", "/faq",
       "/legal-information", "/privacy-policy", "/terms", "/refund-policy", "/disclaimer",
       "/thank-you",
     ]
@@ -48,8 +48,10 @@ const STATIC_ROUTES = REVIEW_MODE
 // Catalog-listing routes that are disabled outright (not data-driven)
 // while REVIEW_MODE is on -- swept too, but expected to 404, which
 // proves the gate is actually working instead of just assuming it.
+// "/industries" is enabled in review mode (filtered to published
+// niches), so it's in STATIC_ROUTES above instead of here.
 const DISABLED_STATIC_ROUTES = REVIEW_MODE
-  ? ["/products", "/industries", "/essential", "/elite", "/complete", "/compare"]
+  ? ["/products", "/essential", "/elite", "/complete", "/compare"]
   : [];
 
 const routes = [

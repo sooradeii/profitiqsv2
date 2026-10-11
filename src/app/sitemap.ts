@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     REVIEW_MODE
       ? [
           "",
+          "/industries",
           "/how-it-works",
           "/about",
           "/contact",
@@ -44,7 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
   }));
 
-  // Only the published niche's industry page is indexable in review
+  // Only the published niches' industry pages are indexable in review
   // mode -- every other industry is excluded.
   const industryRoutes = (REVIEW_MODE ? getNiches().filter((n) => isPublishedNicheSlug(n.slug)) : getNiches()).map(
     (n) => ({

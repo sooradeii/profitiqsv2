@@ -3,28 +3,30 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getNiches, getProductsByNiche } from "@/lib/products";
-import { REVIEW_MODE } from "@/lib/site-config";
+import { REVIEW_MODE, isPublishedNicheSlug } from "@/lib/site-config";
 import { Reveal } from "@/components/reveal";
 
 export const metadata: Metadata = {
   title: "Industries",
-  description: "21 business categories ProfitIQS builds business management systems for.",
+  description: "Business categories ProfitIQS builds business management systems for.",
   alternates: { canonical: "/industries" },
 };
 
 export default function IndustriesPage() {
-  // TEMPORARY Digistore24 review mode: the full industries catalog is
-  // not publicly browsable while only one product is published. The
-  // route, data, and this page's code all stay intact -- see
+  // TEMPORARY Digistore24 review mode: only the published niches are
+  // publicly browsable here -- everything else stays intact in the
+  // codebase and data but is filtered out. If somehow nothing is
+  // published yet, this 404s rather than rendering an empty grid. See
   // REVIEW_MODE in src/lib/site-config.ts.
-  if (REVIEW_MODE) notFound();
-  const niches = getNiches();
+  const allNiches = getNiches();
+  const niches = REVIEW_MODE ? allNiches.filter((n) => isPublishedNicheSlug(n.slug)) : allNiches;
+  if (REVIEW_MODE && niches.length === 0) notFound();
   return (
     <div className="mx-auto max-w-[1280px] px-5 py-14 sm:px-8 lg:py-20">
       <Reveal>
         <h1 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Industries</h1>
         <p className="mt-3 max-w-xl text-base text-fg-soft">
-          21 business categories, each with its own Essential, Elite, and Complete system.
+          {niches.length} business {niches.length === 1 ? "category" : "categories"}, each with its own Essential, Elite, and Complete system.
         </p>
       </Reveal>
       <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

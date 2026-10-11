@@ -25,12 +25,29 @@ function check(label: string, pass: boolean, detail?: string) {
   if (!pass) ok = false;
 }
 
+const EXPECTED_PUBLISHED_NICHES = [
+  "1099-income",
+  "airbnb",
+  "auto-repair",
+  "cleaning-service",
+  "dental-practice",
+  "electrical-contractor",
+  "pest-control",
+].sort();
+
 console.log("REVIEW MODE AUDIT\n");
 
 check("REVIEW_MODE is on", REVIEW_MODE === true);
-check("exactly 3 published products (Auto Repair's 3 tiers)", PUBLISHED_PRODUCTS.length === 3, PUBLISHED_PRODUCTS.join(", "));
-check("exactly one published niche", PUBLISHED_NICHE_SLUGS.length === 1, PUBLISHED_NICHE_SLUGS.join(", "));
-check("published niche is auto-repair", PUBLISHED_NICHE_SLUGS[0] === "auto-repair");
+check("exactly 21 published products (7 niches x 3 tiers)", PUBLISHED_PRODUCTS.length === 21, String(PUBLISHED_PRODUCTS.length));
+check("exactly 7 published niches", PUBLISHED_NICHE_SLUGS.length === 7, PUBLISHED_NICHE_SLUGS.join(", "));
+check(
+  "published niches are the expected 7",
+  JSON.stringify([...PUBLISHED_NICHE_SLUGS].sort()) === JSON.stringify(EXPECTED_PUBLISHED_NICHES),
+  PUBLISHED_NICHE_SLUGS.join(", "),
+);
+check("each published niche has exactly 3 published tiers", PUBLISHED_NICHE_SLUGS.every((slug) =>
+  PUBLISHED_PRODUCTS.filter((id) => id.startsWith(`${slug}-`)).length === 3,
+));
 
 console.log("\nFULL CATALOG DATA STILL INTACT (nothing deleted)");
 check("63 products still in PRODUCTS", PRODUCTS.length === 63, `found ${PRODUCTS.length}`);
@@ -39,9 +56,9 @@ for (const tier of ["essential", "elite", "complete"] as const) {
   check(`21 ${tier} products still present`, n === 21, `found ${n}`);
 }
 const hiddenCount = PRODUCTS.filter((p) => !isPublishedProduct(p.id)).length;
-check("60 products correctly hidden but recoverable", hiddenCount === 60, `found ${hiddenCount}`);
+check("42 products correctly hidden but recoverable", hiddenCount === 42, `found ${hiddenCount}`);
 const hiddenNicheCount = new Set(PRODUCTS.map((p) => p.slug)).size - PUBLISHED_NICHE_SLUGS.length;
-check("20 industries correctly hidden but recoverable", hiddenNicheCount === 20, `found ${hiddenNicheCount}`);
+check("14 industries correctly hidden but recoverable", hiddenNicheCount === 14, `found ${hiddenNicheCount}`);
 
 console.log("\nAUTO REPAIR -- ALL 3 TIERS PUBLISHED WITH REAL CHECKOUTS");
 const autoRepairTiers = getProductsByNiche("auto-repair");
@@ -68,16 +85,28 @@ for (const [id, expected] of Object.entries(EXPECTED)) {
 console.log("\nNAVIGATION DOESN'T LEAK THE HIDDEN CATALOG");
 const navHrefs = MAIN_NAV.map((i) => i.href);
 const footerHrefs = Object.values(FOOTER_LINKS).flat().map((i) => i.href);
-const forbidden = ["/products", "/industries", "/essential", "/elite", "/complete", "/compare"];
+// "/industries" is intentionally enabled in review mode (filtered to
+// published niches), so it's excluded from this forbidden list.
+const forbidden = ["/products", "/essential", "/elite", "/complete", "/compare"];
 for (const href of forbidden) {
   check(`nav does not link to ${href}`, !navHrefs.includes(href));
   check(`footer does not link to ${href}`, !footerHrefs.includes(href));
 }
-check("nav links to the published niche page", navHrefs.includes(`/industries/${PUBLISHED_NICHE_SLUGS[0]}`));
+check("nav links to the industries listing", navHrefs.includes("/industries"));
 check(
-  "footer links to all 3 published product pages",
-  PUBLISHED_PRODUCTS.every((id) => footerHrefs.includes(`/products/${id}`)),
-  footerHrefs.filter((h) => h.startsWith("/products/")).join(", "),
+  "footer links to every published niche's industry page",
+  PUBLISHED_NICHE_SLUGS.every((slug) => footerHrefs.includes(`/industries/${slug}`)),
+  footerHrefs.filter((h) => h.startsWith("/industries/")).join(", "),
+);
+check(
+  "no footer/nav link points at a hidden (unpublished) niche or product",
+  [...navHrefs, ...footerHrefs].every((href) => {
+    const industryMatch = href.match(/^\/industries\/([a-z0-9-]+)$/);
+    if (industryMatch) return PUBLISHED_NICHE_SLUGS.includes(industryMatch[1]);
+    const productMatch = href.match(/^\/products\/([a-z0-9-]+)$/);
+    if (productMatch) return PUBLISHED_PRODUCTS.includes(productMatch[1]);
+    return true;
+  }),
 );
 
 console.log("\nNO FULL-CATALOG MESSAGING ON THE REVIEW-MODE HOMEPAGE");

@@ -7,10 +7,13 @@ export default function robots(): MetadataRoute.Robots {
     // TEMPORARY Digistore24 review mode: these routes already 404 for
     // every non-published product/industry, but disallow them too so
     // crawlers never even request the ones that still exist statically.
+    // "/industries" (the listing page) is now enabled -- see
+    // REVIEW_MODE in src/lib/site-config.ts -- so it's intentionally
+    // left out of this disallow list.
     //
-    // IMPORTANT: "/products" and "/industries" are anchored with `$`
-    // (exact match only) -- a bare `Disallow: /products` is a PREFIX
-    // match per the robots.txt spec and would also block the published
+    // IMPORTANT: "/products" is anchored with `$` (exact match only) --
+    // a bare `Disallow: /products` is a PREFIX match per the
+    // robots.txt spec and would also block the published
     // /products/auto-repair-* pages, which must stay indexable. Hidden
     // product/industry pages are listed individually instead of with a
     // prefix, for the same reason.
@@ -23,7 +26,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
         disallow: [
           "/products$",
-          "/industries$",
           "/essential$",
           "/elite$",
           "/complete$",
