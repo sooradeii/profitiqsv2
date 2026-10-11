@@ -31,17 +31,20 @@ const EXPECTED_PUBLISHED_NICHES = [
   "auto-repair",
   "cleaning-service",
   "dental-practice",
+  "digital-marketing-agency",
+  "ecommerce",
   "electrical-contractor",
+  "hvac",
   "pest-control",
 ].sort();
 
 console.log("REVIEW MODE AUDIT\n");
 
 check("REVIEW_MODE is on", REVIEW_MODE === true);
-check("exactly 21 published products (7 niches x 3 tiers)", PUBLISHED_PRODUCTS.length === 21, String(PUBLISHED_PRODUCTS.length));
-check("exactly 7 published niches", PUBLISHED_NICHE_SLUGS.length === 7, PUBLISHED_NICHE_SLUGS.join(", "));
+check("exactly 30 published products (10 niches x 3 tiers)", PUBLISHED_PRODUCTS.length === 30, String(PUBLISHED_PRODUCTS.length));
+check("exactly 10 published niches", PUBLISHED_NICHE_SLUGS.length === 10, PUBLISHED_NICHE_SLUGS.join(", "));
 check(
-  "published niches are the expected 7",
+  "published niches are the expected 10",
   JSON.stringify([...PUBLISHED_NICHE_SLUGS].sort()) === JSON.stringify(EXPECTED_PUBLISHED_NICHES),
   PUBLISHED_NICHE_SLUGS.join(", "),
 );
@@ -56,9 +59,9 @@ for (const tier of ["essential", "elite", "complete"] as const) {
   check(`21 ${tier} products still present`, n === 21, `found ${n}`);
 }
 const hiddenCount = PRODUCTS.filter((p) => !isPublishedProduct(p.id)).length;
-check("42 products correctly hidden but recoverable", hiddenCount === 42, `found ${hiddenCount}`);
+check("33 products correctly hidden but recoverable", hiddenCount === 33, `found ${hiddenCount}`);
 const hiddenNicheCount = new Set(PRODUCTS.map((p) => p.slug)).size - PUBLISHED_NICHE_SLUGS.length;
-check("14 industries correctly hidden but recoverable", hiddenNicheCount === 14, `found ${hiddenNicheCount}`);
+check("11 industries correctly hidden but recoverable", hiddenNicheCount === 11, `found ${hiddenNicheCount}`);
 
 console.log("\nAUTO REPAIR -- ALL 3 TIERS PUBLISHED WITH REAL CHECKOUTS");
 const autoRepairTiers = getProductsByNiche("auto-repair");
