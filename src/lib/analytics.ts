@@ -15,7 +15,8 @@ export type AnalyticsEvent =
   | { name: "industry_view"; slug: string }
   | { name: "tier_view"; tier: "essential" | "elite" | "complete" }
   | { name: "buy_now_click"; productId: string; price: number | null }
-  | { name: "digistore_outbound_click"; productId: string; url: string };
+  | { name: "digistore_outbound_click"; productId: string; url: string }
+  | { name: "affiliate_kit_download"; kit: string };
 
 export function track(event: AnalyticsEvent) {
   if (typeof window === "undefined") return;
