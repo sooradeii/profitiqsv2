@@ -4,6 +4,7 @@ import path from "node:path";
 import Image from "next/image";
 import Link from "next/link";
 import {
+  Archive,
   ArrowRight,
   Download,
   FileText,
@@ -16,7 +17,7 @@ import { getProductsByNiche } from "@/lib/products";
 import { SITE } from "@/lib/site-config";
 import { Reveal } from "@/components/reveal";
 import { StatCounter } from "@/components/stat-counter";
-import { AffiliateDownloadLink } from "@/components/affiliate-download-link";
+import { AffiliateDownloadLink, AffiliateDownloadAllLink } from "@/components/affiliate-download-link";
 
 export const metadata: Metadata = {
   title: "Affiliates",
@@ -77,6 +78,14 @@ export default function AffiliatesPage() {
     const cover = getProductsByNiche(n.slug).find((p) => p.tier === "complete")?.coverImage ?? null;
     return { ...n, cover, sizeMB: getFileSizeMB(n.file) };
   });
+  // "Download everything" fires one download per kit rather than linking to
+  // a single combined zip -- GitHub rejects any tracked file over 100MB, and
+  // a 12-kit bundle runs well past that.
+  const allFiles = [
+    { href: `/downloads/affiliate-kit/${MASTER_KIT_FILE}`, name: MASTER_KIT_FILE },
+    ...niches.map((n) => ({ href: `/downloads/affiliate-kit/${n.file}`, name: n.file })),
+  ];
+  const totalSizeMB = Math.round((masterSizeMB + niches.reduce((sum, n) => sum + n.sizeMB, 0)) * 10) / 10;
 
   return (
     <div>
@@ -181,18 +190,52 @@ export default function AffiliatesPage() {
         </div>
       </section>
 
-      {/* ===== MASTER KIT DOWNLOAD ===== */}
+      {/* ===== DOWNLOADS ===== */}
       <section id="downloads" className="scroll-mt-16 border-b border-border">
         <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
           <Reveal>
-            <h2 className="font-display text-3xl tracking-tight text-fg sm:text-4xl">Start with the master kit</h2>
+            <h2 className="font-display text-3xl tracking-tight text-fg sm:text-4xl">Get your affiliate kit</h2>
             <p className="mt-3 max-w-2xl text-base text-fg-soft">
-              The commission schedule, the compliance rules, brand messaging, shared promotional copy, and a full
-              cold-email infrastructure lesson — read this once, then promote any niche.
+              Everything in one download, or just the master kit and the one industry you&apos;re promoting — your call.
             </p>
           </Reveal>
-          <Reveal delay={80}>
-            <div className="glow-card cta-surface mt-8 flex flex-col items-start justify-between gap-6 rounded-[var(--radius-card)] border border-border p-8 text-white sm:flex-row sm:items-center">
+
+          <Reveal delay={60}>
+            <div className="glow-card mt-8 flex flex-col items-start justify-between gap-6 rounded-[var(--radius-card)] border-2 border-violet bg-violet-soft p-8 sm:flex-row sm:items-center">
+              <div className="flex items-start gap-4">
+                <div className="flex size-14 shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-violet/15">
+                  <Archive className="size-7 text-violet" />
+                </div>
+                <div>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-violet px-2.5 py-0.5 text-[11px] font-semibold text-white">
+                    Everything, one click
+                  </span>
+                  <h3 className="mt-2 font-display text-xl font-bold text-fg">All 12 kits — master plus every industry</h3>
+                  <p className="mt-1.5 max-w-md text-sm text-fg-soft">
+                    One click downloads the master kit and all 11 industry kits as 12 separate files — every PDF,
+                    every screenshot, every graphic.
+                  </p>
+                  {totalSizeMB > 0 && (
+                    <p className="mt-2 font-mono text-[11px] text-fg-soft">12 files, all 11 industries &middot; {totalSizeMB} MB total</p>
+                  )}
+                </div>
+              </div>
+              <AffiliateDownloadAllLink
+                kit="complete"
+                files={allFiles}
+                className="inline-flex shrink-0 items-center gap-2 rounded-[var(--radius-control)] bg-violet px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:opacity-90"
+              >
+                <Download className="size-4" />
+                Download everything
+              </AffiliateDownloadAllLink>
+            </div>
+          </Reveal>
+
+          <Reveal delay={100}>
+            <p className="mt-10 text-sm font-semibold text-fg-soft">Or download them separately</p>
+          </Reveal>
+          <Reveal delay={120}>
+            <div className="glow-card cta-surface mt-4 flex flex-col items-start justify-between gap-6 rounded-[var(--radius-card)] border border-border p-8 text-white sm:flex-row sm:items-center">
               <div className="flex items-start gap-4">
                 <div className="flex size-14 shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-white/10">
                   <Package className="size-7 text-white" />
@@ -334,22 +377,22 @@ export default function AffiliatesPage() {
           <Reveal>
             <h2 className="font-display text-3xl tracking-tight sm:text-4xl">Ready to promote?</h2>
             <p className="mt-4 text-white/65">
-              Start with the master kit, then grab the industry kit that matches your audience.
+              Grab everything in one download, or pick just the industry you&apos;re promoting.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <AffiliateDownloadLink
-                kit="master"
-                href={`/downloads/affiliate-kit/${MASTER_KIT_FILE}`}
+              <AffiliateDownloadAllLink
+                kit="complete"
+                files={allFiles}
                 className="inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-white px-7 py-3.5 text-sm font-semibold text-ink hover:bg-white/90"
               >
                 <Download className="size-4" />
-                Download master kit
-              </AffiliateDownloadLink>
+                Download everything
+              </AffiliateDownloadAllLink>
               <Link
                 href="#downloads"
                 className="rounded-[var(--radius-control)] border border-white/30 px-7 py-3.5 text-sm font-semibold text-white hover:bg-white/10"
               >
-                See all 11 industry kits
+                See individual kits
               </Link>
             </div>
             <p className="mt-6 flex items-center justify-center gap-1.5 text-xs text-white/50">
