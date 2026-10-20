@@ -21,7 +21,7 @@ export function generateStaticParams() {
 // computed expression) -- keep in sync by hand with REVIEW_MODE in
 // src/lib/site-config.ts. See the matching comment in
 // src/app/products/[id]/page.tsx for the full explanation.
-export const dynamicParams = false;
+export const dynamicParams = true;
 
 export async function generateMetadata({
   params,

@@ -63,7 +63,7 @@ export const LEGAL_ENTITY = {
  * flipped by hand -- see the comment next to each, and run
  * `npm run audit-review-mode` to confirm they're in sync).
  */
-export const REVIEW_MODE = true;
+export const REVIEW_MODE = false;
 export const PUBLISHED_PRODUCTS: string[] = [
   "1099-income-essential",
   "1099-income-elite",

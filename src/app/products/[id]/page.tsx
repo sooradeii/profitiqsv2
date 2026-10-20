@@ -24,7 +24,7 @@ export function generateStaticParams() {
 // literal stays in sync; qa-sweep.mjs's http-status checks catch the
 // runtime symptom of a mismatch too (a "hidden" product would come
 // back 200 via SSR fallback instead of 404).
-export const dynamicParams = false;
+export const dynamicParams = true;
 
 export async function generateMetadata({
   params,
