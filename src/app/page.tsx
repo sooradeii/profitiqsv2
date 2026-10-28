@@ -40,9 +40,6 @@ const FEATURED_SLUGS = [
   "trucking-owner-operator",
 ];
 
-// Hero composition covers -- real products, fixed selection.
-const HERO_COVER_SLUGS = ["airbnb", "electrical-contractor", "restaurant", "roofing", "ecommerce", "trucking-owner-operator", "1099-income"];
-
 const TIERS = [
   {
     tier: "essential" as const,
@@ -73,7 +70,6 @@ export default function HomePage() {
 function FullCatalogHomePage() {
   const niches = getNiches();
   const featured = FEATURED_SLUGS.map((slug) => getProduct(slug, "essential")).filter((p) => !!p);
-  const heroCovers = HERO_COVER_SLUGS.map((slug) => getProduct(slug, "complete")).filter((p) => !!p);
   const autoRepairComplete = getProduct("auto-repair", "complete")!;
 
   // Ecosystem ticker -- structural facts derived from real data, not a
@@ -141,28 +137,19 @@ function FullCatalogHomePage() {
 
             <Reveal delay={120}>
               <div className="mx-auto w-full max-w-md">
-                <div className="grid w-full grid-cols-3 gap-3">
-                  {heroCovers.slice(0, 6).map((p, i) => (
-                    <div
-                      key={p.id}
-                      className={
-                        "glow-card cover-lift relative aspect-[3/4] overflow-hidden rounded-[var(--radius-card)] border border-border bg-white shadow-[0_20px_50px_-20px_rgba(17,19,24,0.25)] " +
-                        (i === 0 ? "col-span-2 row-span-2" : "")
-                      }
-                    >
-                      {p.coverImage && (
-                        <Image
-                          src={p.coverImage}
-                          alt={`${p.industry} cover`}
-                          fill
-                          className="object-contain p-2"
-                          sizes="200px"
-                          priority={i === 0}
-                        />
-                      )}
-                    </div>
-                  ))}
+                <div className="glow-card cover-lift overflow-hidden rounded-[var(--radius-card)] border border-border bg-black shadow-[0_20px_50px_-20px_rgba(17,19,24,0.25)]">
+                  <video
+                    controls
+                    preload="metadata"
+                    poster="/videos/poster.jpg"
+                    className="aspect-video w-full"
+                  >
+                    <source src="/videos/profitiqs-vsl.mp4" type="video/mp4" />
+                  </video>
                 </div>
+                <p className="mt-3 text-center text-sm text-fg-soft">
+                  Which jobs actually made you money last month? Two minutes on what ProfitIQS shows you.
+                </p>
               </div>
             </Reveal>
           </div>
@@ -171,31 +158,6 @@ function FullCatalogHomePage() {
 
       {/* Real-data ticker -- every industry + its real Essential price */}
       <Ticker items={tickerItems} />
-
-      {/* ===== VSL — the main pitch, watched not read ===== */}
-      <section className="cta-surface">
-        <div className="mx-auto max-w-[920px] px-5 py-16 text-center sm:px-8 lg:py-20">
-          <Reveal>
-            <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl">
-              Which jobs actually made you money last month?
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-base text-white/65">
-              Two minutes on what ProfitIQS actually shows you — and why most owners can&apos;t
-              answer that question today.
-            </p>
-            <div className="glow-card mt-10 overflow-hidden rounded-[var(--radius-card)] border border-white/15 bg-black shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)]">
-              <video
-                controls
-                preload="metadata"
-                poster="/videos/poster.jpg"
-                className="aspect-video w-full"
-              >
-                <source src="/videos/profitiqs-vsl.mp4" type="video/mp4" />
-              </video>
-            </div>
-          </Reveal>
-        </div>
-      </section>
 
       {/* ===== PROBLEM RECOGNITION — bento grid, size-as-hierarchy ===== */}
       <section className="border-b border-border bg-surface">
