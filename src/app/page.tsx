@@ -172,6 +172,31 @@ function FullCatalogHomePage() {
       {/* Real-data ticker -- every industry + its real Essential price */}
       <Ticker items={tickerItems} />
 
+      {/* ===== VSL — the main pitch, watched not read ===== */}
+      <section className="cta-surface">
+        <div className="mx-auto max-w-[920px] px-5 py-16 text-center sm:px-8 lg:py-20">
+          <Reveal>
+            <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl">
+              Which jobs actually made you money last month?
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-base text-white/65">
+              Two minutes on what ProfitIQS actually shows you — and why most owners can&apos;t
+              answer that question today.
+            </p>
+            <div className="glow-card mt-10 overflow-hidden rounded-[var(--radius-card)] border border-white/15 bg-black shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)]">
+              <video
+                controls
+                preload="metadata"
+                poster="/videos/poster.jpg"
+                className="aspect-video w-full"
+              >
+                <source src="/videos/profitiqs-vsl.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ===== PROBLEM RECOGNITION — bento grid, size-as-hierarchy ===== */}
       <section className="border-b border-border bg-surface">
         <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
