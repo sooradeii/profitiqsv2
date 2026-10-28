@@ -26,6 +26,7 @@ export function SiteFooter() {
           <div className="flex flex-wrap gap-x-4 gap-y-1">
             <a href={`mailto:${SITE.supportEmail}`} className="hover:text-fg">{SITE.supportEmail}</a>
             <a href={`tel:${SITE.supportPhone.replace(/\s/g, "")}`} className="hover:text-fg">{SITE.supportPhone}</a>
+            <Link href="/photo-credits" className="hover:text-fg">Photo credits</Link>
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Check, Download, ShieldCheck, Search } from "lucide-react";
 import { TrendingUp, Layers, Target, Repeat } from "lucide-react";
+import { Compass, BarChart3, Repeat2, Workflow } from "lucide-react";
 import { getNiches, getProduct, getProductById, getProductsByNiche, canBuyNow, PRODUCTS } from "@/lib/products";
 import { FAQ_ITEMS, REVIEW_FAQ_ITEMS } from "@/lib/faq";
 import { REVIEW_MODE, REVIEW_PRIMARY_PRODUCT_ID, REVIEW_PRIMARY_NICHE_SLUG, SITE } from "@/lib/site-config";
@@ -28,6 +29,23 @@ const REVIEW_METADATA: Metadata = {
 };
 
 export const metadata: Metadata = REVIEW_MODE ? REVIEW_METADATA : FULL_CATALOG_METADATA;
+
+// Deterministic photo-niche selection for the "Built for the work you
+// actually do" band -- one visually distinct trade per category, not all
+// 21 (the full list stays in "Find your system" below). Order is the
+// display order.
+const PHOTO_NICHE_SLUGS = [
+  "hvac",
+  "electrical-contractor",
+  "auto-repair",
+  "plumbing-contractor",
+  "restaurant",
+  "trucking-owner-operator",
+  "landscaping",
+  "construction",
+  "cleaning-service",
+  "ecommerce",
+];
 
 // Deterministic featured selection -- not randomized per render.
 const FEATURED_SLUGS = [
@@ -72,6 +90,9 @@ function FullCatalogHomePage() {
   const niches = getNiches();
   const featured = FEATURED_SLUGS.map((slug) => getProduct(slug, "essential")).filter((p) => !!p);
   const autoRepairComplete = getProduct("auto-repair", "complete")!;
+  const photoNiches = PHOTO_NICHE_SLUGS.map((slug) => niches.find((n) => n.slug === slug)).filter(
+    (n): n is NonNullable<typeof n> => !!n,
+  );
 
   // Ecosystem ticker -- structural facts derived from real data, not a
   // price list.
@@ -115,9 +136,10 @@ function FullCatalogHomePage() {
         <div className="mx-auto max-w-2xl px-5 py-14 text-center sm:px-8">
           <Reveal>
             <p className="mx-auto max-w-lg text-base leading-relaxed text-white/70 sm:text-lg">
-              Practical business management systems built around the
-              numbers that matter — revenue, expenses, cash flow,
-              performance, and planning.
+              Not a generic spreadsheet with your logo on it. A system built
+              around the exact numbers your industry runs on — revenue,
+              expenses, cash flow, performance, and planning — ready to use
+              the day you open it.
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-3">
               <Link
@@ -154,6 +176,50 @@ function FullCatalogHomePage() {
 
       {/* Real-data ticker -- every industry + its real Essential price */}
       <Ticker items={tickerItems} />
+
+      {/* ===== BUILT FOR THE WORK — real-trade photography, not icons ===== */}
+      <section className="border-b border-border bg-surface">
+        <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
+          <Reveal>
+            <h2 className="max-w-2xl font-display text-3xl tracking-tight text-fg sm:text-4xl">
+              Built for the work you actually do.
+            </h2>
+            <p className="mt-4 max-w-2xl text-base text-fg-soft">
+              Each system is built around one specific trade&apos;s real
+              numbers, not a one-size-fits-all template. Find the one built
+              for yours.
+            </p>
+          </Reveal>
+          <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            {photoNiches.map((n, i) => (
+              <Reveal key={n.slug} delay={(i % 10) * 50}>
+                <Link
+                  href={`/industries/${n.slug}`}
+                  className="card-hover group relative block aspect-[4/5] overflow-hidden rounded-[var(--radius-card)] border border-border"
+                >
+                  <Image
+                    src={`/images/niches/${n.slug}.jpg`}
+                    alt={`${n.shortName} business owner at work`}
+                    fill
+                    sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/15 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-3.5">
+                    <p className="text-[11px] font-medium text-white/70">{n.category}</p>
+                    <p className="mt-0.5 text-sm font-semibold text-white">{n.shortName}</p>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal>
+            <Link href="/industries" className="mt-6 inline-block text-sm font-semibold text-accent">
+              See all {niches.length} industries &rarr;
+            </Link>
+          </Reveal>
+        </div>
+      </section>
 
       {/* ===== PROBLEM RECOGNITION — bento grid, size-as-hierarchy ===== */}
       <section className="border-b border-border bg-surface">
@@ -203,10 +269,10 @@ function FullCatalogHomePage() {
         <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
           <Reveal>
             <h2 className="font-display text-3xl tracking-tight text-fg sm:text-4xl">
-              Find your system
+              All {niches.length} industries
             </h2>
             <p className="mt-3 max-w-xl text-base text-fg-soft">
-              What kind of business do you run?
+              Don&apos;t see your trade above? It&apos;s almost certainly here.
             </p>
             <Link
               href="/products"
@@ -263,17 +329,23 @@ function FullCatalogHomePage() {
         <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
           <Reveal>
             <h2 className="font-display text-3xl tracking-tight text-fg sm:text-4xl">Why ProfitIQS</h2>
+            <p className="mt-4 max-w-2xl text-base text-fg-soft">
+              Four decisions that shape every one of the 63 systems, in every industry.
+            </p>
           </Reveal>
-          <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { title: "Business-specific", body: "Built around the metrics each business type actually watches, not a generic template." },
-              { title: "Real numbers", body: "Your revenue and expense data becomes a clearer picture of performance." },
-              { title: "Practical", body: "Designed for recurring monthly use, not a one-time analysis." },
-              { title: "Structured", body: "From source data to dashboards, KPI reports, and planning in one workbook." },
+              { icon: Compass, title: "Business-specific", body: "Built around the metrics each business type actually watches, not a generic template." },
+              { icon: BarChart3, title: "Real numbers", body: "Your revenue and expense data becomes a clearer picture of performance." },
+              { icon: Repeat2, title: "Practical", body: "Designed for recurring monthly use, not a one-time analysis." },
+              { icon: Workflow, title: "Structured", body: "From source data to dashboards, KPI reports, and planning in one workbook." },
             ].map((b, i) => (
               <Reveal key={b.title} delay={i * 70}>
-                <h3 className="font-display text-lg text-fg">{b.title}</h3>
-                <p className="mt-2 text-sm text-fg-soft">{b.body}</p>
+                <div className="glow-card h-full rounded-[var(--radius-card)] border border-border bg-surface p-6">
+                  <b.icon className="size-5 text-accent" />
+                  <h3 className="mt-4 font-display text-lg text-fg">{b.title}</h3>
+                  <p className="mt-2 text-sm text-fg-soft">{b.body}</p>
+                </div>
               </Reveal>
             ))}
           </div>
