@@ -3,8 +3,11 @@
 import { useRef, useState } from "react";
 
 /**
- * Autoplays muted on load (browser policy requires muted for autoplay). The
- * native `poster` attribute only shows before first play -- this adds a
+ * No autoplay -- every browser blocks autoplay-with-sound outright (not just
+ * discourages it), so autoplay would mean either no sound or no playback at
+ * all. Starts on the poster, plays with full sound from the first click
+ * (a real click is a user gesture, so the browser allows audio). The native
+ * `poster` attribute only shows before first play -- this adds a
  * click-to-resume poster overlay that reappears on every pause too, not
  * just the first frame.
  */
@@ -16,12 +19,9 @@ export function HeroVideo({ src, poster }: { src: string; poster: string }) {
     <div className="relative overflow-hidden rounded-[var(--radius-card)]">
       <video
         ref={videoRef}
-        autoPlay
-        muted
-        loop
         playsInline
         controls
-        preload="auto"
+        preload="metadata"
         poster={poster}
         className="aspect-video w-full"
         onPause={() => setPaused(true)}
