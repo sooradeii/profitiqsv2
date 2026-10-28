@@ -98,7 +98,28 @@ function FullCatalogHomePage() {
                 on real numbers.
               </span>
             </h1>
-            <p className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-fg-soft sm:text-lg">
+          </Reveal>
+
+          <Reveal delay={80}>
+            <div className="mx-auto mt-8 w-full max-w-5xl">
+              <div className="glow-card cover-lift overflow-hidden rounded-[var(--radius-card)] border border-border bg-black shadow-[0_30px_80px_-30px_rgba(17,19,24,0.4)]">
+                <video
+                  controls
+                  preload="metadata"
+                  poster="/videos/poster.jpg"
+                  className="aspect-video w-full"
+                >
+                  <source src="/videos/profitiqs-vsl.mp4" type="video/mp4" />
+                </video>
+              </div>
+              <p className="mt-4 text-center text-sm text-fg-soft">
+                Which jobs actually made you money last month? Two minutes on what ProfitIQS shows you.
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={140} className="mx-auto max-w-2xl text-center">
+            <p className="mx-auto mt-8 max-w-lg text-base leading-relaxed text-fg-soft sm:text-lg">
               Practical business management systems built around the
               numbers that matter — revenue, expenses, cash flow,
               performance, and planning.
@@ -118,28 +139,7 @@ function FullCatalogHomePage() {
                 Find Your Industry
               </Link>
             </div>
-          </Reveal>
-
-          <Reveal delay={100}>
-            <div className="mx-auto mt-10 w-full max-w-5xl">
-              <div className="glow-card cover-lift overflow-hidden rounded-[var(--radius-card)] border border-border bg-black shadow-[0_30px_80px_-30px_rgba(17,19,24,0.4)]">
-                <video
-                  controls
-                  preload="metadata"
-                  poster="/videos/poster.jpg"
-                  className="aspect-video w-full"
-                >
-                  <source src="/videos/profitiqs-vsl.mp4" type="video/mp4" />
-                </video>
-              </div>
-              <p className="mt-4 text-center text-sm text-fg-soft">
-                Which jobs actually made you money last month? Two minutes on what ProfitIQS shows you.
-              </p>
-            </div>
-          </Reveal>
-
-          <Reveal delay={140}>
-            <div className="mx-auto mt-10 flex max-w-md justify-center gap-10 border-t border-border pt-6">
+            <div className="mx-auto mt-8 flex max-w-md justify-center gap-10 border-t border-border pt-6">
               <div>
                 <p className="font-display text-3xl font-extrabold tabular-nums text-fg"><StatCounter value={PRODUCTS.length} /></p>
                 <p className="mt-1 font-mono text-[11px] text-fg-soft">Real systems</p>
