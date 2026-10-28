@@ -11,6 +11,7 @@ import { ProductCard } from "@/components/product-card";
 import { StatCounter } from "@/components/stat-counter";
 import { Ticker } from "@/components/ticker";
 import { BuyNowLink } from "@/components/buy-now-link";
+import { HeroVideo } from "@/components/hero-video";
 
 const FULL_CATALOG_METADATA: Metadata = {
   title: "ProfitIQS — Business Management Systems for Business Owners",
@@ -86,13 +87,9 @@ function FullCatalogHomePage() {
     <div>
       {/* ===== HERO — light, confident, weight/color-driven accent ===== */}
       <section className="hero-surface">
-        <div className="mx-auto max-w-[1280px] px-5 pb-10 pt-12 sm:px-8 lg:pb-14 lg:pt-16">
+        <div className="mx-auto max-w-[1280px] px-5 pb-14 pt-12 sm:px-8 lg:pt-16">
           <Reveal className="mx-auto max-w-2xl text-center">
-            <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5">
-              <span className="pulse-dot" />
-              <span className="font-mono text-[11px] font-medium text-fg-soft">63 real systems &middot; 21 business categories</span>
-            </div>
-            <h1 className="mt-5 font-display text-[2.6rem] font-extrabold leading-[1.02] tracking-[-0.02em] text-fg sm:text-[3.5rem]">
+            <h1 className="font-display text-[2.6rem] font-extrabold leading-[1.02] tracking-[-0.02em] text-fg sm:text-[3.5rem]">
               Run your business
               <span className="-mt-1 block font-handwritten text-[3.4rem] font-bold leading-[0.85] tracking-normal text-accent sm:text-[4.4rem]">
                 on real numbers.
@@ -102,24 +99,22 @@ function FullCatalogHomePage() {
 
           <Reveal delay={80}>
             <div className="mx-auto mt-8 w-full max-w-5xl">
-              <div className="glow-card cover-lift overflow-hidden rounded-[var(--radius-card)] border border-border bg-black shadow-[0_30px_80px_-30px_rgba(17,19,24,0.4)]">
-                <video
-                  controls
-                  preload="metadata"
-                  poster="/videos/poster.jpg"
-                  className="aspect-video w-full"
-                >
-                  <source src="/videos/profitiqs-vsl.mp4" type="video/mp4" />
-                </video>
+              <div className="cover-lift rounded-[var(--radius-card)] border-2 border-accent/40 shadow-[0_0_0_1px_rgba(37,99,235,0.1),0_35px_90px_-25px_rgba(37,99,235,0.45)]">
+                <HeroVideo src="/videos/profitiqs-vsl.mp4" poster="/videos/poster.png" />
               </div>
               <p className="mt-4 text-center text-sm text-fg-soft">
                 Which jobs actually made you money last month? Two minutes on what ProfitIQS shows you.
               </p>
             </div>
           </Reveal>
+        </div>
+      </section>
 
-          <Reveal delay={140} className="mx-auto max-w-2xl text-center">
-            <p className="mx-auto mt-8 max-w-lg text-base leading-relaxed text-fg-soft sm:text-lg">
+      {/* ===== HERO FOLLOW-THROUGH — dark, separates from the light hero above ===== */}
+      <section className="cta-surface">
+        <div className="mx-auto max-w-2xl px-5 py-14 text-center sm:px-8">
+          <Reveal>
+            <p className="mx-auto max-w-lg text-base leading-relaxed text-white/70 sm:text-lg">
               Practical business management systems built around the
               numbers that matter — revenue, expenses, cash flow,
               performance, and planning.
@@ -127,30 +122,30 @@ function FullCatalogHomePage() {
             <div className="mt-7 flex flex-wrap justify-center gap-3">
               <Link
                 href="/products"
-                className="inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-accent px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-accent-hover"
+                className="inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-white px-6 py-3.5 text-sm font-semibold text-ink transition-colors hover:bg-white/90"
               >
                 Explore the Systems
                 <ArrowRight className="size-4" />
               </Link>
               <Link
                 href="/industries"
-                className="inline-flex items-center gap-2 rounded-[var(--radius-control)] border border-border px-6 py-3.5 text-sm font-semibold text-fg transition-colors hover:bg-surface-muted"
+                className="inline-flex items-center gap-2 rounded-[var(--radius-control)] border border-white/30 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
               >
                 Find Your Industry
               </Link>
             </div>
-            <div className="mx-auto mt-8 flex max-w-md justify-center gap-10 border-t border-border pt-6">
+            <div className="mx-auto mt-8 flex max-w-md justify-center gap-10 border-t border-white/15 pt-6">
               <div>
-                <p className="font-display text-3xl font-extrabold tabular-nums text-fg"><StatCounter value={PRODUCTS.length} /></p>
-                <p className="mt-1 font-mono text-[11px] text-fg-soft">Real systems</p>
+                <p className="font-display text-3xl font-extrabold tabular-nums text-white"><StatCounter value={PRODUCTS.length} /></p>
+                <p className="mt-1 font-mono text-[11px] text-white/50">Real systems</p>
               </div>
               <div>
-                <p className="font-display text-3xl font-extrabold tabular-nums text-fg"><StatCounter value={niches.length} /></p>
-                <p className="mt-1 font-mono text-[11px] text-fg-soft">Categories</p>
+                <p className="font-display text-3xl font-extrabold tabular-nums text-white"><StatCounter value={niches.length} /></p>
+                <p className="mt-1 font-mono text-[11px] text-white/50">Categories</p>
               </div>
               <div>
-                <p className="font-display text-3xl font-extrabold tabular-nums text-fg">3</p>
-                <p className="mt-1 font-mono text-[11px] text-fg-soft">Tiers each</p>
+                <p className="font-display text-3xl font-extrabold tabular-nums text-white">3</p>
+                <p className="mt-1 font-mono text-[11px] text-white/50">Tiers each</p>
               </div>
             </div>
           </Reveal>
