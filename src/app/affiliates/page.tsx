@@ -22,7 +22,7 @@ import { AffiliateDownloadLink, AffiliateDownloadAllLink } from "@/components/af
 export const metadata: Metadata = {
   title: "Affiliates",
   description:
-    "Promote ProfitIQS and keep a real commission. Download the master affiliate kit or any of the 11 industry kits — real screenshots, swipe copy, and an 8-email cold outreach sequence included.",
+    "Promote ProfitIQS and keep a real commission. Download the master affiliate kit or any of the 21 industry kits — real screenshots, swipe copy, and an 8-email cold outreach sequence included.",
   alternates: { canonical: "/affiliates" },
 };
 
@@ -41,6 +41,16 @@ const NICHE_KITS = [
   { slug: "electrical-contractor", file: "electrical-contractor-Affiliate-Kit.zip", label: "Electrical Contractor" },
   { slug: "hvac", file: "hvac-Affiliate-Kit.zip", label: "HVAC" },
   { slug: "pest-control", file: "pest-control-Affiliate-Kit.zip", label: "Pest Control" },
+  { slug: "landscaping", file: "landscaping-Affiliate-Kit.zip", label: "Landscaping" },
+  { slug: "lawn-care", file: "lawn-care-Affiliate-Kit.zip", label: "Lawn Care" },
+  { slug: "manufacturing", file: "manufacturing-Affiliate-Kit.zip", label: "Manufacturing" },
+  { slug: "plumbing-contractor", file: "plumbing-contractor-Affiliate-Kit.zip", label: "Plumbing Contractor" },
+  { slug: "property-management", file: "property-management-Affiliate-Kit.zip", label: "Property Management" },
+  { slug: "rental-portfolio", file: "rental-portfolio-Affiliate-Kit.zip", label: "Rental Property Management" },
+  { slug: "restaurant", file: "restaurant-Affiliate-Kit.zip", label: "Restaurant" },
+  { slug: "roofing", file: "roofing-Affiliate-Kit.zip", label: "Roofing" },
+  { slug: "small-business", file: "small-business-Affiliate-Kit.zip", label: "Small Business Command Center" },
+  { slug: "trucking-owner-operator", file: "trucking-owner-operator-Affiliate-Kit.zip", label: "Trucking Owner-Operator" },
 ] as const;
 
 const MASTER_KIT_FILE = "ProfitIQS-Master-Affiliate-Kit.zip";
@@ -80,7 +90,7 @@ export default function AffiliatesPage() {
   });
   // "Download everything" fires one download per kit rather than linking to
   // a single combined zip -- GitHub rejects any tracked file over 100MB, and
-  // a 12-kit bundle runs well past that.
+  // a 22-kit bundle runs well past that.
   const allFiles = [
     { href: `/downloads/affiliate-kit/${MASTER_KIT_FILE}`, name: MASTER_KIT_FILE },
     ...niches.map((n) => ({ href: `/downloads/affiliate-kit/${n.file}`, name: n.file })),
@@ -104,7 +114,7 @@ export default function AffiliatesPage() {
               </span>
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-fg-soft sm:text-lg">
-              11 industry-specific business intelligence systems, one real commission schedule, and a complete kit
+              21 industry-specific business intelligence systems, one real commission schedule, and a complete kit
               for every niche — screenshots, swipe copy, and an outreach sequence already written. You bring the
               audience; the kit does the rest.
             </p>
@@ -210,13 +220,13 @@ export default function AffiliatesPage() {
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-violet px-2.5 py-0.5 text-[11px] font-semibold text-white">
                     Everything, one click
                   </span>
-                  <h3 className="mt-2 font-display text-xl font-bold text-fg">All 12 kits — master plus every industry</h3>
+                  <h3 className="mt-2 font-display text-xl font-bold text-fg">All {allFiles.length} kits — master plus every industry</h3>
                   <p className="mt-1.5 max-w-md text-sm text-fg-soft">
-                    One click downloads the master kit and all 11 industry kits as 12 separate files — every PDF,
+                    One click downloads the master kit and all {niches.length} industry kits as {allFiles.length} separate files — every PDF,
                     every screenshot, every graphic.
                   </p>
                   {totalSizeMB > 0 && (
-                    <p className="mt-2 font-mono text-[11px] text-fg-soft">12 files, all 11 industries &middot; {totalSizeMB} MB total</p>
+                    <p className="mt-2 font-mono text-[11px] text-fg-soft">{allFiles.length} files, all {niches.length} industries &middot; {totalSizeMB} MB total</p>
                   )}
                 </div>
               </div>

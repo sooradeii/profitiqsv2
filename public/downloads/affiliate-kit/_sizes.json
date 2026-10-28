@@ -1,5 +1,5 @@
 {
-  "master-affiliate-kit": 6.6,
+  "master-affiliate-kit": 7.9,
   "1099-income": 35.0,
   "airbnb": 35.2,
   "auto-repair": 38.9,
@@ -10,5 +10,15 @@
   "ecommerce": 34.0,
   "electrical-contractor": 30.3,
   "hvac": 37.9,
-  "pest-control": 33.7
+  "pest-control": 33.7,
+  "landscaping": 37.9,
+  "lawn-care": 38.3,
+  "manufacturing": 35.6,
+  "plumbing-contractor": 44.4,
+  "property-management": 34.7,
+  "rental-portfolio": 36.8,
+  "restaurant": 29.9,
+  "roofing": 31.7,
+  "small-business": 32.2,
+  "trucking-owner-operator": 34.0
 }
