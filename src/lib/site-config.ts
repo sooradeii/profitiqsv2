@@ -163,6 +163,7 @@ const FULL_FOOTER_LINKS = {
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
     { label: "FAQ", href: "/faq" },
+    { label: "Affiliates", href: "/affiliates" },
   ],
   Legal: [
     { label: "Legal Information", href: "/legal-information" },
