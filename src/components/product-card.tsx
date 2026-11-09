@@ -24,6 +24,7 @@ export function ProductCard({ product }: { product: Product }) {
             className="object-contain p-3"
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
             loading="lazy"
+            unoptimized
           />
         </div>
       )}

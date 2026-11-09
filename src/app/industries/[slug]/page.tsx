@@ -74,7 +74,7 @@ export default async function IndustryPage({
           {complete?.coverImage && (
             <Reveal delay={100}>
               <div className="cover-lift relative mx-auto aspect-[3/4] w-full max-w-xs overflow-hidden rounded-[var(--radius-card)] border border-border bg-surface shadow-[0_24px_48px_-24px_rgba(17,19,24,0.3)]">
-                <Image src={complete.coverImage} alt={`${niche.industry} cover`} fill className="object-contain p-3" sizes="360px" priority />
+                <Image src={complete.coverImage} alt={`${niche.industry} cover`} fill className="object-contain p-3" sizes="360px" priority unoptimized />
               </div>
             </Reveal>
           )}

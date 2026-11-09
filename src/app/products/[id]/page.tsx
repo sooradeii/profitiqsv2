@@ -187,6 +187,7 @@ export default async function ProductPage({
                   className="object-contain p-4"
                   sizes="400px"
                   priority
+                  unoptimized
                 />
               </div>
             )}

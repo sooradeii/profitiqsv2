@@ -40,7 +40,7 @@ export default function IndustriesPage() {
               >
                 {cover && (
                   <div className="relative aspect-[3/4] w-16 shrink-0 overflow-hidden rounded-[10px] border border-border bg-surface-muted">
-                    <Image src={cover} alt="" fill className="object-contain p-1" sizes="64px" />
+                    <Image src={cover} alt="" fill className="object-contain p-1" sizes="64px" unoptimized />
                   </div>
                 )}
                 <div className="min-w-0 flex-1">

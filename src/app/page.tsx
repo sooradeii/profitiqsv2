@@ -554,6 +554,7 @@ function ReviewHomePage() {
                     className="object-contain p-4"
                     sizes="400px"
                     priority
+                    unoptimized
                   />
                 </div>
               )}

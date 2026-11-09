@@ -300,7 +300,7 @@ export default function AffiliatesPage() {
                   <div className="flex items-center gap-3">
                     {n.cover && (
                       <div className="relative aspect-[3/4] w-12 shrink-0 overflow-hidden rounded-[8px] border border-border bg-surface-muted">
-                        <Image src={n.cover} alt="" fill className="object-contain p-1" sizes="48px" />
+                        <Image src={n.cover} alt="" fill className="object-contain p-1" sizes="48px" unoptimized />
                       </div>
                     )}
                     <div className="min-w-0">
