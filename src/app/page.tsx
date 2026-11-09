@@ -47,6 +47,15 @@ const PHOTO_NICHE_SLUGS = [
   "ecommerce",
 ];
 
+// Same three opening hooks as the Home VSL's cold open -- real pain
+// points pulled from the niche briefs (plumbing callbacks, restaurant
+// prime cost, auto repair comebacks), not invented for the page.
+const PROBLEM_HOOKS = [
+  { slug: "plumbing-contractor", role: "Plumber", question: "Which callbacks are eating the margin?" },
+  { slug: "restaurant", role: "Restaurant owner", question: "Where did prime cost really land?" },
+  { slug: "auto-repair", role: "Shop owner", question: "How many comebacks are eating your bay time?" },
+] as const;
+
 // Deterministic featured selection -- not randomized per render.
 const FEATURED_SLUGS = [
   "1099-income",
@@ -221,7 +230,7 @@ function FullCatalogHomePage() {
         </div>
       </section>
 
-      {/* ===== PROBLEM RECOGNITION — bento grid, size-as-hierarchy ===== */}
+      {/* ===== PROBLEM RECOGNITION — same opening hook as the VSL ===== */}
       <section className="border-b border-border bg-surface">
         <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 lg:py-20">
           <Reveal>
@@ -229,35 +238,34 @@ function FullCatalogHomePage() {
               Your business is moving. Can you see the numbers?
             </h2>
             <p className="mt-4 max-w-2xl text-base text-fg-soft">
-              Most owners can see revenue. Fewer can quickly see margin by
-              job or client, where costs are growing, which areas need
-              attention, how cash is moving, and what deserves action next.
+              Most owners can see revenue. Fewer can answer the one question
+              that actually runs the business.
             </p>
           </Reveal>
-          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-4">
-            <Reveal className="sm:col-span-2 sm:row-span-2">
-              <div className="glow-card cta-surface flex h-full flex-col justify-between rounded-[var(--radius-card)] border border-border p-7 text-white">
-                <TrendingUp className="size-6 text-accent" />
-                <div>
-                  <h3 className="mt-6 font-display text-xl">Margin by job or client</h3>
-                  <p className="mt-2 text-sm text-white/60">
-                    Cost and revenue broken out by job, product, or client
-                    — not one blended number that hides the details.
-                  </p>
-                </div>
-              </div>
-            </Reveal>
-            {[
-              { icon: Target, title: "Where costs grow", body: "Track expenses against budget before they compound." },
-              { icon: Layers, title: "What needs attention", body: "One score summarizing where the business is fragile." },
-              { icon: Repeat, title: "How cash moves", body: "A monthly routine, not a once-a-year scramble." },
-            ].map((c, i) => (
-              <Reveal key={c.title} delay={i * 70} className="sm:col-span-2">
-                <div className="glow-card rounded-[var(--radius-card)] border border-border bg-bg p-5">
-                  <c.icon className="size-5 text-accent" />
-                  <h3 className="mt-3 text-sm font-semibold text-fg">{c.title}</h3>
-                  <p className="mt-1.5 text-sm text-fg-soft">{c.body}</p>
-                </div>
+          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {PROBLEM_HOOKS.map((h, i) => (
+              <Reveal key={h.slug} delay={i * 90}>
+                <Link
+                  href={`/industries/${h.slug}`}
+                  className="card-hover group relative block aspect-[4/5] overflow-hidden rounded-[var(--radius-card)] border border-border sm:aspect-[3/4]"
+                >
+                  <Image
+                    src={`/images/niches/${h.slug}.jpg`}
+                    alt={`${h.role} at work`}
+                    fill
+                    sizes="(min-width: 640px) 33vw, 100vw"
+                    className="object-cover grayscale transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/40 to-ink/10" />
+                  <div className="absolute inset-x-0 top-0 flex items-center justify-between p-5">
+                    <span className="font-mono text-xs text-white/60">0{i + 1} &middot; {h.role}</span>
+                  </div>
+                  <div className="absolute inset-x-0 bottom-0 p-5">
+                    <p className="font-display text-xl font-semibold leading-tight text-white">
+                      {h.question}
+                    </p>
+                  </div>
+                </Link>
               </Reveal>
             ))}
           </div>
