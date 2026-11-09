@@ -9,6 +9,7 @@ import { Reveal } from "@/components/reveal";
 import { TrackView } from "@/components/track-view";
 import { BuyNowLink } from "@/components/buy-now-link";
 import { DigistorePromocode } from "@/components/digistore-promocode";
+import { HeroVideo } from "@/components/hero-video";
 
 export function generateStaticParams() {
   // TEMPORARY Digistore24 review mode: only the published niche
@@ -77,6 +78,21 @@ export default async function IndustryPage({
               </div>
             </Reveal>
           )}
+        </div>
+      </section>
+
+      <section className="border-b border-border bg-surface">
+        <div className="mx-auto max-w-[900px] px-5 py-14 sm:px-8">
+          <Reveal>
+            <h2 className="text-center font-display text-2xl font-semibold tracking-tight text-fg">
+              See the {niche.shortName} system walkthrough
+            </h2>
+          </Reveal>
+          <Reveal delay={80}>
+            <div className="cover-lift mt-8 rounded-[var(--radius-card)] border-2 border-accent/40 shadow-[0_0_0_1px_rgba(37,99,235,0.1),0_35px_90px_-25px_rgba(37,99,235,0.45)]">
+              <HeroVideo src={`/videos/niches/${niche.slug}.mp4`} poster={`/videos/niches/${niche.slug}-poster.jpg`} />
+            </div>
+          </Reveal>
         </div>
       </section>
 

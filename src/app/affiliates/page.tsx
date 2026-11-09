@@ -18,6 +18,7 @@ import { SITE } from "@/lib/site-config";
 import { Reveal } from "@/components/reveal";
 import { StatCounter } from "@/components/stat-counter";
 import { AffiliateDownloadLink, AffiliateDownloadAllLink } from "@/components/affiliate-download-link";
+import { HeroVideo } from "@/components/hero-video";
 
 export const metadata: Metadata = {
   title: "Affiliates",
@@ -113,7 +114,14 @@ export default function AffiliatesPage() {
                 Keep real commission.
               </span>
             </h1>
-            <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-fg-soft sm:text-lg">
+          </Reveal>
+          <Reveal delay={80} className="mx-auto mt-8 w-full max-w-4xl">
+            <div className="cover-lift rounded-[var(--radius-card)] border-2 border-accent/40 shadow-[0_0_0_1px_rgba(37,99,235,0.1),0_35px_90px_-25px_rgba(37,99,235,0.45)]">
+              <HeroVideo src="/videos/affiliate-vsl.mp4" poster="/videos/affiliate-poster.jpg" />
+            </div>
+          </Reveal>
+          <Reveal className="mx-auto max-w-2xl text-center">
+            <p className="mx-auto mt-8 max-w-xl text-base leading-relaxed text-fg-soft sm:text-lg">
               21 industry-specific business intelligence systems, one real commission schedule, and a complete kit
               for every niche — screenshots, swipe copy, and an outreach sequence already written. You bring the
               audience; the kit does the rest.
