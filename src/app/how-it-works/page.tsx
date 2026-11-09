@@ -52,7 +52,7 @@ export default function HowItWorksPage() {
       <section className="border-b border-border bg-surface">
         <div className="mx-auto max-w-2xl px-5 py-14 text-center sm:px-8 lg:py-20">
           <Reveal>
-            <h1 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">How it works</h1>
+            <h1 className="font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">How it works</h1>
             <p className="mt-4 text-base text-fg-soft">
               From the product page to your files landing on your computer —
               the whole flow runs through Digistore24, ProfitIQS&apos;s
@@ -71,7 +71,7 @@ export default function HowItWorksPage() {
                   <s.icon className="size-5" />
                 </div>
                 <div>
-                  <h2 className="font-display text-base font-bold text-fg">{s.title}</h2>
+                  <h2 className="font-display text-base font-semibold text-fg">{s.title}</h2>
                   <p className="mt-1 text-sm text-fg-soft">{s.body}</p>
                 </div>
               </Reveal>

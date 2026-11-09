@@ -110,9 +110,9 @@ function FullCatalogHomePage() {
       <section className="hero-surface">
         <div className="mx-auto max-w-[1280px] px-5 pb-14 pt-12 sm:px-8 lg:pt-16">
           <Reveal className="mx-auto max-w-2xl text-center">
-            <h1 className="font-display text-[2.6rem] font-extrabold leading-[1.02] tracking-[-0.02em] text-fg sm:text-[3.5rem]">
+            <h1 className="font-display text-[2.6rem] font-semibold leading-[1.02] tracking-[-0.02em] text-fg sm:text-[3.5rem]">
               Run your business
-              <span className="-mt-1 block font-handwritten text-[3.4rem] font-bold leading-[0.85] tracking-normal text-accent sm:text-[4.4rem]">
+              <span className="-mt-1 block text-[3.4rem] font-semibold italic leading-[0.85] tracking-[-0.04em] text-accent sm:text-[4.4rem]">
                 on real numbers.
               </span>
             </h1>
@@ -158,15 +158,15 @@ function FullCatalogHomePage() {
             </div>
             <div className="mx-auto mt-8 flex max-w-md justify-center gap-10 border-t border-white/15 pt-6">
               <div>
-                <p className="font-display text-3xl font-extrabold tabular-nums text-white"><StatCounter value={PRODUCTS.length} /></p>
+                <p className="font-display text-3xl font-semibold tabular-nums text-white"><StatCounter value={PRODUCTS.length} /></p>
                 <p className="mt-1 font-mono text-[11px] text-white/50">Real systems</p>
               </div>
               <div>
-                <p className="font-display text-3xl font-extrabold tabular-nums text-white"><StatCounter value={niches.length} /></p>
+                <p className="font-display text-3xl font-semibold tabular-nums text-white"><StatCounter value={niches.length} /></p>
                 <p className="mt-1 font-mono text-[11px] text-white/50">Categories</p>
               </div>
               <div>
-                <p className="font-display text-3xl font-extrabold tabular-nums text-white">3</p>
+                <p className="font-display text-3xl font-semibold tabular-nums text-white">3</p>
                 <p className="mt-1 font-mono text-[11px] text-white/50">Tiers each</p>
               </div>
             </div>
@@ -371,7 +371,7 @@ function FullCatalogHomePage() {
                     <h3 className="font-display text-lg text-fg">{t.name}</h3>
                     <p className="mt-2 flex-1 text-sm text-fg-soft">{t.body}</p>
                     {sample?.price !== null && sample?.price !== undefined && (
-                      <p className="mt-4 font-mono text-2xl font-bold tabular-nums text-fg">
+                      <p className="mt-4 font-mono text-2xl font-semibold tabular-nums text-fg">
                         From <StatCounter value={sample.price} prefix="$" duration={800} />
                       </p>
                     )}
@@ -404,7 +404,7 @@ function FullCatalogHomePage() {
               { n: "03", title: "Open and start tracking", body: "Enter your numbers and the dashboards do the rest." },
             ].map((s, i) => (
               <Reveal key={s.n} delay={i * 90}>
-                <span className="font-mono text-7xl font-extrabold text-violet/30">{s.n}</span>
+                <span className="font-mono text-7xl font-semibold text-violet/30">{s.n}</span>
                 <h3 className="mt-3 font-display text-lg text-fg">{s.title}</h3>
                 <p className="mt-2 text-sm text-fg-soft">{s.body}</p>
               </Reveal>
@@ -496,9 +496,9 @@ function ReviewHomePage() {
                 <span className="pulse-dot" />
                 <span className="font-mono text-[11px] font-medium text-fg-soft">{product.category} &middot; {product.tierLabel}</span>
               </div>
-              <h1 className="mt-5 font-display text-[2.6rem] font-extrabold leading-[1.02] tracking-[-0.02em] text-fg sm:text-[3.5rem]">
+              <h1 className="mt-5 font-display text-[2.6rem] font-semibold leading-[1.02] tracking-[-0.02em] text-fg sm:text-[3.5rem]">
                 Business intelligence systems
-                <span className="-mt-1 block font-handwritten text-[3.4rem] font-bold leading-[0.85] tracking-normal text-accent sm:text-[4.4rem]">
+                <span className="-mt-1 block text-[3.4rem] font-semibold italic leading-[0.85] tracking-[-0.04em] text-accent sm:text-[4.4rem]">
                   built around real numbers.
                 </span>
               </h1>
@@ -628,7 +628,7 @@ function ReviewHomePage() {
                 <Reveal key={t.id} delay={i * 90}>
                   <div className={isComplete ? "glow-card flex h-full flex-col rounded-[var(--radius-card)] border-2 border-violet bg-violet-soft p-7" : "glow-card flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-bg p-7"}>
                     <h3 className="font-display text-lg text-fg">{t.tierLabel}</h3>
-                    {t.price !== null && <p className="mt-2 font-display text-2xl font-extrabold text-fg">${t.price}</p>}
+                    {t.price !== null && <p className="mt-2 font-display text-2xl font-semibold text-fg">${t.price}</p>}
                     <ul className="mt-4 flex-1 space-y-1.5 text-sm text-fg-soft">
                       {t.features.slice(0, 5).map((f) => <li key={f}>&#10003; {f}</li>)}
                     </ul>
@@ -668,7 +668,7 @@ function ReviewHomePage() {
               { n: "03", title: "Download and start tracking", body: "Your files arrive through Digistore24's Download Vault." },
             ].map((s, i) => (
               <Reveal key={s.n} delay={i * 90}>
-                <span className="font-mono text-7xl font-extrabold text-violet/30">{s.n}</span>
+                <span className="font-mono text-7xl font-semibold text-violet/30">{s.n}</span>
                 <h3 className="mt-3 font-display text-lg text-fg">{s.title}</h3>
                 <p className="mt-2 text-sm text-fg-soft">{s.body}</p>
               </Reveal>

@@ -21,7 +21,7 @@ export default function ThankYouPage() {
         <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-success-soft">
           <CheckCircle2 className="size-7 text-success" />
         </div>
-        <h1 className="mt-6 font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">
+        <h1 className="mt-6 font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
           Thank you for your order.
         </h1>
         <p className="mt-4 text-base text-fg-soft">
@@ -33,7 +33,7 @@ export default function ThankYouPage() {
 
         <div className="mt-10 space-y-6 rounded-[var(--radius-card)] border border-border bg-surface p-6 text-left sm:p-8">
           <div>
-            <h2 className="font-display text-lg font-bold text-fg">Getting your files</h2>
+            <h2 className="font-display text-lg font-semibold text-fg">Getting your files</h2>
             <p className="mt-2 text-sm text-fg-soft">
               Your product is a digital download. Digistore24 sends your
               order confirmation and download access directly to the
@@ -43,7 +43,7 @@ export default function ThankYouPage() {
             </p>
           </div>
           <div>
-            <h2 className="font-display text-lg font-bold text-fg">Next steps</h2>
+            <h2 className="font-display text-lg font-semibold text-fg">Next steps</h2>
             <p className="mt-2 text-sm text-fg-soft">
               Open the confirmation email from Digistore24, download your
               workbook, and use the included Quick Start guide to get set
@@ -51,7 +51,7 @@ export default function ThankYouPage() {
             </p>
           </div>
           <div>
-            <h2 className="font-display text-lg font-bold text-fg">Need help?</h2>
+            <h2 className="font-display text-lg font-semibold text-fg">Need help?</h2>
             <p className="mt-2 text-sm text-fg-soft">
               If anything about your order looks wrong — a missing email,
               a file issue, or a billing question — reach out and we&apos;ll

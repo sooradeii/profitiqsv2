@@ -34,13 +34,13 @@ export function ProductCard({ product }: { product: Product }) {
           </span>
           <span className="text-[11px] text-fg-soft">{product.category}</span>
         </div>
-        <h3 className="mt-3 font-display text-base font-bold leading-snug text-fg">
+        <h3 className="mt-3 font-display text-base font-semibold leading-snug text-fg">
           {product.industry}
         </h3>
         <p className="mt-1.5 line-clamp-2 flex-1 text-sm text-fg-soft">{product.heroLine}</p>
         <div className="mt-4 flex items-center justify-between">
           {product.price !== null ? (
-            <span className="font-display text-lg font-extrabold tabular-nums text-fg">${product.price}</span>
+            <span className="font-display text-lg font-semibold tabular-nums text-fg">${product.price}</span>
           ) : (
             <span className="text-sm text-fg-soft">Pricing TBA</span>
           )}

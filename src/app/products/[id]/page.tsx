@@ -130,10 +130,10 @@ export default async function ProductPage({
               <p className="text-xs font-semibold uppercase tracking-wide text-accent">
                 {product.category} &middot; {product.tierLabel}
               </p>
-              <h1 className="mt-3 font-display text-4xl font-extrabold tracking-tight text-fg sm:text-5xl">
+              <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight text-fg sm:text-5xl">
                 {product.industry}
               </h1>
-              <p className="mt-4 max-w-lg font-display text-xl font-bold text-accent">{product.heroLine}</p>
+              <p className="mt-4 max-w-lg font-display text-xl font-semibold text-accent">{product.heroLine}</p>
               <p className="mt-3 max-w-lg text-sm text-fg-soft">
                 Track revenue, costs, margins, and business performance in
                 one system built specifically for {product.category.toLowerCase()}
@@ -142,7 +142,7 @@ export default async function ProductPage({
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 {product.price !== null && (
-                  <span className="font-display text-3xl font-extrabold tabular-nums text-fg">${product.price}</span>
+                  <span className="font-display text-3xl font-semibold tabular-nums text-fg">${product.price}</span>
                 )}
                 <span className="rounded-full bg-surface-muted px-3 py-1 text-xs font-medium text-fg-soft">one-time payment</span>
               </div>
@@ -198,7 +198,7 @@ export default async function ProductPage({
       <section className="border-b border-border bg-surface">
         <div className="mx-auto max-w-[1280px] px-5 py-14 sm:px-8">
           <Reveal>
-            <h2 className="font-display text-2xl font-extrabold tracking-tight text-fg">What&apos;s included</h2>
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-fg">What&apos;s included</h2>
             <ul className="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
               {product.includedFiles.map((f) => (
                 <li key={f} className="flex items-start gap-2.5 rounded-[var(--radius-control)] border border-border bg-bg p-3.5 text-sm text-fg">
@@ -216,7 +216,7 @@ export default async function ProductPage({
         <section className="border-b border-border">
           <div className="mx-auto max-w-[1280px] px-5 py-14 sm:px-8">
             <Reveal>
-              <h2 className="font-display text-2xl font-extrabold tracking-tight text-fg">What the workbook covers</h2>
+              <h2 className="font-display text-2xl font-semibold tracking-tight text-fg">What the workbook covers</h2>
               <p className="mt-2 max-w-xl text-sm text-fg-soft">
                 The real section list from the {product.tierLabel} workbook — nothing here is a mockup.
               </p>
@@ -236,7 +236,7 @@ export default async function ProductPage({
       <section className="border-b border-border bg-surface">
         <div className="mx-auto max-w-[1280px] px-5 py-14 sm:px-8">
           <Reveal>
-            <h2 className="font-display text-2xl font-extrabold tracking-tight text-fg">Who it&apos;s for</h2>
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-fg">Who it&apos;s for</h2>
             <p className="mt-3 max-w-xl text-sm text-fg-soft">{product.audience}</p>
           </Reveal>
         </div>
@@ -248,7 +248,7 @@ export default async function ProductPage({
       <section className="border-b border-border">
         <div className="mx-auto max-w-[1280px] px-5 py-14 sm:px-8">
           <Reveal>
-            <h2 className="font-display text-2xl font-extrabold tracking-tight text-fg">
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-fg">
               {siblingTiers.length > 1 ? `Compare the ${product.industry} tiers` : "Essential, Elite, and Complete"}
             </h2>
           </Reveal>
@@ -265,7 +265,7 @@ export default async function ProductPage({
                           : "flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-bg p-6"
                       }
                     >
-                      <h3 className="font-display text-lg font-bold text-fg">{t.label}</h3>
+                      <h3 className="font-display text-lg font-semibold text-fg">{t.label}</h3>
                       <p className="mt-2 flex-1 text-sm text-fg-soft">{t.body}</p>
                       {isCurrent && <span className="mt-4 text-xs font-semibold text-accent">This is what you&apos;re getting</span>}
                     </div>
@@ -286,8 +286,8 @@ export default async function ProductPage({
                         : "flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-bg p-6"
                     }
                   >
-                    <h3 className="font-display text-lg font-bold text-fg">{sib.tierLabel}</h3>
-                    {sib.price !== null && <p className="mt-2 font-display text-2xl font-extrabold text-fg">${sib.price}</p>}
+                    <h3 className="font-display text-lg font-semibold text-fg">{sib.tierLabel}</h3>
+                    {sib.price !== null && <p className="mt-2 font-display text-2xl font-semibold text-fg">${sib.price}</p>}
                     {isCurrent ? (
                       <span className="mt-4 text-xs font-semibold text-accent">You&apos;re viewing this tier</span>
                     ) : (
@@ -311,7 +311,7 @@ export default async function ProductPage({
             <p className="flex items-center justify-center gap-2 text-xs text-white/50">
               <Mail className="size-3.5" /> {SITE.supportEmail}
             </p>
-            <h2 className="mt-4 font-display text-2xl font-extrabold tracking-tight">
+            <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight">
               Get {product.industry} — {product.tierLabel}
               {product.price !== null ? ` — $${product.price}` : ""}
             </h2>

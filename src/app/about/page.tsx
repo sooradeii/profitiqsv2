@@ -11,7 +11,7 @@ export default function AboutPage() {
   return (
     <div className="mx-auto max-w-2xl px-5 py-14 sm:px-8 lg:py-20">
       <Reveal>
-        <h1 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">About ProfitIQS</h1>
+        <h1 className="font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">About ProfitIQS</h1>
         <div className="mt-8 space-y-5 text-fg-soft">
           <p>
             ProfitIQS exists to turn messy business numbers into practical

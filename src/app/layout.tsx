@@ -1,27 +1,29 @@
 import type { Metadata } from "next";
-import { Poppins, Caveat } from "next/font/google";
+import { Inter_Tight, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SITE, REVIEW_MODE } from "@/lib/site-config";
 
-// Type direction: Poppins is the single typeface for the entire public
-// site -- display, body, and numerals. Weight carries the hierarchy
-// instead of switching families: 400-500 body, 600 labels, 700
-// subheadings, 800 headlines/prices/metrics. Caveat added as one narrow,
-// deliberate exception -- a clean, legible handwriting-style accent used
-// only on the hero's second headline line, for warmth/trust rather than
-// as a system-wide serif/script.
-const poppins = Poppins({
-  variable: "--font-poppins",
+// Type direction: Inter Tight is the single typeface for the entire
+// public site -- headlines, body, labels, prices, numbers, and buttons.
+// Weight carries the hierarchy instead of switching families: 400 for
+// the occasional lighter line, 500 for small labels/subtitles, 600
+// (SemiBold) as the heaviest weight anywhere -- headlines, big numbers,
+// prices, tile titles. Letter-spacing runs tighter than default
+// (-3% to -6%) for the premium feel. Geist Mono (500) is the monospace
+// fallback for small technical labels.
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
 });
 
-const caveat = Caveat({
-  variable: "--font-caveat",
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
-  weight: ["600", "700"],
+  weight: ["500"],
 });
 
 const DEFAULT_TITLE = REVIEW_MODE
@@ -72,7 +74,7 @@ const websiteJsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${poppins.variable} ${caveat.variable} h-full`}>
+    <html lang="en" className={`${interTight.variable} ${geistMono.variable} h-full`}>
       <body
         className="flex min-h-full flex-col bg-bg text-fg antialiased"
         style={{ paddingBottom: "var(--ds24-bottom-offset, 0px)" }}

@@ -26,7 +26,7 @@ export default function FaqPage() {
     <div className="mx-auto max-w-2xl px-5 py-14 sm:px-8 lg:py-20">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <Reveal>
-        <h1 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Frequently asked questions</h1>
+        <h1 className="font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">Frequently asked questions</h1>
       </Reveal>
       <dl className="mt-8 divide-y divide-border">
         {items.map((item, i) => (

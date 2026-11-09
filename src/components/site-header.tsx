@@ -41,7 +41,7 @@ export function SiteHeader() {
       <div className={`mx-auto flex w-full max-w-[1280px] items-center justify-between px-5 transition-[height] duration-200 sm:px-8 ${scrolled ? "h-14" : "h-16"}`}>
         <Link href="/" className="flex items-center gap-2">
           <Image src="/assets/brand/profitiqs-logo.png" alt="" width={26} height={26} priority />
-          <span className="font-display text-[15px] font-bold tracking-tight text-fg">
+          <span className="font-display text-[15px] font-semibold tracking-tight text-fg">
             {SITE.name}
           </span>
         </Link>

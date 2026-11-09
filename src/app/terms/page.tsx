@@ -12,7 +12,7 @@ export default function TermsPage() {
   return (
     <div className="mx-auto max-w-2xl px-5 py-14 sm:px-8 lg:py-20">
       <Reveal>
-        <h1 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Terms</h1>
+        <h1 className="font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">Terms</h1>
         <p className="mt-2 text-sm text-fg-soft">Last updated: August 2026</p>
         <div className="mt-8 space-y-5 text-fg-soft">
           <p>
@@ -22,7 +22,7 @@ export default function TermsPage() {
             own License document covering that specific purchase.
           </p>
           <section>
-            <h2 className="font-display text-lg font-bold text-fg">What you&apos;re buying</h2>
+            <h2 className="font-display text-lg font-semibold text-fg">What you&apos;re buying</h2>
             <p className="mt-2 text-sm">
               ProfitIQS products are digital Excel-based workbooks and
               accompanying guides, licensed for use by a single business.
@@ -31,7 +31,7 @@ export default function TermsPage() {
             </p>
           </section>
           <section>
-            <h2 className="font-display text-lg font-bold text-fg">Checkout &amp; delivery</h2>
+            <h2 className="font-display text-lg font-semibold text-fg">Checkout &amp; delivery</h2>
             <p className="mt-2 text-sm">
               Purchases are processed through Digistore24. Products are
               delivered digitally through Digistore24&apos;s Download Vault,
@@ -39,7 +39,7 @@ export default function TermsPage() {
             </p>
           </section>
           <section>
-            <h2 className="font-display text-lg font-bold text-fg">No professional advice</h2>
+            <h2 className="font-display text-lg font-semibold text-fg">No professional advice</h2>
             <p className="mt-2 text-sm">
               ProfitIQS products are business-tracking tools. They are not
               accounting, tax, or legal advice. Consult a qualified
@@ -47,7 +47,7 @@ export default function TermsPage() {
             </p>
           </section>
           <section>
-            <h2 className="font-display text-lg font-bold text-fg">Contact</h2>
+            <h2 className="font-display text-lg font-semibold text-fg">Contact</h2>
             <p className="mt-2 text-sm">
               <a href={`mailto:${SITE.supportEmail}`} className="font-semibold text-accent">{SITE.supportEmail}</a>
             </p>

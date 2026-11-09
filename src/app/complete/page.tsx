@@ -21,7 +21,7 @@ export default function CompletePage() {
       <TrackView event={{ name: "tier_view", tier: "complete" }} />
       <Reveal>
         <p className="text-xs font-semibold uppercase tracking-wide text-success">Tier</p>
-        <h1 className="mt-2 font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Complete</h1>
+        <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">Complete</h1>
         <p className="mt-3 max-w-2xl text-base text-fg-soft">
           For business owners who want the full system — both the Essential
           and Elite workbooks for their industry, bundled together with the

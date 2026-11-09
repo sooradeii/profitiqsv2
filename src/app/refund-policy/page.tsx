@@ -13,7 +13,7 @@ export default function RefundPolicyPage() {
   return (
     <div className="mx-auto max-w-2xl px-5 py-14 sm:px-8 lg:py-20">
       <Reveal>
-        <h1 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Refund Policy</h1>
+        <h1 className="font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">Refund Policy</h1>
         <p className="mt-2 text-sm text-fg-soft">Last updated: August 2026</p>
 
         <div className="mt-8 rounded-[var(--radius-card)] border border-border bg-surface p-6">

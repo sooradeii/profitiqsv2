@@ -21,7 +21,7 @@ export default function EssentialPage() {
       <TrackView event={{ name: "tier_view", tier: "essential" }} />
       <Reveal>
         <p className="text-xs font-semibold uppercase tracking-wide text-fg-soft">Tier</p>
-        <h1 className="mt-2 font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Essential</h1>
+        <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">Essential</h1>
         <p className="mt-3 max-w-2xl text-base text-fg-soft">
           For business owners who want the practical foundation — one
           workbook covering the core entry, tracking, and dashboard sheets

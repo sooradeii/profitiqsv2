@@ -1,11 +1,14 @@
 @import "tailwindcss";
 
 /* ProfitIQS design tokens -- centralized, no scattered hex values in
-   components. Final system: Poppins as the single typeface (weight
-   carries hierarchy, not family); electric blue as the primary brand
-   color with indigo/violet as restrained secondary accents -- matches
-   the real ProfitIQS logo mark, which is blue. Quietly expensive, not
-   loud: gradients stay in the blue/indigo/violet family only. */
+   components. Final system: Inter Tight as the single typeface (weight
+   carries hierarchy, not family -- SemiBold 600 is the heaviest weight
+   anywhere), tightened letter-spacing (-3% to -6%) for a premium feel,
+   Geist Mono as the small-label monospace fallback; electric blue as
+   the primary brand color with indigo/violet as restrained secondary
+   accents -- matches the real ProfitIQS logo mark, which is blue.
+   Quietly expensive, not loud: gradients stay in the blue/indigo/violet
+   family only. */
 :root {
   --bg: #f8fafc;
   --surface: #ffffff;
@@ -55,10 +58,9 @@
   --color-violet: var(--violet);
   --color-violet-soft: var(--violet-soft);
 
-  --font-sans: var(--font-poppins);
-  --font-display: var(--font-poppins);
-  --font-mono: var(--font-poppins);
-  --font-handwritten: var(--font-caveat);
+  --font-sans: var(--font-inter-tight);
+  --font-display: var(--font-inter-tight);
+  --font-mono: var(--font-geist-mono);
 
   --radius-card: var(--radius-card);
   --radius-control: var(--radius-control);
@@ -71,26 +73,29 @@
   body {
     background: var(--bg);
     color: var(--foreground);
+    letter-spacing: -0.015em;
+  }
+  button, a, input, label {
+    letter-spacing: -0.03em;
   }
   html {
     scroll-behavior: smooth;
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    font-weight: 700;
-    letter-spacing: -0.01em;
+    font-weight: 600;
+    letter-spacing: -0.04em;
     text-wrap: balance;
     /* Safety net: text-wrap:balance can pick a line-break distribution
        that renders a few pixels wider than the container for certain real
-       headline text at this bold/tight-tracked weight (confirmed via
-       direct measurement -- not theoretical). overflow-wrap lets the
-       browser break mid-word only if balance's chosen arrangement
-       otherwise wouldn't fit, without changing normal wrapping. */
+       headline text at this tight-tracked weight (confirmed via direct
+       measurement -- not theoretical). overflow-wrap lets the browser
+       break mid-word only if balance's chosen arrangement otherwise
+       wouldn't fit, without changing normal wrapping. */
     overflow-wrap: break-word;
   }
   h1 {
-    font-weight: 800;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.05em;
   }
   :focus-visible {
     outline: 2px solid var(--accent);

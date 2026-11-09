@@ -26,7 +26,7 @@ export default function PhotoCreditsPage() {
   return (
     <div className="mx-auto max-w-2xl px-5 py-14 sm:px-8 lg:py-20">
       <Reveal>
-        <h1 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Photo Credits</h1>
+        <h1 className="font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">Photo Credits</h1>
         <p className="mt-4 text-sm text-fg-soft">
           The industry photography on the ProfitIQS homepage comes from{" "}
           <a

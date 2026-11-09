@@ -21,7 +21,7 @@ export default function ElitePage() {
       <TrackView event={{ name: "tier_view", tier: "elite" }} />
       <Reveal>
         <p className="text-xs font-semibold uppercase tracking-wide text-accent">Tier</p>
-        <h1 className="mt-2 font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Elite</h1>
+        <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">Elite</h1>
         <p className="mt-3 max-w-2xl text-base text-fg-soft">
           For business owners who need deeper analytics, planning,
           reporting, and intelligence — KPI scorecards, forecasting, and

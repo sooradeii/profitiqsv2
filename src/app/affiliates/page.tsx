@@ -107,9 +107,9 @@ export default function AffiliatesPage() {
               <span className="pulse-dot" />
               <span className="font-mono text-[11px] font-medium text-fg-soft">Affiliate Program · Launch phase</span>
             </div>
-            <h1 className="mt-5 font-display text-[2.4rem] font-extrabold leading-[1.05] tracking-[-0.02em] text-fg sm:text-[3.2rem]">
+            <h1 className="mt-5 font-display text-[2.4rem] font-semibold leading-[1.05] tracking-[-0.02em] text-fg sm:text-[3.2rem]">
               Promote ProfitIQS.
-              <span className="-mt-1 block font-handwritten text-[3rem] font-bold leading-[0.9] tracking-normal text-accent sm:text-[3.8rem]">
+              <span className="-mt-1 block text-[3rem] font-semibold italic leading-[0.9] tracking-[-0.04em] text-accent sm:text-[3.8rem]">
                 Keep real commission.
               </span>
             </h1>
@@ -135,19 +135,19 @@ export default function AffiliatesPage() {
             </div>
             <div className="mx-auto mt-10 flex max-w-md justify-center gap-10 border-t border-border pt-6">
               <div>
-                <p className="font-display text-3xl font-extrabold tabular-nums text-fg">
+                <p className="font-display text-3xl font-semibold tabular-nums text-fg">
                   <StatCounter value={COMMISSION_PHASES[0].percent} suffix="%" />
                 </p>
                 <p className="mt-1 font-mono text-[11px] text-fg-soft">Launch commission</p>
               </div>
               <div>
-                <p className="font-display text-3xl font-extrabold tabular-nums text-fg">
+                <p className="font-display text-3xl font-semibold tabular-nums text-fg">
                   <StatCounter value={NICHE_KITS.length} />
                 </p>
                 <p className="mt-1 font-mono text-[11px] text-fg-soft">Industry kits</p>
               </div>
               <div>
-                <p className="font-display text-3xl font-extrabold tabular-nums text-fg">1</p>
+                <p className="font-display text-3xl font-semibold tabular-nums text-fg">1</p>
                 <p className="mt-1 font-mono text-[11px] text-fg-soft">Payment, no subscription</p>
               </div>
             </div>
@@ -177,7 +177,7 @@ export default function AffiliatesPage() {
                   }
                 >
                   <span className="font-mono text-[11px] font-semibold uppercase tracking-wide text-fg-soft">{p.name}</span>
-                  <p className="mt-2 font-display text-4xl font-extrabold tabular-nums text-fg">
+                  <p className="mt-2 font-display text-4xl font-semibold tabular-nums text-fg">
                     <StatCounter value={p.percent} suffix="%" duration={800} />
                   </p>
                   <p className="mt-3 flex-1 text-sm text-fg-soft">{p.window}</p>
@@ -220,7 +220,7 @@ export default function AffiliatesPage() {
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-violet px-2.5 py-0.5 text-[11px] font-semibold text-white">
                     Everything, one click
                   </span>
-                  <h3 className="mt-2 font-display text-xl font-bold text-fg">All {allFiles.length} kits — master plus every industry</h3>
+                  <h3 className="mt-2 font-display text-xl font-semibold text-fg">All {allFiles.length} kits — master plus every industry</h3>
                   <p className="mt-1.5 max-w-md text-sm text-fg-soft">
                     One click downloads the master kit and all {niches.length} industry kits as {allFiles.length} separate files — every PDF,
                     every screenshot, every graphic.
@@ -251,7 +251,7 @@ export default function AffiliatesPage() {
                   <Package className="size-7 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-display text-xl font-bold">ProfitIQS Master Affiliate Kit</h3>
+                  <h3 className="font-display text-xl font-semibold">ProfitIQS Master Affiliate Kit</h3>
                   <p className="mt-1.5 max-w-md text-sm text-white/65">
                     Program overview, commission guide, compliance guide, brand messaging, shared promo copy, and the
                     full cold-email playbook.
@@ -296,7 +296,7 @@ export default function AffiliatesPage() {
                       </div>
                     )}
                     <div className="min-w-0">
-                      <h3 className="truncate font-display text-base font-bold text-fg">{n.label}</h3>
+                      <h3 className="truncate font-display text-base font-semibold text-fg">{n.label}</h3>
                       {n.sizeMB > 0 && <p className="font-mono text-[11px] text-fg-soft">{n.sizeMB} MB</p>}
                     </div>
                   </div>
@@ -350,7 +350,7 @@ export default function AffiliatesPage() {
               { n: "03", title: "Promote with what's already written", body: "Swap in your link, and go — hooks, scripts, posts, emails and graphics are done." },
             ].map((s, i) => (
               <Reveal key={s.n} delay={i * 90}>
-                <span className="font-mono text-7xl font-extrabold text-violet/30">{s.n}</span>
+                <span className="font-mono text-7xl font-semibold text-violet/30">{s.n}</span>
                 <h3 className="mt-3 font-display text-lg text-fg">{s.title}</h3>
                 <p className="mt-2 text-sm text-fg-soft">{s.body}</p>
               </Reveal>
@@ -368,7 +368,7 @@ export default function AffiliatesPage() {
                 <ShieldCheck className="size-5 text-success" />
               </div>
               <div>
-                <h3 className="font-display text-lg font-bold text-fg">Promote honestly — it&apos;s the whole program</h3>
+                <h3 className="font-display text-lg font-semibold text-fg">Promote honestly — it&apos;s the whole program</h3>
                 <p className="mt-2 max-w-2xl text-sm text-fg-soft">
                   No fake testimonials, no income promises, no spam. Cold outreach is allowed under CAN-SPAM&apos;s
                   opt-out rules, but only with a truthful subject line, a real business address, and a working

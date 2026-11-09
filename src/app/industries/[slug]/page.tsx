@@ -66,8 +66,8 @@ export default async function IndustryPage({
         <div className="mx-auto grid max-w-[1280px] grid-cols-1 gap-10 px-5 py-14 sm:px-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <Reveal className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-wide text-accent">{niche.category}</p>
-            <h1 className="mt-3 font-display text-4xl font-extrabold tracking-tight text-fg sm:text-5xl">{niche.industry}</h1>
-            <p className="mt-4 max-w-lg font-display text-xl font-bold text-accent">{niche.heroLine}</p>
+            <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight text-fg sm:text-5xl">{niche.industry}</h1>
+            <p className="mt-4 max-w-lg font-display text-xl font-semibold text-accent">{niche.heroLine}</p>
             <p className="mt-3 max-w-lg text-sm text-fg-soft">{niche.audience}</p>
           </Reveal>
           {complete?.coverImage && (
@@ -82,7 +82,7 @@ export default async function IndustryPage({
 
       <section className="mx-auto max-w-[1280px] px-5 py-14 sm:px-8">
         <Reveal>
-          <h2 className="font-display text-2xl font-extrabold tracking-tight text-fg">Choose your tier</h2>
+          <h2 className="font-display text-2xl font-semibold tracking-tight text-fg">Choose your tier</h2>
           <p className="mt-2 flex items-center gap-1.5 text-sm font-semibold text-success">
             <ShieldCheck className="size-4" /> 60-day money-back guarantee, no questions asked
           </p>
@@ -94,8 +94,8 @@ export default async function IndustryPage({
             return (
               <Reveal key={p.id} delay={i * 90}>
                 <div className={isComplete ? "flex h-full flex-col rounded-[var(--radius-card)] border-2 border-violet bg-violet-soft p-6" : "flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-surface p-6"}>
-                  <h3 className="font-display text-lg font-bold text-fg">{p.tierLabel}</h3>
-                  {p.price !== null && <p className="mt-2 font-display text-2xl font-extrabold text-fg">${p.price}</p>}
+                  <h3 className="font-display text-lg font-semibold text-fg">{p.tierLabel}</h3>
+                  {p.price !== null && <p className="mt-2 font-display text-2xl font-semibold text-fg">${p.price}</p>}
                   <ul className="mt-4 flex-1 space-y-1.5 text-sm text-fg-soft">
                     {p.features.slice(0, 5).map((f) => <li key={f}>&#10003; {f}</li>)}
                   </ul>

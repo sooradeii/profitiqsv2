@@ -13,7 +13,7 @@ export default function ContactPage() {
   return (
     <div className="mx-auto max-w-2xl px-5 py-14 sm:px-8 lg:py-20">
       <Reveal>
-        <h1 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Contact</h1>
+        <h1 className="font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">Contact</h1>
         <p className="mt-3 text-base text-fg-soft">
           Questions about a product, a purchase, or anything else — messages
           are read directly, not routed through a ticket system.

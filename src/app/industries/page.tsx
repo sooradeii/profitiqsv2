@@ -24,7 +24,7 @@ export default function IndustriesPage() {
   return (
     <div className="mx-auto max-w-[1280px] px-5 py-14 sm:px-8 lg:py-20">
       <Reveal>
-        <h1 className="font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">Industries</h1>
+        <h1 className="font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">Industries</h1>
         <p className="mt-3 max-w-xl text-base text-fg-soft">
           {niches.length} business {niches.length === 1 ? "category" : "categories"}, each with its own Essential, Elite, and Complete system.
         </p>
@@ -45,7 +45,7 @@ export default function IndustriesPage() {
                 )}
                 <div className="min-w-0 flex-1">
                   <p className="text-xs font-semibold uppercase tracking-wide text-accent">{n.category}</p>
-                  <h2 className="mt-1 truncate font-display text-base font-bold text-fg">{n.shortName}</h2>
+                  <h2 className="mt-1 truncate font-display text-base font-semibold text-fg">{n.shortName}</h2>
                   <p className="mt-1 line-clamp-2 text-sm text-fg-soft">{n.heroLine}</p>
                   <span className="mt-2 inline-block text-sm font-semibold text-accent">View system &rarr;</span>
                 </div>
